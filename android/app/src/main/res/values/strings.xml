@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Archaka Ads</string>
+    <string name="title_activity_main">Archaka Ads</string>
+    <string name="package_name">ads.archaka.net.vaikhanasa.sri</string>
+    <string name="custom_url_scheme">ads.archaka.net.vaikhanasa.sri</string>
+</resources>
