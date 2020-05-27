@@ -1,0 +1,7 @@
+{
+  "name": "sri-vaikhanasa-archaka-ads",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

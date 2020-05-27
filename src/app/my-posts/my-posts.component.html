@@ -1,0 +1,33 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>My Ads</ion-title>
+        <ion-buttons slot="end">
+            <ion-button fill="clear" color="dark" (click)="addNew()">
+                <ion-icon slot="start" name="add"></ion-icon>
+                Add
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+    <br />
+    <div class="container" style="max-width: 600px;">
+        <div class="row">
+
+            <ng-container *ngFor="let post of sortedPosts">
+
+                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <archaka-post-card [post]="post" (onOptionsClick)="showOptions($event)"></archaka-post-card>
+                </div>
+
+            </ng-container>
+
+        </div>
+    </div>
+
+</ion-content>

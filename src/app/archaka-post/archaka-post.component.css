@@ -1,0 +1,47 @@
+.card-img-top {
+    width: 100%;
+    /* height: 15vw; */
+    object-fit: cover;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    transition: .3s ease;
+    background-color: white;
+}
+
+.cross {
+    color: lightgray;
+    font-size: 30px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    text-align: center;
+    text-shadow: 5px 5px 5px #ccc;
+}
+
+ion-col {
+    text-align: center;
+}
+
+ion-col .overlay {
+    opacity: 0.9;
+}
+
+.item.sc-ion-label-md-h,
+.item .sc-ion-label-md-h {
+    white-space: normal;
+}
+
+.card-footer {
+    padding: 0px;
+}

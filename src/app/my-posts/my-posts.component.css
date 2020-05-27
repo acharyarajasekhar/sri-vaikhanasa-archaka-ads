@@ -1,0 +1,3 @@
+.dangerbutton {
+  color: bar(--ion-color-danger);
+}

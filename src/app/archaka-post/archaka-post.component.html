@@ -1,0 +1,91 @@
+<div class="card text-dark bg-white mb-3" *ngIf="post.updatedAt">
+
+    <photo-slides-card [slides]="post.photos" *ngIf="post?.photos && post.photos.length > 0"></photo-slides-card>
+    <div class="card-body">
+        <h5 class="card-title">{{ post.name }}</h5>
+        <p class="card-text">{{ post.description }}</p>
+
+        <ion-list lines="none">
+            <ion-item lines="none">
+                <ion-icon color="primary" slot="start" src="assets/icons/funds.svg"></ion-icon>
+                <ion-label>
+                    <h2>Monthly Salary</h2>
+                    <p>{{ post?.salary | currency:'INR':'symbol':'1.0-0' }}</p>
+                </ion-label>
+            </ion-item>
+            <ion-item href="tel:{{post?.contactNumber}}" button="true" lines="none">
+                <ion-icon color="success" slot="start" src="assets/icons/call.svg"></ion-icon>
+                <ion-label>
+                    <h2>Contact Person</h2>
+                    <p>{{ post.contactPerson }} - ({{ post?.contactNumber }})</p>
+                </ion-label>
+            </ion-item>
+            <ion-item [gMaps]="post?.address" button="true" lines="none">
+                <ion-icon color="warning" slot="start" src="assets/icons/address.svg"></ion-icon>
+                <ion-label>
+                    <h2>Address</h2>
+                    <p>{{ post?.address?.addressLine }}, {{ post?.address?.display }}</p>
+                </ion-label>
+            </ion-item>
+            <ion-item lines="none">
+                <ion-icon color="secondary" slot="start" src="assets/icons/supplyfree.svg"></ion-icon>
+                <ion-label>
+                    <h2>We provide</h2>
+                    <ion-row class="color-icons-row">
+                        <ng-container>
+                            <ion-col>
+                                <img src="assets/icons/house.svg" height="30px" />
+                                <div class="overlay" *ngIf="post.additionals.indexOf('Accommodation') == -1">
+                                    <ion-icon name="close" class="cross"></ion-icon>
+                                </div>
+                            </ion-col>
+                            <ion-col>
+                                <img src="assets/icons/fullgas.svg" height="30px" />
+                                <div class="overlay" *ngIf="post.additionals.indexOf('LPG') == -1">
+                                    <ion-icon name="close" class="cross"></ion-icon>
+                                </div>
+                            </ion-col>
+                            <ion-col>
+                                <img src="assets/icons/rice.svg" height="30px" />
+                                <div class="overlay" *ngIf="post.additionals.indexOf('Rice') == -1">
+                                    <ion-icon name="close" class="cross"></ion-icon>
+                                </div>
+                            </ion-col>
+                            <ion-col>
+                                <img src="assets/icons/veg.svg" height="30px" />
+                                <div class="overlay" *ngIf="post.additionals.indexOf('Vegetables') == -1">
+                                    <ion-icon name="close" class="cross"></ion-icon>
+                                </div>
+                            </ion-col>
+                            <ion-col>
+                                <img src="assets/icons/milk.svg" height="30px" />
+                                <div class="overlay" *ngIf="post.additionals.indexOf('Milk') == -1">
+                                    <ion-icon name="close" class="cross"></ion-icon>
+                                </div>
+                            </ion-col>
+                        </ng-container>
+                    </ion-row>
+                </ion-label>
+            </ion-item>
+        </ion-list>
+
+        <p class="card-text" style="float: right;"><small class="text-muted">Last updated
+                {{ post.updatedAt.toDate() | timeAgo }}</small></p>
+
+    </div>
+
+    <div class="card-footer">
+        <ion-item lines="none" *ngIf="post.ownerId | userprofile | async as owner">
+            <ion-thumbnail slot="start">
+                <img [avatar]="owner.photoURL">
+            </ion-thumbnail>
+            <ion-label>
+                <h3>{{ owner.displayName }}</h3>
+                <p>{{ owner.phoneNumber }} </p>
+            </ion-label>
+            <ion-button fill="clear" (click)="showOptions()">
+                <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+            </ion-button>
+        </ion-item>
+    </div>
+</div>

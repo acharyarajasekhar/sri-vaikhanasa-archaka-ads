@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Home</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-progress-bar *ngIf="isLoading" type="indeterminate" color="tertiary" mode="ios">
+</ion-progress-bar>
+
+<ion-content>
+
+  <br />
+  <div class="container" style="max-width: 600px;">
+    <div class="row">
+
+      <ng-container *ngFor="let post of sortedPosts">
+        
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+          <archaka-post-card [post]="post" (onOptionsClick)="showOptions($event)"></archaka-post-card>
+        </div>
+        
+      </ng-container>
+
+    </div>
+  </div>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button size='small' (click)="addNew()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-infinite-scroll [disabled]="isEndOfPageReached" threshold="10px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+  <ion-item *ngIf="isEndOfPageReached" lines="none" color="light">
+    <ion-note>* End of Page *</ion-note>
+  </ion-item>
+
+  <ng-container *ngIf="page.empty | async">
+
+    <div id="noitemscontainer">
+      <ion-icon src="/assets/icons/noinbox.svg" style="font-size: 32px;"></ion-icon>
+      <p>No Posts Available</p>
+    </div>
+
+  </ng-container>
+
+</ion-content>
