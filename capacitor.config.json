@@ -1,5 +1,5 @@
 {
-  "appId": "ads.archaka.net.vaikhanasa.sri",
+  "appId": "net.srivakhanasa.archakaads",
   "appName": "Archaka Ads",
   "bundledWebRuntime": false,
   "npmClient": "npm",
@@ -9,6 +9,5 @@
       "launchShowDuration": 0
     }
   },
-  "cordova": {},
-  "linuxAndroidStudioPath": "/home/acharya/android/android-studio-ide-192.6392135-linux/android-studio/bin/studio.sh"
+  "cordova": {}
 }

@@ -1,5 +1,5 @@
 {
-  "appId": "ads.archaka.net.vaikhanasa.sri",
+  "appId": "net.vaikhanasa.sri.ads.archaka",
   "appName": "Archaka Ads",
   "bundledWebRuntime": false,
   "npmClient": "npm",
