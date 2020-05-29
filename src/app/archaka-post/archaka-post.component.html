@@ -77,7 +77,7 @@
     <div class="card-footer">
         <ion-item lines="none" *ngIf="post.ownerId | userprofile | async as owner">
             <ion-thumbnail slot="start">
-                <img [avatar]="owner.photoURL">
+                <img [avatar]="owner.photoURL" defaultImage="assets/defaults/avatar.png">
             </ion-thumbnail>
             <ion-label>
                 <h3>{{ owner.displayName }}</h3>

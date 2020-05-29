@@ -11,6 +11,7 @@ import { FirestoreDataPaginationService, WhereCondition, QueryConfig } from '@ac
 import { AuthService } from '../services/auth.service';
 import { ReportAbuseService, ReportAbuseComponent } from '@acharyarajasekhar/ngx-report-abuse';
 import { environment } from 'src/environments/environment';
+import { ProfileService } from '../services/profile.service';
 
 @Component({
   selector: 'app-home',
@@ -53,7 +54,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     private busy: BusyIndicatorService,
     public page: FirestoreDataPaginationService,
     private ngZone: NgZone,
-    private authService: AuthService,
+    private profileService: ProfileService,
     private reportAbuseService: ReportAbuseService,
     private actionSheetController: ActionSheetController
   ) { }
@@ -162,22 +163,25 @@ export class HomeComponent implements OnInit, OnDestroy {
 
             this.busy.show();
 
-            let mySelf = await this.authService.user.pipe(take(1)).toPromise();
+            this.profileService.profile.pipe(take(1)).subscribe(mySelf => {
+              if (!!mySelf) {
 
-            let reportInfo = {
-              ...result.data,
-              reportedBy: mySelf
-            }
+                let reportInfo = {
+                  ...result.data,
+                  reportedBy: mySelf
+                }
 
-            this.reportAbuseService.report(reportInfo).then(() => {
-              this.toast.show("Your information is saved...");
-              this.busy.hide();
-            }).catch(err => {
-              this.toast.error(err);
-              this.busy.hide();
-            });
+                this.reportAbuseService.report(reportInfo).then(() => {
+                  this.toast.show("Your information is saved...");
+                  this.busy.hide();
+                }).catch(err => {
+                  this.toast.error(err);
+                  this.busy.hide();
+                });
+              }
+            })
 
-          } ``
+          }
         }
       })
 

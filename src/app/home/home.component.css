@@ -36,3 +36,7 @@ ion-note {
 .dangerbutton {
   color: bar(--ion-color-danger);
 }
+
+ion-content {
+  --background: var(--ion-color-light,#f4f5f8)!important;
+}

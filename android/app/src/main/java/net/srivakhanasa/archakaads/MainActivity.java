@@ -1,4 +1,4 @@
-package ads.archaka.net.vaikhanasa.sri;
+package net.srivakhanasa.archakaads;
 
 import android.os.Bundle;
 

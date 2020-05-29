@@ -2,13 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { PostsService } from '../services/posts.service';
 import * as _ from 'lodash';
 import { ActionSheetController, ModalController, AlertController } from '@ionic/angular';
-import { AuthService } from '../services/auth.service';
 import { ArchakaPostEditorComponent } from '../archaka-post-editor/archaka-post-editor.component';
 import { BusyIndicatorService } from '@acharyarajasekhar/busy-indicator';
 import { ToastService } from '../services/toast.service';
-import { ReportAbuseComponent, ReportAbuseService } from '@acharyarajasekhar/ngx-report-abuse';
-import { environment } from 'src/environments/environment';
-import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-my-posts',
@@ -33,9 +29,7 @@ export class MyPostsComponent implements OnInit {
     private modalController: ModalController,
     private alertController: AlertController,
     private busy: BusyIndicatorService,
-    private toast: ToastService,
-    private authService: AuthService,
-    private reportAbuseService: ReportAbuseService
+    private toast: ToastService
   ) { }
 
   ngOnInit(): void {
@@ -86,12 +80,6 @@ export class MyPostsComponent implements OnInit {
       cssClass: 'dangerbutton',
       handler: () => { this.delete(); }
     });
-    // buttons.push({
-    //   text: 'Report Abuse',
-    //   icon: 'assets/icons/abuse.svg',
-    //   cssClass: 'dangerbutton',
-    //   handler: async () => { this.reportAbuse(); }
-    // });
 
     const actionSheet = await this.actionSheetController.create({
       header: 'Options',
@@ -100,49 +88,6 @@ export class MyPostsComponent implements OnInit {
 
     await actionSheet.present();
 
-  }
-
-  async reportAbuse() {
-
-    if (!!this.currentPost && !!this.currentPost.id) {
-
-      const modal = await this.modalController.create({
-        component: ReportAbuseComponent,
-        componentProps: {
-          payLoad: this.currentPost,
-          formConfig: environment.formConfigs.reportAbuseForm,
-          pageTitle: "Report this Ad..."
-        }
-      });
-
-      modal.onDidDismiss().then(async result => {
-        if (result.role === 'ok') {
-          if (!!result.data) {
-
-            this.busy.show();
-
-            let mySelf = await this.authService.user.pipe(take(1)).toPromise();
-
-            let reportInfo = {
-              ...result.data,
-              reportedBy: mySelf
-            }
-
-            this.reportAbuseService.report(reportInfo).then(() => {
-              this.toast.show("Your information is saved...");
-              this.busy.hide();
-            }).catch(err => {
-              this.toast.error(err);
-              this.busy.hide();
-            });
-
-          } ``
-        }
-      })
-
-      return await modal.present();
-
-    }
   }
 
   async delete() {
