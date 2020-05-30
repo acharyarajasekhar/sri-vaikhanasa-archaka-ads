@@ -3,7 +3,7 @@ import { ProfileService } from '../services/profile.service';
 import { environment } from 'src/environments/environment';
 import { ModalController } from '@ionic/angular';
 import { ProfileEditorComponent } from './profile-editor/profile-editor.component';
-import { ToastService } from '../services/toast.service';
+import { ToastService } from '@acharyarajasekhar/ngx-utility-services';
 import { BusyIndicatorService } from '@acharyarajasekhar/busy-indicator';
 import { PostsService } from '../services/posts.service';
 

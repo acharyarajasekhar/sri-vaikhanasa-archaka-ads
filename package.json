@@ -24,7 +24,7 @@
     "@acharyarajasekhar/ngx-image-preloader": "^1.0.0",
     "@acharyarajasekhar/ngx-report-abuse": "^1.0.1",
     "@acharyarajasekhar/ngx-utility-pipes": "^1.0.0",
-    "@acharyarajasekhar/ngx-utility-services": "^1.0.2",
+    "@acharyarajasekhar/ngx-utility-services": "^1.0.3",
     "@acharyarajasekhar/profile-card": "^1.0.2",
     "@acharyarajasekhar/route-guards": "^1.0.3",
     "@acharyarajasekhar/upload-progress-indicator": "^1.0.2",

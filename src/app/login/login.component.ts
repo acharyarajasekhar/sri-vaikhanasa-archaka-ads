@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef, NgZone } from '@angular/core'
 import * as firebase from 'firebase/app';
 import { BusyIndicatorService } from '@acharyarajasekhar/busy-indicator';
 import { Router } from '@angular/router';
-import { ToastService } from '../services/toast.service';
+import { ToastService } from '@acharyarajasekhar/ngx-utility-services';
 
 @Component({
   selector: 'app-login',

@@ -4,8 +4,7 @@ import { AuthService } from './auth.service';
 import { BehaviorSubject, } from 'rxjs';
 import * as firebase from 'firebase/app';
 import { FireStorageUploadService } from '@acharyarajasekhar/ngx-utility-services';
-
-const bucketName = 'srivaikhanasanetwork-dev.appspot.com';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -44,7 +43,7 @@ export class ProfileService {
 
   uploadProfileAvatar(photoURL) {
     return new Promise((res, rej) => {
-      if (!!photoURL && !photoURL.includes(bucketName)) {
+      if (!!photoURL && !photoURL.includes(environment.defaults.fireStorageBucketName)) {
         const fileName = `images/users/${this.myUserID}_avatar.jpg`;
         this.uploadService.uploadSingle(photoURL, fileName).then((downloadPhotoURL) => {
           res(downloadPhotoURL);
@@ -58,7 +57,7 @@ export class ProfileService {
 
   uploadCoverPhoto(coverPhotoURL) {
     return new Promise((res, rej) => {
-      if (!!coverPhotoURL && !coverPhotoURL.includes(bucketName)) {
+      if (!!coverPhotoURL && !coverPhotoURL.includes(environment.defaults.fireStorageBucketName)) {
         const fileName = `images/users/${this.myUserID}_cover.jpg`;
         this.uploadService.uploadSingle(coverPhotoURL, fileName).then((downloadPhotoURL) => {
           res(downloadPhotoURL);

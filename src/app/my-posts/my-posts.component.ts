@@ -4,7 +4,7 @@ import * as _ from 'lodash';
 import { ActionSheetController, ModalController, AlertController } from '@ionic/angular';
 import { ArchakaPostEditorComponent } from '../archaka-post-editor/archaka-post-editor.component';
 import { BusyIndicatorService } from '@acharyarajasekhar/busy-indicator';
-import { ToastService } from '../services/toast.service';
+import { ToastService } from '@acharyarajasekhar/ngx-utility-services';
 
 @Component({
   selector: 'app-my-posts',

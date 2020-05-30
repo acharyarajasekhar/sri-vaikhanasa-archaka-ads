@@ -2,7 +2,7 @@ import { Component, OnInit, NgZone, OnDestroy } from '@angular/core';
 import { ModalController, ActionSheetController } from '@ionic/angular';
 import { ArchakaPostEditorComponent } from '../archaka-post-editor/archaka-post-editor.component';
 import { PostsService } from '../services/posts.service';
-import { ToastService } from '../services/toast.service';
+import { ToastService } from '@acharyarajasekhar/ngx-utility-services';
 import { BusyIndicatorService } from '@acharyarajasekhar/busy-indicator';
 import * as _ from 'lodash';
 import { Subject } from 'rxjs';
