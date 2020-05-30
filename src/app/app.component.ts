@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Platform, AlertController } from '@ionic/angular';
+import { Platform, AlertController, ToastController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AuthService } from './services/auth.service';
@@ -55,7 +55,8 @@ export class AppComponent implements OnInit {
     private profileService: ProfileService,
     private networkService: NetworkService,
     private networkAlertService: NetworkAlertService,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private toastCtrl: ToastController
   ) {
     this.initializeApp();
   }
@@ -89,37 +90,46 @@ export class AppComponent implements OnInit {
     })
   }
 
+  private lastTimeBackPress = 0;
+  private timePeriodToExit = 2000;
+
   registerBackButtonHandler() {
 
-    const routerEl = document.querySelector('ion-router');
-    document.addEventListener('ionBackButton', (ev: BackButtonEvent) => {
-      ev.detail.register(-1, async () => {
-        const path = window.location.pathname;
-        if (path === routerEl.root) {
-          
-          const alert = await this.alertController.create({
-            header: 'Confirm!',
-            message: 'Do you really want to <strong>Exit this App</strong>!!!',
-            buttons: [
-              {
-                text: 'No',
-                role: 'cancel',
-                handler: (blah) => { }
-              }, {
-                text: 'Yes',
-                handler: () => {
-                  App.exitApp();
-                }
-              }
-            ]
-          });
-  
-          await alert.present();
+    this.platform.backButton.subscribeWithPriority(10, async () => {
 
-        }
-      });
+
+      if (new Date().getTime() - this.lastTimeBackPress < this.timePeriodToExit) {
+        navigator['app'].exitApp(); // Exit app
+      } else {
+        const toast = await this.toastCtrl.create({
+          message: 'Press back again to exit...',
+          duration: 2000
+        });
+        toast.present();
+        this.lastTimeBackPress = new Date().getTime();
+      }
+
+      // const alert = await this.alertController.create({
+      //   header: 'Confirm!',
+      //   message: 'Do you really want to <strong>Exit this App</strong>!!!',
+      //   buttons: [
+      //     {
+      //       text: 'No',
+      //       role: 'cancel',
+      //       handler: (blah) => { }
+      //     }, {
+      //       text: 'Yes',
+      //       handler: () => {
+      //         App.exitApp();
+      //       }
+      //     }
+      //   ]
+      // });
+
+      // await alert.present();
+
     });
-    
+
   }
 
   logout() {
