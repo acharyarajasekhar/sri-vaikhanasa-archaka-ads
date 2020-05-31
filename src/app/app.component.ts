@@ -9,6 +9,7 @@ import { environment } from 'src/environments/environment';
 import { ProfileService } from './services/profile.service';
 import { NetworkService, NetworkAlertService } from '@acharyarajasekhar/network-alert';
 import { BackButtonHandler } from '@acharyarajasekhar/ngx-utility-services';
+import { PhotosFormControlService } from '@acharyarajasekhar/custom-form-controls';
 
 import { Plugins } from '@capacitor/core';
 const { App } = Plugins;
@@ -55,7 +56,8 @@ export class AppComponent implements OnInit {
     private profileService: ProfileService,
     private networkService: NetworkService,
     private networkAlertService: NetworkAlertService,
-    private backButtonHandler: BackButtonHandler 
+    private backButtonHandler: BackButtonHandler,
+    private photosFormControlService: PhotosFormControlService
   ) {
     this.initializeApp();
   }
@@ -87,7 +89,7 @@ export class AppComponent implements OnInit {
     this.authService.authState.subscribe(u => {
       this.showSideMenu = !!u;
     })
-    
+
   }
 
   logout() {
