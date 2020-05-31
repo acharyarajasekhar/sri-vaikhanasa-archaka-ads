@@ -1,7 +1,7 @@
 <ion-app>
   <ion-split-pane contentId="main-content" [disabled]="!showSideMenu">
     <ion-menu contentId="main-content" type="overlay">
-      <ion-header class="ion-no-border">
+      <ion-content>
         <ion-toolbar>
           <div>
             <profile-card displayFlat="true" [avatarUrl]="profile?.photoURL || defaults.avatarUrl" [coverPhotoUrl]="profile?.coverPhotoURL"
@@ -10,8 +10,6 @@
             </profile-card>
           </div>
         </ion-toolbar>
-      </ion-header>
-      <ion-content>
         <ion-list id="inbox-list" lines="none">
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
             <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false"

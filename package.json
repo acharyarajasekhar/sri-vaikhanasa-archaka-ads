@@ -14,7 +14,7 @@
   "private": true,
   "dependencies": {
     "@acharyarajasekhar/busy-indicator": "^1.0.1",
-    "@acharyarajasekhar/custom-form-controls": "^1.0.8",
+    "@acharyarajasekhar/custom-form-controls": "^1.0.9",
     "@acharyarajasekhar/dynamic-dom-injector": "^1.0.0",
     "@acharyarajasekhar/dynamic-forms": "^1.0.5",
     "@acharyarajasekhar/elastic-textarea": "^1.0.0",
@@ -25,7 +25,7 @@
     "@acharyarajasekhar/ngx-report-abuse": "^1.0.1",
     "@acharyarajasekhar/ngx-utility-pipes": "^1.0.0",
     "@acharyarajasekhar/ngx-utility-services": "^1.0.3",
-    "@acharyarajasekhar/profile-card": "^1.0.2",
+    "@acharyarajasekhar/profile-card": "^1.0.3",
     "@acharyarajasekhar/route-guards": "^1.0.3",
     "@acharyarajasekhar/upload-progress-indicator": "^1.0.2",
     "@angular/common": "~9.1.6",

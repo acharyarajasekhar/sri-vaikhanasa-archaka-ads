@@ -14,9 +14,10 @@
 </ion-header>
 
 <ion-content>
-  <div class="container">
-    <profile-card [avatarUrl]="profile?.photoURL || defaults.avatarUrl" [coverPhotoUrl]="profile?.coverPhotoURL"
-      [coverBgColor]="defaults.coverPhotoBgColor" [title]="profile?.displayName || 'Guest'" [subTitles]="subTitles">
+  <div class="container" style="max-width: 600px;">
+    <profile-card [avatarUrl]="profile?.photoURL || defaults.avatarUrl"
+      [coverPhotoUrl]="profile?.coverPhotoURL" [coverBgColor]="defaults.coverPhotoBgColor"
+      [title]="profile?.displayName || 'Guest'" [subTitles]="subTitles">
     </profile-card>
   </div>
 </ion-content>

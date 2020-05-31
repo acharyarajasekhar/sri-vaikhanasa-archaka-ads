@@ -33,6 +33,9 @@ import { MyPostsComponent } from './my-posts/my-posts.component';
 import { NgxImagePreloaderModule } from '@acharyarajasekhar/ngx-image-preloader';
 import { NgxUtilityPipesModule } from '@acharyarajasekhar/ngx-utility-pipes';
 import { ReportAbuseModule } from '@acharyarajasekhar/ngx-report-abuse';
+import { Crop } from '@ionic-native/crop/ngx';
+import { ImagePicker } from '@ionic-native/image-picker/ngx';
+import { File } from '@ionic-native/file/ngx';
 
 @NgModule({
    declarations: [
@@ -67,6 +70,9 @@ import { ReportAbuseModule } from '@acharyarajasekhar/ngx-report-abuse';
       NgxUtilityPipesModule
    ],
    providers: [
+      File,
+      ImagePicker,
+      Crop,
       StatusBar,
       SplashScreen,
       { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
