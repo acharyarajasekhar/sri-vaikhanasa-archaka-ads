@@ -10,16 +10,18 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "temprun": "ionic build --prod && npx cap sync"
+    "temprun": "ionic build --prod && npx cap sync",
+    "devicerun": "ionic capacitor run android -l --external"
   },
   "private": true,
   "dependencies": {
     "@acharyarajasekhar/busy-indicator": "^1.0.1",
-    "@acharyarajasekhar/custom-form-controls": "^1.0.19",
+    "@acharyarajasekhar/custom-form-controls": "^1.1.0",
     "@acharyarajasekhar/dynamic-dom-injector": "^1.0.0",
     "@acharyarajasekhar/dynamic-forms": "^1.0.5",
     "@acharyarajasekhar/elastic-textarea": "^1.0.0",
     "@acharyarajasekhar/google-maps": "^1.0.1",
+    "@acharyarajasekhar/ion-native-services": "^1.0.0",
     "@acharyarajasekhar/ion-photo-slides-card": "^1.0.0",
     "@acharyarajasekhar/network-alert": "^1.0.5",
     "@acharyarajasekhar/ngx-image-preloader": "^1.0.0",
