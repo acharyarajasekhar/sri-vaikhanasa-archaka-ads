@@ -10,9 +10,6 @@ import { ProfileService } from './services/profile.service';
 import { NetworkService, NetworkAlertService } from '@acharyarajasekhar/network-alert';
 import { BackButtonHandler } from '@acharyarajasekhar/ngx-utility-services';
 
-import { Plugins } from '@capacitor/core';
-const { App } = Plugins;
-
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',

@@ -5,7 +5,7 @@ import { ModalController } from '@ionic/angular';
 import { ProfileEditorComponent } from './profile-editor/profile-editor.component';
 import { ToastService } from '@acharyarajasekhar/ngx-utility-services';
 import { BusyIndicatorService } from '@acharyarajasekhar/busy-indicator';
-import { NativeImagePickerService } from '../services/native-image-picker.service';
+import { NativeImagePickerService } from '@acharyarajasekhar/ion-native-services';
 
 @Component({
   selector: 'app-profile',
