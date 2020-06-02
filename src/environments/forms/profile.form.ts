@@ -21,6 +21,7 @@ export const profileEditForm = {
             icon: "details",
             label: "Choose Profile Photo",
             multiple: false,
+            cropRequired: true,
             accept: ".png, .jpg, .jpeg",
             validators: {}
         },
