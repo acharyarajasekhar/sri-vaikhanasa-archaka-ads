@@ -64,7 +64,7 @@ export class LoginComponent implements OnInit {
     this.busy.show();
 
     this.windowRef.confirmationResult
-      .confirm(this.verificationCode)
+      .confirm(this.verificationCode.toString())
       .then(result => {
 
         this.busy.hide();

@@ -34,7 +34,8 @@ import { NgxImagePreloaderModule } from '@acharyarajasekhar/ngx-image-preloader'
 import { NgxUtilityPipesModule } from '@acharyarajasekhar/ngx-utility-pipes';
 import { ReportAbuseModule } from '@acharyarajasekhar/ngx-report-abuse';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
-import { NativeImagePickerService } from '@acharyarajasekhar/ion-native-services';
+import { NativeImagePickerService, PhotoViewerModule } from '@acharyarajasekhar/ion-native-services';
+import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 
 
 @NgModule({
@@ -67,11 +68,13 @@ import { NativeImagePickerService } from '@acharyarajasekhar/ion-native-services
       NgxImagePreloaderModule,
       PhotoSlidesCardModule,
       ReportAbuseModule,
-      NgxUtilityPipesModule
+      NgxUtilityPipesModule,
+      PhotoViewerModule
    ],
    providers: [
       NativeImagePickerService,
       ImagePicker,
+      PhotoViewer,
       StatusBar,
       SplashScreen,
       { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }

@@ -2,8 +2,8 @@
   <div id="container">
     <ion-list style="width: 260px; margin: auto;" [ngStyle]="{ 'display': windowRef.confirmationResult ? 'none' : 'inherit' }">
       <ion-item>
-        <ion-label position="floating">Phone Number</ion-label>
-        <ion-input type="text" name="phoneNumber" [(ngModel)]="phoneNumber"></ion-input>
+        <ion-label position="floating">Enter you phone number</ion-label>
+        <ion-input type="tel" name="phoneNumber" [(ngModel)]="phoneNumber"></ion-input>
       </ion-item>
       <br />
       <div #captchaDiv id="captchaDiv" class="captcha-div"></div>
@@ -15,7 +15,7 @@
     <ion-list style="width: 260px; margin: auto;" *ngIf="windowRef.confirmationResult">
       <ion-item>
         <ion-label position="floating">OTP</ion-label>
-        <ion-input type="text" name="verificationCode" [(ngModel)]="verificationCode"></ion-input>
+        <ion-input type="number" name="verificationCode" [(ngModel)]="verificationCode"></ion-input>
       </ion-item>
       <br />
       <ion-button slot="end" (click)="verifyLoginCode()">
