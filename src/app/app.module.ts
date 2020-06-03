@@ -34,9 +34,10 @@ import { NgxImagePreloaderModule } from '@acharyarajasekhar/ngx-image-preloader'
 import { NgxUtilityPipesModule } from '@acharyarajasekhar/ngx-utility-pipes';
 import { ReportAbuseModule } from '@acharyarajasekhar/ngx-report-abuse';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
-import { NativeImagePickerService, PhotoViewerModule } from '@acharyarajasekhar/ion-native-services';
+import { NativeImagePickerService, PhotoViewerModule, NativeFirebaseAuthService } from '@acharyarajasekhar/ion-native-services';
 import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
-
+import { FirebaseAuthentication } from '@ionic-native/firebase-authentication/ngx';
+import { NgxFirebasePhoneLoginModule } from '@acharyarajasekhar/ngx-firebase-phone-login';
 
 @NgModule({
    declarations: [
@@ -69,12 +70,15 @@ import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
       PhotoSlidesCardModule,
       ReportAbuseModule,
       NgxUtilityPipesModule,
-      PhotoViewerModule
+      PhotoViewerModule,
+      NgxFirebasePhoneLoginModule
    ],
    providers: [
+      NativeFirebaseAuthService,
       NativeImagePickerService,
       ImagePicker,
       PhotoViewer,
+      FirebaseAuthentication,
       StatusBar,
       SplashScreen,
       { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
