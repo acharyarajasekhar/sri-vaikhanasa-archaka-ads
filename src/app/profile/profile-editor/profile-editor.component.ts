@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, NgZone } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ControlBase, ControlsService } from '@acharyarajasekhar/dynamic-forms';
 import { ModalController } from '@ionic/angular';
@@ -21,7 +21,8 @@ export class ProfileEditorComponent implements OnInit {
 
   constructor(
     private controlSvc: ControlsService,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private zone: NgZone
   ) { }
 
   ngOnInit() {
@@ -46,7 +47,9 @@ export class ProfileEditorComponent implements OnInit {
   }
 
   private setInitialFormValues() {
-    this.controls.forEach(c => c.value = this.profile[c.name]);
+    this.zone.run(() => {
+      this.controls.forEach(c => c.value = this.profile[c.name]);
+    })
   }
 
   cancel() {

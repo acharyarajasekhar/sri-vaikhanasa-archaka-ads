@@ -34,6 +34,14 @@ export const profileEditForm = {
             multiple: false,
             accept: ".png, .jpg, .jpeg",
             validators: {}
+        },
+        {
+            order: 2,
+            name: "isPublic",
+            controlType: 'toggle',
+            label: "Can show my phone number to others",
+            value: false,
+            validators: {}
         }
     ]
 }

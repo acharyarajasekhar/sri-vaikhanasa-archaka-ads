@@ -129,7 +129,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     const buttons = [];
 
     buttons.push({
-      text: 'Report Abuse',
+      text: 'Report this Ad...',
       icon: 'assets/icons/abuse.svg',
       cssClass: 'dangerbutton',
       handler: async () => { this.reportAbuse(); }
@@ -163,21 +163,27 @@ export class HomeComponent implements OnInit, OnDestroy {
 
             this.busy.show();
 
-            this.profileService.profile.pipe(take(1)).subscribe(mySelf => {
+            this.profileService.profile.pipe(take(1)).subscribe(async mySelf => {
               if (!!mySelf) {
 
-                let reportInfo = {
-                  ...result.data,
-                  reportedBy: mySelf
-                }
+                try {
+                  if (!!result.data.reportedInfo.isHidden) {
+                    await this.postsService.hideThisPost(result.data.subject.id);
+                  }
 
-                this.reportAbuseService.report(reportInfo).then(() => {
+                  let reportInfo = {
+                    ...result.data,
+                    reportedBy: mySelf
+                  }
+
+                  await this.reportAbuseService.report(reportInfo);
                   this.toast.show("Your information is saved...");
                   this.busy.hide();
-                }).catch(err => {
+                }
+                catch (err) {
                   this.toast.error(err);
                   this.busy.hide();
-                });
+                }
               }
             })
 

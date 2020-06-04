@@ -5,7 +5,6 @@ import { ModalController } from '@ionic/angular';
 import { ProfileEditorComponent } from './profile-editor/profile-editor.component';
 import { ToastService } from '@acharyarajasekhar/ngx-utility-services';
 import { BusyIndicatorService } from '@acharyarajasekhar/busy-indicator';
-import { NativeImagePickerService } from '@acharyarajasekhar/ion-native-services';
 
 @Component({
   selector: 'app-profile',
@@ -26,17 +25,12 @@ export class ProfileComponent implements OnInit {
     private profileService: ProfileService,
     private modalController: ModalController,
     private toast: ToastService,
-    private busy: BusyIndicatorService,
-    private imagePickerService: NativeImagePickerService,
-    private zone: NgZone
+    private busy: BusyIndicatorService
   ) { }
 
   ngOnInit() {
     this.profileService.profile.subscribe(p => {
       this.profile = p || {};
-      if (!!p) {
-        this.subTitles = [p.phoneNumber];
-      }
     })
   }
 
@@ -73,18 +67,6 @@ export class ProfileComponent implements OnInit {
     })
 
     return await modal.present();
-  }
-
-
-  images: Array<string> = []
-
-  selectImages() {
-    this.imagePickerService.pick(2).then(images => {
-      this.zone.run(() => {
-        console.log(images)
-        this.images = images;
-      });     
-    })
   }
 
 }

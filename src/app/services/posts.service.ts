@@ -79,6 +79,15 @@ export class PostsService {
 
     }
 
+    hideThisPost(postId: string) {
+
+        return this.store
+            .collection('archakaposts')
+            .doc(postId)
+            .set({ isVerified: false }, { merge: true });
+
+    }
+
     deleteMyPostById(id: any) {
         return this.store.collection('archakaposts').doc(id).delete();
     }

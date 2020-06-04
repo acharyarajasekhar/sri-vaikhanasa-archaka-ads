@@ -5,6 +5,8 @@ import { BehaviorSubject, } from 'rxjs';
 import * as firebase from 'firebase/app';
 import { FireStorageUploadService } from '@acharyarajasekhar/ngx-utility-services';
 import { environment } from 'src/environments/environment';
+import { PopoverController } from '@ionic/angular';
+import { ProfilePopupCardComponent } from '../profile/profile-popup-card/profile-popup-card.component';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +23,8 @@ export class ProfileService {
   constructor(
     private authService: AuthService,
     private store: AngularFirestore,
-    private uploadService: FireStorageUploadService
+    private uploadService: FireStorageUploadService,
+    private popoverController: PopoverController
   ) {
     this.authService.authState.subscribe(u => {
       if (!!u && !!u.uid) {
@@ -88,4 +91,16 @@ export class ProfileService {
     });
 
   }
+
+  async showThisProfile(profile: any) {
+    const popover = await this.popoverController.create({
+      component: ProfilePopupCardComponent,
+      componentProps: {
+        profile: profile
+      }
+    });
+
+    await popover.present();
+  }
+
 }

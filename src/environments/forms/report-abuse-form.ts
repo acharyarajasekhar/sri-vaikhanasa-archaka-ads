@@ -30,5 +30,13 @@ export const reportAbuseForm = {
                 maxLength: { length: 5000, message: "Description cannot be more than 5000 characters long" }
             }
         },
+        {
+            order: 2,
+            name: "isHidden",
+            controlType: 'toggle',
+            label: "Hide this Ad from public view immediately",
+            value: false,
+            validators: {}
+        }
     ]
 }

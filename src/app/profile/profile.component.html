@@ -15,12 +15,18 @@
 
 <ion-content>
   <div class="container" style="max-width: 600px;">
-    <profile-card [avatarUrl]="profile?.photoURL || defaults.avatarUrl"
-      [coverPhotoUrl]="profile?.coverPhotoURL" [coverBgColor]="defaults.coverPhotoBgColor"
-      [title]="profile?.displayName || 'Guest'" [subTitles]="subTitles">
+    <profile-card [avatarUrl]="profile?.photoURL || defaults.avatarUrl" [coverPhotoUrl]="profile?.coverPhotoURL"
+      [coverBgColor]="defaults.coverPhotoBgColor" [title]="profile?.displayName || 'Guest'" [subTitles]="subTitles">
+      <ion-list lines="none">
+        <ion-item href="tel:{{profile?.phoneNumber}}" button="true">
+          <ion-icon slot="start" color="primary" src="/assets/icons/call.svg"></ion-icon>
+          <ion-label>
+            <h2>Phone</h2>
+            <p>{{ profile?.phoneNumber || 'Not Available' }}</p>
+            <ion-note>{{ !!profile?.isPublic ? "Others can see your phone number" : "Others cannot see your phone number" }}</ion-note>
+          </ion-label>
+        </ion-item>
+      </ion-list>
     </profile-card>
-
-    <ion-button (click)="selectImages()">Image Picker</ion-button>
-    <img [src]="m" *ngFor="let m of images" [zoomable]="m">
   </div>
 </ion-content>

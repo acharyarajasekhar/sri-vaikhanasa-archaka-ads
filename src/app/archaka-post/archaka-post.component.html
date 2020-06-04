@@ -69,9 +69,6 @@
             </ion-item>
         </ion-list>
 
-        <p class="card-text" style="float: right;"><small class="text-muted">Last updated
-                {{ post.updatedAt.toDate() | timeAgo }}</small></p>
-
     </div>
 
     <div class="card-footer">
@@ -79,9 +76,13 @@
             <ion-thumbnail slot="start">
                 <img [avatar]="owner.photoURL" defaultImage="assets/defaults/avatar.png" [zoomable]="owner.photoURL">
             </ion-thumbnail>
-            <ion-label>
-                <h3>{{ owner.displayName }}</h3>
-                <p>{{ owner.phoneNumber }} </p>
+            <ion-label (click)="showThisProfile(owner)">
+                <h3 *ngIf="!isMyPost">{{ owner.displayName }}</h3>
+                <p><small class="text-muted">Last updated
+                        {{ post.updatedAt.toDate() | timeAgo }}</small><br />
+                    <small *ngIf="!!isMyPost" class="text-muted">Status:
+                        {{ (post.isActive && post.isVerified) ? 'Public visible' : 'Pending for admin verification' }}</small>
+                </p>
             </ion-label>
             <ion-button fill="clear" (click)="showOptions()">
                 <ion-icon name="ellipsis-vertical-outline"></ion-icon>

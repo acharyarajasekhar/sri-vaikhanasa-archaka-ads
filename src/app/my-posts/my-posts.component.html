@@ -22,7 +22,7 @@
             <ng-container *ngFor="let post of sortedPosts">
 
                 <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                    <archaka-post-card [post]="post" (onOptionsClick)="showOptions($event)"></archaka-post-card>
+                    <archaka-post-card [post]="post" isMyPost="true" (onOptionsClick)="showOptions($event)"></archaka-post-card>
                 </div>
 
             </ng-container>
