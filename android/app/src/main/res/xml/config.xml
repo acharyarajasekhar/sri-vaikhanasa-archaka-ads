@@ -24,8 +24,16 @@
     <param name="onload" value="false"/>
   </feature>
 
+  <feature name="SMS">
+    <param name="android-package" value="com.rjfun.cordova.sms.SMSPlugin"/>
+  </feature>
+
   <feature name="ImagePicker">
     <param name="android-package" value="com.synconset.ImagePicker"/>
+  </feature>
+
+  <feature name="Sms">
+    <param name="android-package" value="com.cordova.plugins.sms.Sms"/>
   </feature>
 
   
