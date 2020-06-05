@@ -40,6 +40,7 @@ import { FirebaseAuthentication } from '@ionic-native/firebase-authentication/ng
 import { NgxFirebasePhoneLoginModule } from '@acharyarajasekhar/ngx-firebase-phone-login';
 import { ProfilePopupCardComponent } from './profile/profile-popup-card/profile-popup-card.component';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
+import { TabsComponent } from './tabs/tabs.component';
 
 @NgModule({
    declarations: [
@@ -52,7 +53,8 @@ import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
       ArchakaPostEditorComponent,
       UserProfilePipe,
       MyPostsComponent,
-      ProfilePopupCardComponent
+      ProfilePopupCardComponent,
+      TabsComponent
    ],
    entryComponents: [],
    imports: [

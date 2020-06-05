@@ -11,7 +11,7 @@
           </div>
         </ion-toolbar>
         <ion-list id="inbox-list" lines="none">
-          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
+          <ion-menu-toggle auto-hide="false" *ngFor="let p of defaults.appPages; let i = index">
             <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false"
               [class.selected]="activePath == p.url">
               <ion-icon slot="start" [name]="p.icon"></ion-icon>

@@ -19,7 +19,8 @@
       <ng-container *ngFor="let post of sortedPosts">
 
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-          <archaka-post-card [post]="post" (onOptionsClick)="showOptions($event)" *ngIf="!!post.isActive && !!post.isVerified"></archaka-post-card>
+          <archaka-post-card [post]="post" (onOptionsClick)="showOptions($event)"
+            *ngIf="!!post.isActive && !!post.isVerified"></archaka-post-card>
         </div>
 
       </ng-container>
@@ -53,29 +54,4 @@
 
 </ion-content>
 
-<ion-footer>
-  <ion-tabs>
-    <ion-tab-bar slot="bottom">
-      <ion-tab-button tab="schedule">
-        <ion-icon name="calendar"></ion-icon>
-        <ion-label>Schedule</ion-label>
-        <ion-badge>6</ion-badge>
-      </ion-tab-button>
-
-      <ion-tab-button tab="speakers">
-        <ion-icon name="person-circle"></ion-icon>
-        <ion-label>Speakers</ion-label>
-      </ion-tab-button>
-
-      <ion-tab-button tab="map">
-        <ion-icon name="map"></ion-icon>
-        <ion-label>Map</ion-label>
-      </ion-tab-button>
-
-      <ion-tab-button tab="about">
-        <ion-icon name="information-circle"></ion-icon>
-        <ion-label>About</ion-label>
-      </ion-tab-button>
-    </ion-tab-bar>
-  </ion-tabs>
-</ion-footer>
+<app-tabs></app-tabs>

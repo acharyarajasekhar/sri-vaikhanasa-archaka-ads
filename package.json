@@ -24,7 +24,7 @@
     "@acharyarajasekhar/ion-native-services": "^1.0.10",
     "@acharyarajasekhar/ion-photo-slides-card": "^1.0.1",
     "@acharyarajasekhar/network-alert": "^1.0.5",
-    "@acharyarajasekhar/ngx-firebase-phone-login": "^1.0.5",
+    "@acharyarajasekhar/ngx-firebase-phone-login": "^1.0.6",
     "@acharyarajasekhar/ngx-image-cropper": "^1.0.1",
     "@acharyarajasekhar/ngx-image-preloader": "^1.0.0",
     "@acharyarajasekhar/ngx-report-abuse": "^1.0.1",

@@ -25,24 +25,6 @@ export class AppComponent implements OnInit {
   public activePath: string = '';
   public showSideMenu: boolean = false;
 
-  public appPages = [
-    {
-      title: 'Home',
-      url: '/home',
-      icon: 'home-outline'
-    },
-    {
-      title: 'My Ads',
-      url: '/myads',
-      icon: 'list-outline'
-    },
-    {
-      title: 'My Profile',
-      url: '/profile',
-      icon: 'person-outline'
-    }
-  ];
-
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,

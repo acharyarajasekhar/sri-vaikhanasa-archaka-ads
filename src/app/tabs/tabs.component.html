@@ -1,0 +1,12 @@
+<ion-footer *ngIf="isMobileView">
+    <ion-toolbar>
+        <ion-tabs>
+            <ion-tab-bar slot="bottom">
+                <ion-tab-button (click)="selectMe(p.url)" *ngFor="let p of defaults.appPages" [selected]="activePath == p.url">
+                    <ion-icon [name]="p.icon"></ion-icon>
+                    <ion-label>{{ p.title }}</ion-label>
+                </ion-tab-button>
+            </ion-tab-bar>
+        </ion-tabs>
+    </ion-toolbar>
+</ion-footer>
