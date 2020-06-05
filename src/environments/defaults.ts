@@ -1,6 +1,6 @@
 export const defaults = {
     emptyArray: [],
-    coverPhotoBgColor: "#3b4045",
+    coverPhotoBgColor: "#004a8f",
     // coverPhotoBgColor: "rgba(var(--ion-color-primary-rgb), 0.14)",
     avatarUrl: "assets/defaults/avatar.png",
     baseApiURL: "https://us-central1-srivaikhanasanetwork-dev.cloudfunctions.net/api",
