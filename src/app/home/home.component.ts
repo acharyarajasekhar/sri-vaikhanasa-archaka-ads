@@ -72,6 +72,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ionViewDidEnter() {
+    this.queryConfig.where.push({ fieldPath: 'isActive', opStr: '==', value: true });
+    this.queryConfig.where.push({ fieldPath: 'isVerified', opStr: '==', value: true });
     this.page.init(this.queryConfig);
     this.page.data.subscribe(posts => {
       this.ngZone.run(() => {

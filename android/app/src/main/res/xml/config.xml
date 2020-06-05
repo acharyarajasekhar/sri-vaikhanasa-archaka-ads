@@ -32,9 +32,5 @@
     <param name="android-package" value="com.synconset.ImagePicker"/>
   </feature>
 
-  <feature name="Sms">
-    <param name="android-package" value="com.cordova.plugins.sms.Sms"/>
-  </feature>
-
   
 </widget>
