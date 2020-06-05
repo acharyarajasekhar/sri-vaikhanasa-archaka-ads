@@ -1,5 +1,10 @@
 <ion-header>
-    <ion-toolbar>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-button (click)="cancel()">
+                <ion-icon name="chevron-back-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
         <ion-title>Edit Profile</ion-title>
     </ion-toolbar>
 </ion-header>
@@ -13,10 +18,14 @@
 </ion-content>
 
 <ion-footer>
-    <ion-toolbar>
+    <ion-toolbar color="primary">
         <ion-buttons slot="end">
-            <ion-button (click)="cancel()">Cancel</ion-button>
-            <ion-button (click)="onSave()" color="primary" fill="clear">Save</ion-button>
+            <ion-button (click)="cancel()">
+                <ion-icon slot="start" name="close-outline"></ion-icon>Cancel
+            </ion-button>
+            <ion-button (click)="onSave()">
+                <ion-icon slot="start" name="checkmark-done-outline"></ion-icon>Submit
+            </ion-button>
         </ion-buttons>
     </ion-toolbar>
 </ion-footer>
