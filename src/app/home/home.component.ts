@@ -12,6 +12,7 @@ import { AuthService } from '../services/auth.service';
 import { ReportAbuseService, ReportAbuseComponent } from '@acharyarajasekhar/ngx-report-abuse';
 import { environment } from 'src/environments/environment';
 import { ProfileService } from '../services/profile.service';
+import { NativeSocialSharingService } from '@acharyarajasekhar/ion-native-services';
 
 @Component({
   selector: 'app-home',
@@ -56,7 +57,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     private ngZone: NgZone,
     private profileService: ProfileService,
     private reportAbuseService: ReportAbuseService,
-    private actionSheetController: ActionSheetController
+    private actionSheetController: ActionSheetController,
+    private nativeSocialSharingService: NativeSocialSharingService
   ) { }
 
   ngOnInit() {
@@ -123,6 +125,15 @@ export class HomeComponent implements OnInit, OnDestroy {
     })
 
     return await modal.present();
+  }
+
+  async share() {
+    this.busy.show();
+    await this.nativeSocialSharingService.share({
+      subject: "Archaka Ads",
+      message: "Test Message From Archaka Ads..."
+    });
+    this.busy.hide();
   }
 
   async showOptions(post) {

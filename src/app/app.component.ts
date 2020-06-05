@@ -8,13 +8,15 @@ import { environment } from 'src/environments/environment';
 import { ProfileService } from './services/profile.service';
 import { NetworkService, NetworkAlertService } from '@acharyarajasekhar/network-alert';
 import { BackButtonHandler } from '@acharyarajasekhar/ngx-utility-services';
+import { StatusBar } from '@ionic-native/status-bar/ngx';
 
-import {
-  Plugins,
-  StatusBarStyle,
-} from '@capacitor/core';
+// import {
+//   Plugins,
+//   StatusBarStyle,
+// } from '@capacitor/core';
+import { NativeNavigationBarService } from '@acharyarajasekhar/ion-native-services';
 
-const { StatusBar } = Plugins;
+// const { StatusBar } = Plugins;
 
 @Component({
   selector: 'app-root',
@@ -34,12 +36,14 @@ export class AppComponent implements OnInit {
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
+    private statusBar: StatusBar,
     private router: Router,
     private authService: AuthService,
     private profileService: ProfileService,
     private networkService: NetworkService,
     private networkAlertService: NetworkAlertService,
-    private backButtonHandler: BackButtonHandler
+    private backButtonHandler: BackButtonHandler,
+    private nativeNavigationBarService: NativeNavigationBarService
   ) {
     this.initializeApp();
   }
@@ -48,12 +52,13 @@ export class AppComponent implements OnInit {
     this.platform.ready().then(() => {
 
       if (this.platform.is('android') || this.platform.is('ios')) {
-        StatusBar.setOverlaysWebView({ overlay: false });
-        StatusBar.setStyle({ style: StatusBarStyle.Dark });
-        StatusBar.setBackgroundColor({ color: '#004a8f' });
+        this.statusBar.styleDefault();
+        this.statusBar.overlaysWebView(false);
+        this.statusBar.backgroundColorByHexString('#004a8f');
+        // this.nativeNavigationBarService.setToAutoHide(true);
         this.splashScreen.hide();
       }
-      
+
       this.profileService.profile.subscribe(p => {
         this.profile = p;
       });

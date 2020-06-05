@@ -13,6 +13,7 @@ dependencies {
     implementation "com.soundcloud.android:android-crop:1.0.0@aar"
     implementation "com.google.firebase:firebase-auth:19.3.+"
     implementation "com.android.support:appcompat-v7:23+"
+    implementation "com.android.support:support-v4:24.1.1+"
 }
 apply from: "../../node_modules/com-sarriaroman-photoviewer/src/android/photoviewer.gradle"
 apply from: "../../node_modules/cordova-plugin-telerik-imagepicker/src/android/ignorelinterrors.gradle"
