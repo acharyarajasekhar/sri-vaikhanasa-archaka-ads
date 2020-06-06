@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { AuthService } from './services/auth.service';
@@ -9,14 +8,6 @@ import { ProfileService } from './services/profile.service';
 import { NetworkService, NetworkAlertService } from '@acharyarajasekhar/network-alert';
 import { BackButtonHandler } from '@acharyarajasekhar/ngx-utility-services';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-
-// import {
-//   Plugins,
-//   StatusBarStyle,
-// } from '@capacitor/core';
-import { NativeNavigationBarService } from '@acharyarajasekhar/ion-native-services';
-
-// const { StatusBar } = Plugins;
 
 @Component({
   selector: 'app-root',
@@ -43,7 +34,6 @@ export class AppComponent implements OnInit {
     private networkService: NetworkService,
     private networkAlertService: NetworkAlertService,
     private backButtonHandler: BackButtonHandler,
-    private nativeNavigationBarService: NativeNavigationBarService
   ) {
     this.initializeApp();
   }
@@ -55,7 +45,6 @@ export class AppComponent implements OnInit {
         this.statusBar.styleDefault();
         this.statusBar.overlaysWebView(false);
         this.statusBar.backgroundColorByHexString('#004a8f');
-        // this.nativeNavigationBarService.setToAutoHide(true);
         this.splashScreen.hide();
       }
 

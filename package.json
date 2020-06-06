@@ -61,7 +61,7 @@
     "cordova-plugin-crop": "^0.4.0",
     "cordova-plugin-file": "^6.0.2",
     "cordova-plugin-firebase-authentication": "^3.3.0",
-    "cordova-plugin-navigationbar": "^1.0.31",
+    "cordova-plugin-navigationbar-color": "0.0.9",
     "cordova-plugin-sms": "^1.0.5",
     "cordova-plugin-statusbar": "^2.4.3",
     "cordova-plugin-telerik-imagepicker": "^2.3.3",

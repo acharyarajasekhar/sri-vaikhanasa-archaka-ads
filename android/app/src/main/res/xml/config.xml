@@ -25,7 +25,8 @@
   </feature>
 
   <feature name="NavigationBar">
-    <param name="android-package" value="com.cranberrygame.cordova.plugin.navigationbar.NavigationBar"/>
+    <param name="android-package" value="com.viniciusfagundes.cordova.plugin.navigationbar.NavigationBar"/>
+    <param name="onload" value="true"/>
   </feature>
 
   <feature name="SMS">
@@ -46,4 +47,6 @@
   </feature>
 
   
+  <preference name="NavigationBarBackgroundColor" value="#000000" />
+  <preference name="NavigationBarLigth" value="false" />
 </widget>

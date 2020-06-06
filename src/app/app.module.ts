@@ -34,7 +34,7 @@ import { NgxImagePreloaderModule } from '@acharyarajasekhar/ngx-image-preloader'
 import { NgxUtilityPipesModule } from '@acharyarajasekhar/ngx-utility-pipes';
 import { ReportAbuseModule } from '@acharyarajasekhar/ngx-report-abuse';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
-import { NativeImagePickerService, PhotoViewerModule, NativeFirebaseAuthService, NativeSMSListenerService, NativeNavigationBarService, NativeSocialSharingService } from '@acharyarajasekhar/ion-native-services';
+import { NativeImagePickerService, PhotoViewerModule, NativeFirebaseAuthService, NativeSMSListenerService, NativeSocialSharingService } from '@acharyarajasekhar/ion-native-services';
 import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 import { FirebaseAuthentication } from '@ionic-native/firebase-authentication/ngx';
 import { NgxFirebasePhoneLoginModule } from '@acharyarajasekhar/ngx-firebase-phone-login';
@@ -42,7 +42,6 @@ import { ProfilePopupCardComponent } from './profile/profile-popup-card/profile-
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 import { TabsComponent } from './tabs/tabs.component';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
-import { NavigationBar } from '@ionic-native/navigation-bar/ngx';
 
 @NgModule({
    declarations: [
@@ -84,7 +83,6 @@ import { NavigationBar } from '@ionic-native/navigation-bar/ngx';
       NativeFirebaseAuthService,
       NativeImagePickerService,
       NativeSMSListenerService,
-      NativeNavigationBarService,
       NativeSocialSharingService,
       ImagePicker,
       PhotoViewer,
@@ -93,7 +91,6 @@ import { NavigationBar } from '@ionic-native/navigation-bar/ngx';
       StatusBar,
       SplashScreen,
       SocialSharing,
-      NavigationBar,
       { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
    ],
    bootstrap: [
