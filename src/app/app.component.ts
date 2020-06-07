@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Platform } from '@ionic/angular';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { AuthService } from './services/auth.service';
 import { Router, RouterEvent } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { ProfileService } from './services/profile.service';
 import { NetworkService, NetworkAlertService } from '@acharyarajasekhar/network-alert';
-import { BackButtonHandler } from '@acharyarajasekhar/ngx-utility-services';
+import { BackButtonHandler, ToastService } from '@acharyarajasekhar/ngx-utility-services';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+
+import { Plugins } from '@capacitor/core';
+const { SplashScreen } = Plugins;
 
 @Component({
   selector: 'app-root',
@@ -26,7 +28,6 @@ export class AppComponent implements OnInit {
 
   constructor(
     private platform: Platform,
-    private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private router: Router,
     private authService: AuthService,
@@ -34,18 +35,26 @@ export class AppComponent implements OnInit {
     private networkService: NetworkService,
     private networkAlertService: NetworkAlertService,
     private backButtonHandler: BackButtonHandler,
+    private toast: ToastService
   ) {
     this.initializeApp();
   }
 
   initializeApp() {
-    this.platform.ready().then(() => {
-
+    this.platform.ready().then(async () => {
+      await SplashScreen.show({
+        autoHide: false
+      });
+      this.toast.error("SplashScreen.show()");
       if (this.platform.is('android') || this.platform.is('ios')) {
         this.statusBar.styleDefault();
         this.statusBar.overlaysWebView(false);
         this.statusBar.backgroundColorByHexString('#004a8f');
-        this.splashScreen.hide();
+        this.toast.error("Before: " + new Date());
+        setTimeout(() => {
+          // SplashScreen.hide();
+          this.toast.error("After: " + new Date());
+        }, 3000);
       }
 
       this.profileService.profile.subscribe(p => {

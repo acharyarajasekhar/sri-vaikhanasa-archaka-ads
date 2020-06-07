@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AngularFireModule } from '@angular/fire';
@@ -89,7 +88,6 @@ import { SocialSharing } from '@ionic-native/social-sharing/ngx';
       AndroidPermissions,
       FirebaseAuthentication,
       StatusBar,
-      SplashScreen,
       SocialSharing,
       { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
    ],

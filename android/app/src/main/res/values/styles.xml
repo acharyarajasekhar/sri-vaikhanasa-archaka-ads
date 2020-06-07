@@ -17,6 +17,6 @@
 
 
     <style name="AppTheme.NoActionBarLaunch" parent="AppTheme.NoActionBar">
-        <item name="android:background">@drawable/archaka_ads_background_splash</item>
+        <item name="android:background">@drawable/splash</item>
     </style>
 </resources>
