@@ -45,7 +45,9 @@ export class AppComponent implements OnInit {
         this.statusBar.styleDefault();
         this.statusBar.overlaysWebView(false);
         this.statusBar.backgroundColorByHexString('#004a8f');
-        SplashScreen.hide();
+        setTimeout(() => {
+          SplashScreen.hide();
+        }, 2000);        
       }
 
       this.profileService.profile.subscribe(p => {
