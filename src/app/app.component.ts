@@ -45,6 +45,7 @@ export class AppComponent implements OnInit {
         this.statusBar.styleDefault();
         this.statusBar.overlaysWebView(false);
         this.statusBar.backgroundColorByHexString('#004a8f');
+        SplashScreen.hide();
       }
 
       this.profileService.profile.subscribe(p => {
@@ -55,14 +56,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.platform.ready().then(async () => {
-      if (this.platform.is('android') || this.platform.is('ios')) {
-        setTimeout(() => {
-          SplashScreen.hide();
-        }, 500);
-      }
-    });
-
+    
     this.networkService.onlineChanges.subscribe(isOnline => {
       if (isOnline) this.networkAlertService.hide();
       else this.networkAlertService.show();
