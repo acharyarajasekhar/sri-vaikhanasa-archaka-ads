@@ -5,7 +5,7 @@ import { Router, RouterEvent } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { ProfileService } from './services/profile.service';
 import { NetworkService, NetworkAlertService } from '@acharyarajasekhar/network-alert';
-import { BackButtonHandler, ToastService } from '@acharyarajasekhar/ngx-utility-services';
+import { BackButtonHandler } from '@acharyarajasekhar/ngx-utility-services';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { Plugins } from '@capacitor/core';
@@ -34,27 +34,17 @@ export class AppComponent implements OnInit {
     private profileService: ProfileService,
     private networkService: NetworkService,
     private networkAlertService: NetworkAlertService,
-    private backButtonHandler: BackButtonHandler,
-    private toast: ToastService
+    private backButtonHandler: BackButtonHandler
   ) {
     this.initializeApp();
   }
 
   initializeApp() {
     this.platform.ready().then(async () => {
-      await SplashScreen.show({
-        autoHide: false
-      });
-      this.toast.error("SplashScreen.show()");
       if (this.platform.is('android') || this.platform.is('ios')) {
         this.statusBar.styleDefault();
         this.statusBar.overlaysWebView(false);
         this.statusBar.backgroundColorByHexString('#004a8f');
-        this.toast.error("Before: " + new Date());
-        setTimeout(() => {
-          // SplashScreen.hide();
-          this.toast.error("After: " + new Date());
-        }, 3000);
       }
 
       this.profileService.profile.subscribe(p => {
@@ -65,6 +55,13 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.platform.ready().then(async () => {
+      if (this.platform.is('android') || this.platform.is('ios')) {
+        setTimeout(() => {
+          SplashScreen.hide();
+        }, 500);
+      }
+    });
 
     this.networkService.onlineChanges.subscribe(isOnline => {
       if (isOnline) this.networkAlertService.hide();
