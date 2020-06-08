@@ -13,6 +13,9 @@ import {
 
 const { PushNotifications } = Plugins;
 
+import { FCM } from "capacitor-fcm";
+const fcm = new FCM();
+
 @Component({
   selector: 'app-tabs',
   templateUrl: './tabs.component.html',
@@ -53,9 +56,15 @@ export class TabsComponent implements OnInit {
       if (result.granted) {
         // Register with Apple / Google to receive push via APNS/FCM
         PushNotifications.register();
+
+        fcm
+          .subscribeTo({ topic: "newarchakaads" })
+          .then(r => console.log(`subscribed to topic`))
+          .catch(err => console.log(err));
+
       } else {
         // Show some error
-        this.toast.error("Push Notifications - Permission Denied");
+        console.log("Push Notifications - Permission Denied");
       }
     });
 
@@ -67,19 +76,19 @@ export class TabsComponent implements OnInit {
 
     PushNotifications.addListener('registrationError',
       (error: any) => {
-        alert('Error on registration: ' + JSON.stringify(error));
+        console.log('Error on registration: ' + JSON.stringify(error));
       }
     );
 
     PushNotifications.addListener('pushNotificationReceived',
       (notification: PushNotification) => {
-        alert('Push received: ' + JSON.stringify(notification));
+        console.log('Push received: ' + JSON.stringify(notification));
       }
     );
 
     PushNotifications.addListener('pushNotificationActionPerformed',
       (notification: PushNotificationActionPerformed) => {
-        alert('Push action performed: ' + JSON.stringify(notification));
+        console.log('Push action performed: ' + JSON.stringify(notification));
       }
     );
   }
