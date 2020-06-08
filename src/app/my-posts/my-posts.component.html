@@ -31,7 +31,8 @@
 
     <ng-container *ngIf="sortedPosts.length == 0">
 
-        <div id="noitemscontainer" (click)="addNew()">
+        <div id="noitemscontainer" class="ion-activatable" (click)="addNew()">
+            <ion-ripple-effect></ion-ripple-effect>
             <ion-icon src="/assets/icons/noinbox.svg" style="font-size: 32px;"></ion-icon>
             <p>No Active Ads<br />Click here to post your first Ad...</p>
         </div>

@@ -9,6 +9,7 @@ import { BackButtonHandler } from '@acharyarajasekhar/ngx-utility-services';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { Plugins } from '@capacitor/core';
+import { AppRateService } from '@acharyarajasekhar/ion-native-services';
 const { SplashScreen } = Plugins;
 
 @Component({
@@ -34,7 +35,8 @@ export class AppComponent implements OnInit {
     private profileService: ProfileService,
     private networkService: NetworkService,
     private networkAlertService: NetworkAlertService,
-    private backButtonHandler: BackButtonHandler
+    private backButtonHandler: BackButtonHandler,
+    private appRateService: AppRateService
   ) {
     this.initializeApp();
   }
@@ -47,7 +49,16 @@ export class AppComponent implements OnInit {
         this.statusBar.backgroundColorByHexString('#004a8f');
         setTimeout(() => {
           SplashScreen.hide();
-        }, 2000);        
+        }, 2000);
+        this.appRateService.init({
+          storeAppURL: {
+            android: 'market://details?id=net.srivakhanasa.archakaads',
+          },
+          simpleMode: true,
+          promptAgainForEachNewVersion: true,
+          displayAppName: "Archaka Ads",
+          usesUntilPrompt: 2
+        })
       }
 
       this.profileService.profile.subscribe(p => {
@@ -58,7 +69,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    
+
     this.networkService.onlineChanges.subscribe(isOnline => {
       if (isOnline) this.networkAlertService.hide();
       else this.networkAlertService.show();

@@ -12,7 +12,7 @@ import { AuthService } from '../services/auth.service';
 import { ReportAbuseService, ReportAbuseComponent } from '@acharyarajasekhar/ngx-report-abuse';
 import { environment } from 'src/environments/environment';
 import { ProfileService } from '../services/profile.service';
-import { NativeSocialSharingService } from '@acharyarajasekhar/ion-native-services';
+import { NativeSocialSharingService, AppRateService } from '@acharyarajasekhar/ion-native-services';
 
 @Component({
   selector: 'app-home',
@@ -22,6 +22,7 @@ import { NativeSocialSharingService } from '@acharyarajasekhar/ion-native-servic
 })
 export class HomeComponent implements OnInit, OnDestroy {
 
+  slides: Array<string> = ['assets/defaults/lord.jpg'];
   private conditions = new Array<WhereCondition>();
 
   private queryConfig: QueryConfig = {
@@ -58,7 +59,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     private profileService: ProfileService,
     private reportAbuseService: ReportAbuseService,
     private actionSheetController: ActionSheetController,
-    private nativeSocialSharingService: NativeSocialSharingService
+    private nativeSocialSharingService: NativeSocialSharingService,
+    private appRateService: AppRateService
   ) { }
 
   ngOnInit() {
@@ -127,13 +129,16 @@ export class HomeComponent implements OnInit, OnDestroy {
     return await modal.present();
   }
 
-  async share() {
-    this.busy.show();
-    await this.nativeSocialSharingService.share({
-      subject: "Archaka Ads",
-      message: "Test Message From Archaka Ads..."
-    });
-    this.busy.hide();
+  invite() {
+    this.nativeSocialSharingService.share(environment.defaults.appInvitation).then(() => { }).catch(err => this.toast.error(err));
+  }
+
+  rateThisApp() {
+    this.appRateService.promptNow().then(() => { }).catch(err => this.toast.error(err));
+  }
+
+  async writeFeedback() {
+    await this.appRateService.navigateToAppStore();
   }
 
   async showOptions(post) {

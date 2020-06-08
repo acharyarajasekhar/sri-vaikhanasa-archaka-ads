@@ -56,11 +56,20 @@ export class ProfileEditorComponent implements OnInit {
     this.modalController.dismiss(null, 'cancel');
   }
 
+  private handleUndefined = (obj) => {
+    Object.keys(obj).forEach(key => {
+      if (obj[key] && typeof obj[key] === 'object') this.handleUndefined(obj[key]);
+      else if (obj[key] === undefined) obj[key] = null;
+    });
+    return obj;
+  };
+
   onSave() {
     if (this.form.invalid) {
       this.dynamicForm.showErrors();
     }
     else {
+      this.handleUndefined(this.submitted);
       this.modalController.dismiss(this.submitted, 'ok');
     }
   }

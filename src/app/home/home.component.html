@@ -5,26 +5,91 @@
     </ion-buttons>
     <ion-title>Home</ion-title>
     <ion-buttons slot="end">
-      <ion-button fill="clear" (click)="share()">
-        <ion-icon slot="start" name="share-social-outline"></ion-icon>
-        Share
+      <ion-button fill="clear">
+        <ion-icon name="notifications"></ion-icon>
+      </ion-button>
+      <ion-button fill="clear">
+        <ion-icon name="funnel"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-progress-bar *ngIf="isLoading" type="indeterminate" color="warning" mode="ios">
+<ion-progress-bar *ngIf="isLoading" type="indeterminate" color="secondary" mode="ios">
 </ion-progress-bar>
 
 <ion-content>
+
   <div class="container" style="max-width: 600px; padding-top: 15px;">
-    <div class="row">
+
+    <photo-slides-card [slides]="slides"></photo-slides-card>
+
+    <ion-grid class="connectionsgrid">
+      <ion-row style="background-color: white;">
+        <ion-col class="connections ion-activatable">
+          <ion-ripple-effect></ion-ripple-effect>
+          <ion-grid (click)="invite()">
+            <ion-row>
+              <ion-col>
+                <ion-icon name="share-social-outline" class="connectionicon"></ion-icon>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                Invite<br />Others
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-col>
+        <ion-col class="connections groups ion-activatable">
+          <ion-ripple-effect></ion-ripple-effect>
+          <ion-grid (click)="rateThisApp()">
+            <ion-row>
+              <ion-col>
+                <ion-icon name="star-outline" class="connectionicon"></ion-icon>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                Rate<br />This App
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-col>
+        <ion-col class="connections groups ion-activatable">
+          <ion-ripple-effect></ion-ripple-effect>
+          <ion-grid (click)="writeFeedback()">
+            <ion-row>
+              <ion-col>
+                <ion-icon src="assets/icons/letter.svg" class="connectionicon"></ion-icon>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                Write<br />Feedback
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <div class="row" style="padding-top: 15px;">
 
       <ng-container *ngFor="let post of sortedPosts">
 
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
           <archaka-post-card [post]="post" (onOptionsClick)="showOptions($event)"
             *ngIf="!!post.isActive && !!post.isVerified"></archaka-post-card>
+        </div>
+
+      </ng-container>
+
+      <ng-container *ngIf="page.empty | async">
+
+        <div id="noitemscontainer">
+          <ion-icon src="/assets/icons/noinbox.svg" style="font-size: 32px;"></ion-icon>
+          <p>No Active Ads</p>
         </div>
 
       </ng-container>
@@ -46,15 +111,6 @@
   <ion-item *ngIf="isEndOfPageReached" lines="none" color="light">
     <ion-note>* End of Page *</ion-note>
   </ion-item>
-
-  <ng-container *ngIf="page.empty | async">
-
-    <div id="noitemscontainer">
-      <ion-icon src="/assets/icons/noinbox.svg" style="font-size: 32px;"></ion-icon>
-      <p>No Active Ads</p>
-    </div>
-
-  </ng-container>
 
 </ion-content>
 

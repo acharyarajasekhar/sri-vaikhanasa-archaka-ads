@@ -24,5 +24,9 @@ export const defaults = {
             url: '/profile',
             icon: 'person-outline'
         }
-    ]
+    ],
+    appInvitation: {
+        subject: "Invitation to join Sri Vaikhanasa Archaka Ads App...",
+        message: "Dear Reader, I would like to invite you to join Sri Vaikhanasa Archaka Ads App. An App designed to help our Archaka's in finding their suitable Temple..."
+    }
 }

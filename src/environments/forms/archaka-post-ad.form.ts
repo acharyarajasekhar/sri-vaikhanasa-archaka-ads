@@ -104,6 +104,14 @@ export const archakaPostAdForm = {
                 postalAddressRequired: { message: "Please choose your post office using your pincode" }
                 // geoLocationRequired: { message: "Please choose your geo location on google maps" }
             }
+        },
+        {
+            order: 8,
+            name: "isActive",
+            controlType: 'toggle',
+            label: "Show this Ad to public",
+            value: false,
+            validators: {}
         }
     ]
 }

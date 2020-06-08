@@ -81,7 +81,7 @@
                 <p><small class="text-muted">Last updated
                         {{ post.updatedAt.toDate() | timeAgo }}</small><br />
                     <small *ngIf="!!isMyPost" class="text-muted">Status:
-                        {{ (post.isActive && post.isVerified) ? 'Public visible' : 'Pending for admin verification' }}</small>
+                        {{ post.isActive ? (post.isVerified ? 'Active' : 'Pending for admin verification') : 'In Active' }}</small>
                 </p>
             </ion-label>
             <ion-button fill="clear" (click)="showOptions()">
