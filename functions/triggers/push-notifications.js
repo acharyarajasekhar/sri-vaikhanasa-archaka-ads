@@ -2,7 +2,7 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const auth = admin.auth();
 
-module.exports = functions.firestore.document('archakaposts/{postId}')
+module.exports.newAdNotification = functions.firestore.document('archakaposts/{postId}')
     .onCreate((snap, context) => {
 
         let newData = snap.data();
@@ -10,7 +10,7 @@ module.exports = functions.firestore.document('archakaposts/{postId}')
         const payload = {
             notification: {
                 title: 'New Archaka Ad...',
-                body: `Temple Name: ${newData.name} <br/> Salary: Rs.${newData.salary}/-`
+                body: `Temple Name: ${newData.name}, Salary: Rs.${newData.salary}/-`
             }
         };
 
@@ -24,7 +24,7 @@ module.exports = functions.firestore.document('archakaposts/{postId}')
 
     });
 
-module.exports = functions.firestore.document('archakaposts/{postId}')
+module.exports.updatedAdNotification = functions.firestore.document('archakaposts/{postId}')
     .onUpdate((change, context) => {
 
         let newData = change.after.data();
@@ -32,7 +32,7 @@ module.exports = functions.firestore.document('archakaposts/{postId}')
         const payload = {
             notification: {
                 title: 'Updated Archaka Ad...',
-                body: `Temple Name: ${newData.name} <br/> Salary: Rs.${newData.salary}/-`
+                body: `Temple Name: ${newData.name}, Salary: Rs.${newData.salary}/-`
             }
         };
 
