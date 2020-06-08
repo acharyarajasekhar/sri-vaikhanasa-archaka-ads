@@ -31,7 +31,6 @@ import { UserProfilePipe } from './pipes/pipes/user-profile.pipe';
 import { MyPostsComponent } from './my-posts/my-posts.component';
 import { NgxImagePreloaderModule } from '@acharyarajasekhar/ngx-image-preloader';
 import { NgxUtilityPipesModule } from '@acharyarajasekhar/ngx-utility-pipes';
-import { ReportAbuseModule } from '@acharyarajasekhar/ngx-report-abuse';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { NativeImagePickerService, PhotoViewerModule, NativeFirebaseAuthService, NativeSMSListenerService, NativeSocialSharingService, AppRateService } from '@acharyarajasekhar/ion-native-services';
 import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
@@ -42,6 +41,7 @@ import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 import { TabsComponent } from './tabs/tabs.component';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { AppRate } from '@ionic-native/app-rate/ngx';
+import { NgxGenericFormModule } from '@acharyarajasekhar/ngx-generic-form';
 
 @NgModule({
    declarations: [
@@ -74,10 +74,10 @@ import { AppRate } from '@ionic-native/app-rate/ngx';
       NetworkAlertModule,
       NgxImagePreloaderModule,
       PhotoSlidesCardModule,
-      ReportAbuseModule,
       NgxUtilityPipesModule,
       PhotoViewerModule,
-      NgxFirebasePhoneLoginModule
+      NgxFirebasePhoneLoginModule,
+      NgxGenericFormModule
    ],
    providers: [
       NativeFirebaseAuthService,

@@ -9,10 +9,10 @@ import { Subject } from 'rxjs';
 import { takeUntil, take } from 'rxjs/operators';
 import { FirestoreDataPaginationService, WhereCondition, QueryConfig } from '@acharyarajasekhar/ngx-utility-services';
 import { AuthService } from '../services/auth.service';
-import { ReportAbuseService, ReportAbuseComponent } from '@acharyarajasekhar/ngx-report-abuse';
 import { environment } from 'src/environments/environment';
 import { ProfileService } from '../services/profile.service';
 import { NativeSocialSharingService, AppRateService } from '@acharyarajasekhar/ion-native-services';
+import { NgxGenericFormComponent, NgxGenericFormService } from '@acharyarajasekhar/ngx-generic-form';
 
 @Component({
   selector: 'app-home',
@@ -57,10 +57,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     public page: FirestoreDataPaginationService,
     private ngZone: NgZone,
     private profileService: ProfileService,
-    private reportAbuseService: ReportAbuseService,
     private actionSheetController: ActionSheetController,
     private nativeSocialSharingService: NativeSocialSharingService,
-    private appRateService: AppRateService
+    private appRateService: AppRateService,
+    private ngxGenericFormService: NgxGenericFormService
   ) { }
 
   ngOnInit() {
@@ -138,7 +138,52 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   async writeFeedback() {
-    await this.appRateService.navigateToAppStore();
+
+    const modal = await this.modalController.create({
+      component: NgxGenericFormComponent,
+      componentProps: {
+        formConfig: environment.formConfigs.feedbackForm,
+        pageTitle: "Feedback Form...",
+        headerColor: 'primary',
+        contentColor: 'secondary'
+      }
+    });
+
+    modal.onDidDismiss().then(async result => {
+      if (result.role === 'ok') {
+        if (!!result.data) {
+
+          this.busy.show();
+
+          let mySelf = await this.profileService.profile.pipe(take(1)).toPromise();
+
+          if (!!mySelf) {
+
+            try {
+
+              let reportInfo = {
+                feedbackInfo: result.data,
+                providedBy: mySelf
+              }
+
+              this.handleUndefined(reportInfo);
+
+              await this.ngxGenericFormService.report('feedbacks', reportInfo);
+              this.toast.show("Your information is saved...");
+              this.busy.hide();
+            }
+            catch (err) {
+              this.toast.error(err);
+              this.busy.hide();
+            }
+          }
+
+        }
+      }
+    })
+
+    return await modal.present();
+
   }
 
   async showOptions(post) {
@@ -162,14 +207,21 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   }
 
+  private handleUndefined = (obj) => {
+    Object.keys(obj).forEach(key => {
+      if (obj[key] && typeof obj[key] === 'object') this.handleUndefined(obj[key]);
+      else if (obj[key] === undefined) obj[key] = null;
+    });
+    return obj;
+  };
+
   async reportAbuse() {
 
     if (!!this.currentPost && !!this.currentPost.id) {
 
       const modal = await this.modalController.create({
-        component: ReportAbuseComponent,
+        component: NgxGenericFormComponent,
         componentProps: {
-          payLoad: this.currentPost,
           formConfig: environment.formConfigs.reportAbuseForm,
           pageTitle: "Report this Ad..."
         }
@@ -181,29 +233,32 @@ export class HomeComponent implements OnInit, OnDestroy {
 
             this.busy.show();
 
-            this.profileService.profile.pipe(take(1)).subscribe(async mySelf => {
-              if (!!mySelf) {
+            let mySelf = await this.profileService.profile.pipe(take(1)).toPromise();
 
-                try {
-                  if (!!result.data.reportedInfo.isHidden) {
-                    await this.postsService.hideThisPost(result.data.subject.id);
-                  }
+            if (!!mySelf) {
 
-                  let reportInfo = {
-                    ...result.data,
-                    reportedBy: mySelf
-                  }
-
-                  await this.reportAbuseService.report(reportInfo);
-                  this.toast.show("Your information is saved...");
-                  this.busy.hide();
+              try {
+                if (!!result.data.isHidden) {
+                  await this.postsService.hideThisPost(this.currentPost.id);
                 }
-                catch (err) {
-                  this.toast.error(err);
-                  this.busy.hide();
+
+                let reportInfo = {
+                  subject: this.currentPost,
+                  reportedInfo: result.data,
+                  reportedBy: mySelf
                 }
+
+                this.handleUndefined(reportInfo);
+
+                await this.ngxGenericFormService.report('reportabuse', reportInfo);
+                this.toast.show("Your information is saved...");
+                this.busy.hide();
               }
-            })
+              catch (err) {
+                this.toast.error(err);
+                this.busy.hide();
+              }
+            }
 
           }
         }
