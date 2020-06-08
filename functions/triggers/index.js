@@ -1,0 +1,1 @@
+module.exports.onUserSignUp = require('./user.auth.signup');

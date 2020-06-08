@@ -1,16 +1,19 @@
 {
-    "hosting": {
-        "public": "www",
-        "ignore": [
-          "firebase.json",
-          "**/.*",
-          "**/node_modules/**"
-        ],
-        "rewrites": [
-          {
-            "source": "**",
-            "destination": "/index.html"
-          }
-        ]
+  "functions": {
+    "source": "functions"
+  },
+  "hosting": {
+    "public": "www",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
       }
+    ]
+  }
 }
