@@ -67,6 +67,9 @@ export class MyPostsComponent implements OnInit {
   async showOptions(post) {
 
     this.currentPost = post;
+
+    if (!this.currentPost.isVerified) return;
+
     const buttons = [];
 
     buttons.push({

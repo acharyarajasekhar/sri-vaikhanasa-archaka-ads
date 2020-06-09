@@ -2,7 +2,7 @@ export const feedbackForm = {
     controls: [
         {
             order: 0,
-            name: "abuseType",
+            name: "type",
             controlType: 'radiolist',
             icon: "abuse",
             label: "Type of Feedback...",

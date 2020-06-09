@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { BusyIndicatorService } from '@acharyarajasekhar/busy-indicator';
+import { NativeFirebasePushNotificationService } from '@acharyarajasekhar/ion-native-services';
 
 @Injectable({
   providedIn: 'root'
@@ -14,14 +15,48 @@ export class AuthService {
   authState: Observable<firebase.User>;
   userClaims = new BehaviorSubject<any>({});
 
+  userNotificationTopic: string = 'userchannel';
+  adminNotificationTopic: string = 'adminchannel';
+
   constructor(
     private fireAuth: AngularFireAuth,
-    private store: AngularFirestore,
+    private nativeFirebasePushNotificationService: NativeFirebasePushNotificationService,
     private busyIndicatorService: BusyIndicatorService,
     private router: Router) {
 
+    this.nativeFirebasePushNotificationService.init();
     this.authState = this.fireAuth.authState;
-    this.authState.subscribe(u => this.user.next(u));
+    this.authState.subscribe(u => {
+
+      if (!!u && !!u.uid) {
+        this.nativeFirebasePushNotificationService.subscribeToTopic(this.userNotificationTopic)
+          .then(() => console.log('subscribed to topic: ' + this.userNotificationTopic))
+          .catch(err => console.log('ERROR while subscribing to topic: ' + this.userNotificationTopic));
+
+        this.fireAuth.currentUser.then(cu => {
+          cu.getIdTokenResult(true)
+            .then((res: any) => {
+              this.userClaims.next(res.claims);
+              if (!!res.claims.admin) {
+                this.nativeFirebasePushNotificationService.subscribeToTopic(this.adminNotificationTopic)
+                  .then(() => console.log('subscribed to topic: ' + this.adminNotificationTopic))
+                  .catch(err => console.log('ERROR while subscribing to topic: ' + this.adminNotificationTopic));
+              }
+            })
+        });
+      }
+      else {
+        this.nativeFirebasePushNotificationService.unsubscribeFromTopic(this.userNotificationTopic)
+          .then(() => console.log('unsubscribed to topic: ' + this.userNotificationTopic))
+          .catch(err => console.log('ERROR while unsubscribing to topic: ' + this.userNotificationTopic));
+
+        this.nativeFirebasePushNotificationService.unsubscribeFromTopic(this.adminNotificationTopic)
+          .then(() => console.log('unsubscribed to topic: ' + this.adminNotificationTopic))
+          .catch(err => console.log('ERROR while unsubscribing to topic: ' + this.adminNotificationTopic));
+      }
+
+      this.user.next(u)
+    });
 
   }
 

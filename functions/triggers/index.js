@@ -1,2 +1,2 @@
 module.exports.onUserSignUp = require('./user.auth.signup');
-module.exports.onArchakaAdsPushNotify  = require('./push-notifications');
+module.exports.pushNotifications  = require('./push-notifications');
