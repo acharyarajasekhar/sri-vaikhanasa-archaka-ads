@@ -11,7 +11,7 @@ import { FirestoreDataPaginationService, WhereCondition, QueryConfig } from '@ac
 import { AuthService } from '../services/auth.service';
 import { environment } from 'src/environments/environment';
 import { ProfileService } from '../services/profile.service';
-import { NativeSocialSharingService, AppRateService } from '@acharyarajasekhar/ion-native-services';
+import { NativeSocialSharingService, NativeAppVersionService, NativeAppRateService } from '@acharyarajasekhar/ion-native-services';
 import { NgxGenericFormComponent, NgxGenericFormService } from '@acharyarajasekhar/ngx-generic-form';
 
 @Component({
@@ -59,8 +59,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     private profileService: ProfileService,
     private actionSheetController: ActionSheetController,
     private nativeSocialSharingService: NativeSocialSharingService,
-    private appRateService: AppRateService,
-    private ngxGenericFormService: NgxGenericFormService
+    private nativeAppRateService: NativeAppRateService,
+    private ngxGenericFormService: NgxGenericFormService,
+    private nativeAppVersionService: NativeAppVersionService
   ) { }
 
   ngOnInit() {
@@ -134,7 +135,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   rateThisApp() {
-    this.appRateService.promptNow().then(() => { }).catch(err => this.toast.error(err));
+    this.nativeAppRateService.promptNow().then(() => { }).catch(err => this.toast.error(err));
   }
 
   async writeFeedback() {

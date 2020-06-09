@@ -9,7 +9,8 @@ import { BackButtonHandler } from '@acharyarajasekhar/ngx-utility-services';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { Plugins } from '@capacitor/core';
-import { AppRateService } from '@acharyarajasekhar/ion-native-services';
+import { NativeAppRateService, NativeAppVersionService } from '@acharyarajasekhar/ion-native-services';
+
 const { SplashScreen } = Plugins;
 
 @Component({
@@ -36,7 +37,8 @@ export class AppComponent implements OnInit {
     private networkService: NetworkService,
     private networkAlertService: NetworkAlertService,
     private backButtonHandler: BackButtonHandler,
-    private appRateService: AppRateService
+    private nativeAppRateService: NativeAppRateService,
+    private nativeAppVersionService: NativeAppVersionService
   ) {
     this.initializeApp();
   }
@@ -50,14 +52,8 @@ export class AppComponent implements OnInit {
         setTimeout(() => {
           SplashScreen.hide();
         }, 2000);
-        this.appRateService.init({
-          storeAppURL: {
-            android: 'market://details?id=net.srivakhanasa.archakaads',
-          },
-          simpleMode: true,
-          promptAgainForEachNewVersion: true,
-          displayAppName: "Archaka Ads",
-          usesUntilPrompt: 2
+        this.nativeAppVersionService.init().then(() => {
+          this.nativeAppRateService.init();
         })
       }
 

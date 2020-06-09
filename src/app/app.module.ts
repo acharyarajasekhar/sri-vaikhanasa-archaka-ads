@@ -32,7 +32,7 @@ import { MyPostsComponent } from './my-posts/my-posts.component';
 import { NgxImagePreloaderModule } from '@acharyarajasekhar/ngx-image-preloader';
 import { NgxUtilityPipesModule } from '@acharyarajasekhar/ngx-utility-pipes';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
-import { NativeImagePickerService, PhotoViewerModule, NativeFirebaseAuthService, NativeSMSListenerService, NativeSocialSharingService, AppRateService } from '@acharyarajasekhar/ion-native-services';
+import { NativeImagePickerService, PhotoViewerModule, NativeFirebaseAuthService, NativeSMSListenerService, NativeSocialSharingService, NativeAppRateService, NativeAppVersionService } from '@acharyarajasekhar/ion-native-services';
 import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 import { FirebaseAuthentication } from '@ionic-native/firebase-authentication/ngx';
 import { NgxFirebasePhoneLoginModule } from '@acharyarajasekhar/ngx-firebase-phone-login';
@@ -42,6 +42,7 @@ import { TabsComponent } from './tabs/tabs.component';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { AppRate } from '@ionic-native/app-rate/ngx';
 import { NgxGenericFormModule } from '@acharyarajasekhar/ngx-generic-form';
+import { AppVersion } from '@ionic-native/app-version/ngx';
 
 @NgModule({
    declarations: [
@@ -84,7 +85,8 @@ import { NgxGenericFormModule } from '@acharyarajasekhar/ngx-generic-form';
       NativeImagePickerService,
       NativeSMSListenerService,
       NativeSocialSharingService,
-      AppRateService,
+      NativeAppRateService,
+      NativeAppVersionService,
       ImagePicker,
       PhotoViewer,
       AndroidPermissions,
@@ -92,6 +94,7 @@ import { NgxGenericFormModule } from '@acharyarajasekhar/ngx-generic-form';
       StatusBar,
       SocialSharing,
       AppRate,
+      AppVersion,
       { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
    ],
    bootstrap: [
