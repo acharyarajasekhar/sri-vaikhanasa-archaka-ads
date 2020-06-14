@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="net.srivakhanasa.archakaads">
+    package="net.srivaikhanasa.archakaads">
 
     <application
         android:allowBackup="true"
@@ -25,7 +25,7 @@
 
         <activity
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|smallestScreenSize|screenLayout|uiMode"
-            android:name="net.srivakhanasa.archakaads.MainActivity"
+            android:name="net.srivaikhanasa.archakaads.MainActivity"
             android:label="@string/title_activity_main"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBarLaunch"
@@ -74,6 +74,4 @@
     <!-- Audio -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
-    <!-- SMS -->
-    <uses-permission android:name="android.permission.READ_SMS"/>
 </manifest>

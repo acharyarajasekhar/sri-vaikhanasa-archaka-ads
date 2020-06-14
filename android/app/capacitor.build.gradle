@@ -12,6 +12,7 @@ dependencies {
     implementation project(':capacitor-fcm')
     implementation "com.soundcloud.android:android-crop:1.0.0@aar"
     implementation "com.google.firebase:firebase-auth:19.3.+"
+    implementation "com.google.android.gms:play-services-auth-api-phone:15.0.1"
     implementation "com.android.support:appcompat-v7:23+"
     implementation "com.android.support:support-v4:24.1.1+"
 }

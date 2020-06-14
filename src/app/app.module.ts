@@ -32,7 +32,7 @@ import { MyPostsComponent } from './my-posts/my-posts.component';
 import { NgxImagePreloaderModule } from '@acharyarajasekhar/ngx-image-preloader';
 import { NgxUtilityPipesModule } from '@acharyarajasekhar/ngx-utility-pipes';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
-import { NativeImagePickerService, PhotoViewerModule, NativeFirebaseAuthService, NativeSMSListenerService, NativeSocialSharingService, NativeAppRateService, NativeAppVersionService, NativePhotoViewerService } from '@acharyarajasekhar/ion-native-services';
+import { NativeImagePickerService, PhotoViewerModule, NativeFirebaseAuthService, NativeSocialSharingService, NativeAppRateService, NativeAppVersionService, NativePhotoViewerService } from '@acharyarajasekhar/ion-native-services';
 import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 import { FirebaseAuthentication } from '@ionic-native/firebase-authentication/ngx';
 import { NgxFirebasePhoneLoginModule } from '@acharyarajasekhar/ngx-firebase-phone-login';
@@ -83,7 +83,6 @@ import { AppVersion } from '@ionic-native/app-version/ngx';
    providers: [
       NativeFirebaseAuthService,
       NativeImagePickerService,
-      NativeSMSListenerService,
       NativeSocialSharingService,
       NativeAppRateService,
       NativeAppVersionService,

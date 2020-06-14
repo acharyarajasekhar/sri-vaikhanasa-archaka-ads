@@ -45,8 +45,8 @@
     <param name="onload" value="true"/>
   </feature>
 
-  <feature name="SMS">
-    <param name="android-package" value="com.rjfun.cordova.sms.SMSPlugin"/>
+  <feature name="AndroidSmsRetriever">
+    <param name="android-package" value="com.codingsans.ionic.smsRetriever.AndroidSmsRetriever"/>
   </feature>
 
   <feature name="StatusBar">

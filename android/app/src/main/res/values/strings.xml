@@ -2,6 +2,6 @@
 <resources>
     <string name="app_name">Archaka Ads</string>
     <string name="title_activity_main">Archaka Ads</string>
-    <string name="package_name">net.srivakhanasa.archakaads</string>
-    <string name="custom_url_scheme">net.srivakhanasa.archakaads</string>
+    <string name="package_name">net.srivaikhanasa.archakaads</string>
+    <string name="custom_url_scheme">net.srivaikhanasa.archakaads</string>
 </resources>
