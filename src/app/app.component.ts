@@ -54,7 +54,7 @@ export class AppComponent implements OnInit {
         }, 2000);
         this.nativeAppVersionService.init().then(() => {
           this.nativeAppRateService.init();
-        })
+        });
       }
 
       this.profileService.profile.subscribe(p => {
