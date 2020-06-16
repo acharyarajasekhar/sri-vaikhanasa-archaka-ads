@@ -17,6 +17,7 @@ public class MainActivity extends BridgeActivity {
       // Ex: add(TotallyAwesomePlugin.class);
       add(io.stewan.capacitor.fcm.FCMPlugin.class);
       add(jp.rdlabo.capacitor.plugin.firebase.crashlytics.FirebaseCrashlyticsPlugin.class);
+      add(com.baumblatt.capacitor.firebase.auth.CapacitorFirebaseAuth.class);
     }});
   }
 }

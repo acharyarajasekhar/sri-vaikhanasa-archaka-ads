@@ -34,7 +34,6 @@ import { NgxUtilityPipesModule } from '@acharyarajasekhar/ngx-utility-pipes';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { NativeImagePickerService, PhotoViewerModule, NativeFirebaseAuthService, NativeSocialSharingService, NativeAppRateService, NativeAppVersionService, NativePhotoViewerService } from '@acharyarajasekhar/ion-native-services';
 import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
-import { FirebaseAuthentication } from '@ionic-native/firebase-authentication/ngx';
 import { NgxFirebasePhoneLoginModule } from '@acharyarajasekhar/ngx-firebase-phone-login';
 import { ProfilePopupCardComponent } from './profile/profile-popup-card/profile-popup-card.component';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
@@ -90,7 +89,6 @@ import { AppVersion } from '@ionic-native/app-version/ngx';
       ImagePicker,
       PhotoViewer,
       AndroidPermissions,
-      FirebaseAuthentication,
       StatusBar,
       SocialSharing,
       AppRate,

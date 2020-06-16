@@ -11,8 +11,8 @@ apply from: "../capacitor-cordova-android-plugins/cordova.variables.gradle"
 dependencies {
     implementation project(':rdlabo-capacitor-firebase-crashlytics')
     implementation project(':capacitor-fcm')
+    implementation project(':capacitor-firebase-auth')
     implementation "com.soundcloud.android:android-crop:1.0.0@aar"
-    implementation "com.google.firebase:firebase-auth:19.3.+"
     implementation "com.android.support:appcompat-v7:23+"
     implementation "com.android.support:support-v4:24.1.1+"
 }

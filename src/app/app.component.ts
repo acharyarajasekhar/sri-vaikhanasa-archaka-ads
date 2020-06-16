@@ -5,9 +5,8 @@ import { Router, RouterEvent } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { ProfileService } from './services/profile.service';
 import { NetworkService, NetworkAlertService } from '@acharyarajasekhar/network-alert';
-import { BackButtonHandler } from '@acharyarajasekhar/ngx-utility-services';
+import { BackButtonHandler, ToastService } from '@acharyarajasekhar/ngx-utility-services';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-
 import { Plugins } from '@capacitor/core';
 import { NativeAppRateService, NativeAppVersionService } from '@acharyarajasekhar/ion-native-services';
 
@@ -76,7 +75,6 @@ export class AppComponent implements OnInit {
         this.activePath = event.url;
       }
     })
-
     this.authService.authState.subscribe(u => {
       this.showSideMenu = !!u;
     })

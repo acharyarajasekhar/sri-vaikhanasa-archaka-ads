@@ -7,3 +7,6 @@ project(':rdlabo-capacitor-firebase-crashlytics').projectDir = new File('../node
 
 include ':capacitor-fcm'
 project(':capacitor-fcm').projectDir = new File('../node_modules/capacitor-fcm/android/capacitor-fcm')
+
+include ':capacitor-firebase-auth'
+project(':capacitor-firebase-auth').projectDir = new File('../node_modules/capacitor-firebase-auth/android/capacitor-firebase-auth')
