@@ -9,6 +9,7 @@ import { BackButtonHandler, ToastService } from '@acharyarajasekhar/ngx-utility-
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Plugins } from '@capacitor/core';
 import { NativeAppRateService, NativeAppVersionService } from '@acharyarajasekhar/ion-native-services';
+import { NotificationService } from './services/notification.service';
 
 const { SplashScreen } = Plugins;
 
@@ -37,7 +38,8 @@ export class AppComponent implements OnInit {
     private networkAlertService: NetworkAlertService,
     private backButtonHandler: BackButtonHandler,
     private nativeAppRateService: NativeAppRateService,
-    private nativeAppVersionService: NativeAppVersionService
+    private nativeAppVersionService: NativeAppVersionService,
+    private notificationService: NotificationService
   ) {
     this.initializeApp();
   }
@@ -54,6 +56,7 @@ export class AppComponent implements OnInit {
         this.nativeAppVersionService.init().then(() => {
           this.nativeAppRateService.init();
         });
+        this.notificationService.init();
       }
 
       this.profileService.profile.subscribe(p => {

@@ -1,0 +1,24 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="cancel()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <!-- <ion-buttons slot="end">
+        <ion-button fill="clear">
+          <ion-icon name="notifications"></ion-icon>
+        </ion-button>
+        <ion-button fill="clear">
+          <ion-icon name="funnel"></ion-icon>
+        </ion-button>
+      </ion-buttons> -->
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="container" style="max-width: 600px; padding-top: 15px;">
+    <archaka-post-card [post]="post$ | async" (onOptionsClick)="showOptions($event)">
+    </archaka-post-card>
+  </div>
+</ion-content>

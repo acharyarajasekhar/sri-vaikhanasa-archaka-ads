@@ -1,22 +1,22 @@
-<ion-header>
+<ion-header class="ion-no-border">
+  <ion-progress-bar *ngIf="isLoading" type="indeterminate" color="secondary" mode="ios" style="position: absolute; z-index: 1999;">
+  </ion-progress-bar>
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>Home</ion-title>
-    <!-- <ion-buttons slot="end">
-      <ion-button fill="clear">
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="openNotifications()">
         <ion-icon name="notifications"></ion-icon>
+        <ion-badge slot="end">{{ notificationCount }}</ion-badge>
       </ion-button>
-      <ion-button fill="clear">
+      <!-- <ion-button fill="clear">
         <ion-icon name="funnel"></ion-icon>
-      </ion-button>
-    </ion-buttons> -->
+      </ion-button> -->
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
-
-<ion-progress-bar *ngIf="isLoading" type="indeterminate" color="secondary" mode="ios">
-</ion-progress-bar>
 
 <ion-content>
 
@@ -76,9 +76,15 @@
 
     <div class="row" style="padding-top: 15px;">
 
+      <!-- <ng-container *ngFor="let post of sortedPosts">
+
+        <ion-button (click)="openPost(post.id)">{{ post.name }}</ion-button>
+
+      </ng-container> -->
+
       <ng-container *ngFor="let post of sortedPosts">
 
-        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" [id]="post.id">
           <archaka-post-card [post]="post" (onOptionsClick)="showOptions($event)"
             *ngIf="!!post.isActive && !!post.isVerified"></archaka-post-card>
         </div>

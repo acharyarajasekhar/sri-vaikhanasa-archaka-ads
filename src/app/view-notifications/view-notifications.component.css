@@ -1,0 +1,36 @@
+ion-note {
+    width: 100%;
+    text-align: center;
+    margin: auto;
+  }
+  
+  #noitemscontainer {
+    text-align: center;
+    margin: auto;
+    margin-top: 50px;
+    /* position: absolute; */
+    /* left: 0;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%); */
+  }
+  
+  #noitemscontainer strong {
+    font-size: 20px;
+    line-height: 26px;
+  }
+  
+  #noitemscontainer p {
+    font-size: 16px;
+    line-height: 22px;
+    color: #8c8c8c;
+    margin: 0;
+  }
+  
+  #noitemscontainer ion-icon {
+    color: #8c8c8c;
+  }
+  
+  #noitemscontainer a {
+    text-decoration: none;
+  }

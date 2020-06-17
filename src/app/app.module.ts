@@ -42,6 +42,8 @@ import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { AppRate } from '@ionic-native/app-rate/ngx';
 import { NgxGenericFormModule } from '@acharyarajasekhar/ngx-generic-form';
 import { AppVersion } from '@ionic-native/app-version/ngx';
+import { ArchakaPostViewComponent } from './archaka-post-view/archaka-post-view.component';
+import { ViewNotificationsComponent } from './view-notifications/view-notifications.component';
 
 @NgModule({
    declarations: [
@@ -55,9 +57,11 @@ import { AppVersion } from '@ionic-native/app-version/ngx';
       UserProfilePipe,
       MyPostsComponent,
       ProfilePopupCardComponent,
-      TabsComponent
+      TabsComponent,
+      ArchakaPostViewComponent,
+      ViewNotificationsComponent
    ],
-   entryComponents: [],
+   entryComponents: [ArchakaPostViewComponent, ViewNotificationsComponent],
    imports: [
       BrowserModule,
       IonicModule.forRoot(),

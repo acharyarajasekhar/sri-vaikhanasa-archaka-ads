@@ -1,4 +1,4 @@
-<div class="card text-dark bg-white mb-3" *ngIf="post.updatedAt">
+<div class="card text-dark bg-white mb-3" *ngIf="post?.updatedAt">
 
     <photo-slides-card [slides]="post.photos" *ngIf="post?.photos && post.photos.length > 0"></photo-slides-card>
     <div class="card-body">
@@ -77,11 +77,11 @@
                 <img [avatar]="owner.photoURL" defaultImage="assets/defaults/avatar.png" [zoomable]="owner.photoURL">
             </ion-thumbnail>
             <ion-label (click)="showThisProfile(owner)">
-                <h3 *ngIf="!isMyPost">{{ owner.displayName }}</h3>
+                <h3 *ngIf="!isMyPost">{{ owner.displayName || 'Guest User' }}</h3>
                 <p><small class="text-muted">Last updated
-                        {{ post.updatedAt.toDate() | timeAgo }}</small><br />
+                        {{ post?.updatedAt?.toDate() | timeAgo }}</small><br />
                     <small *ngIf="!!isMyPost" class="text-muted">Status:
-                        {{ post.isActive ? (post.isVerified ? 'Active' : 'Pending for admin verification') : 'In Active' }}</small>
+                        {{ post?.isActive ? (post?.isVerified ? 'Active' : 'Pending for admin verification') : 'In Active' }}</small>
                 </p>
             </ion-label>
             <ion-button fill="clear" (click)="showOptions()">

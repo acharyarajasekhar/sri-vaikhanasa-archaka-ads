@@ -1,18 +1,16 @@
-import { Component, OnInit, NgZone, OnDestroy } from '@angular/core';
-import { ModalController, ActionSheetController } from '@ionic/angular';
-import { ArchakaPostEditorComponent } from '../archaka-post-editor/archaka-post-editor.component';
+import { Component, OnInit, NgZone, OnDestroy, ViewChild } from '@angular/core';
+import { ModalController, IonContent } from '@ionic/angular';
 import { PostsService } from '../services/posts.service';
 import { ToastService } from '@acharyarajasekhar/ngx-utility-services';
-import { BusyIndicatorService } from '@acharyarajasekhar/busy-indicator';
 import * as _ from 'lodash';
 import { Subject } from 'rxjs';
-import { takeUntil, take } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import { FirestoreDataPaginationService, WhereCondition, QueryConfig } from '@acharyarajasekhar/ngx-utility-services';
-import { AuthService } from '../services/auth.service';
 import { environment } from 'src/environments/environment';
-import { ProfileService } from '../services/profile.service';
-import { NativeSocialSharingService, NativeAppVersionService, NativeAppRateService } from '@acharyarajasekhar/ion-native-services';
-import { NgxGenericFormComponent, NgxGenericFormService } from '@acharyarajasekhar/ngx-generic-form';
+import { NativeSocialSharingService, NativeAppRateService } from '@acharyarajasekhar/ion-native-services';
+import { ArchakaPostViewComponent } from '../archaka-post-view/archaka-post-view.component';
+import { ViewNotificationsComponent } from '../view-notifications/view-notifications.component';
+import { NotificationService } from '../services/notification.service';
 
 @Component({
   selector: 'app-home',
@@ -21,6 +19,8 @@ import { NgxGenericFormComponent, NgxGenericFormService } from '@acharyarajasekh
   providers: [FirestoreDataPaginationService]
 })
 export class HomeComponent implements OnInit, OnDestroy {
+
+  @ViewChild(IonContent, { static: false }) content: IonContent;
 
   slides: Array<string> = ['assets/defaults/lord.jpg'];
   private conditions = new Array<WhereCondition>();
@@ -34,7 +34,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   private posts: Array<any> = [];
-  private currentPost: any;
 
   get sortedPosts() {
     if (!!this.posts && this.posts.length > 0) {
@@ -49,19 +48,19 @@ export class HomeComponent implements OnInit, OnDestroy {
   isEndOfPageReached: boolean = false;
   isLoading: boolean = false;
 
+  get notificationCount() {
+    return this.notificationService.getCount();
+  }
+
   constructor(
     private modalController: ModalController,
     private postsService: PostsService,
     private toast: ToastService,
-    private busy: BusyIndicatorService,
     public page: FirestoreDataPaginationService,
     private ngZone: NgZone,
-    private profileService: ProfileService,
-    private actionSheetController: ActionSheetController,
     private nativeSocialSharingService: NativeSocialSharingService,
     private nativeAppRateService: NativeAppRateService,
-    private ngxGenericFormService: NgxGenericFormService,
-    private nativeAppVersionService: NativeAppVersionService
+    private notificationService: NotificationService
   ) { }
 
   ngOnInit() {
@@ -77,6 +76,20 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ionViewDidEnter() {
+
+    // this.notificationService.tappedNotification$.asObservable().subscribe(async notification => {
+    //   alert(JSON.stringify(notification));
+    //   if (!!notification) {
+    //     if (notification.notification.data.type === "archakaad") {
+    //       let id = notification.notification.data.id;
+    //       if (!!id) {
+    //         await this.openPost(id);
+    //       }
+    //     }
+    //     this.notificationService.resetTappedNotification();
+    //   }
+    // })
+
     this.queryConfig.where.push({ fieldPath: 'isActive', opStr: '==', value: true });
     this.queryConfig.where.push({ fieldPath: 'isVerified', opStr: '==', value: true });
     this.page.init(this.queryConfig);
@@ -105,29 +118,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   async addNew() {
-    const modal = await this.modalController.create({
-      component: ArchakaPostEditorComponent
-    });
-
-    modal.onDidDismiss().then(result => {
-      if (result.role === 'ok') {
-        if (!!result.data) {
-
-          this.busy.show();
-
-          this.postsService.addOrUpdatePost(result.data).then(() => {
-            this.toast.show("Ad updated successfully...");
-            this.busy.hide();
-          }).catch(err => {
-            this.toast.error(err);
-            this.busy.hide();
-          });
-
-        }
-      }
-    })
-
-    return await modal.present();
+    await this.postsService.addNew();
   }
 
   invite() {
@@ -139,135 +130,35 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   async writeFeedback() {
-
-    const modal = await this.modalController.create({
-      component: NgxGenericFormComponent,
-      componentProps: {
-        formConfig: environment.formConfigs.feedbackForm,
-        pageTitle: "Feedback Form...",
-        headerColor: 'primary',
-        contentColor: 'secondary'
-      }
-    });
-
-    modal.onDidDismiss().then(async result => {
-      if (result.role === 'ok') {
-        if (!!result.data) {
-
-          this.busy.show();
-
-          let mySelf = await this.profileService.profile.pipe(take(1)).toPromise();
-
-          if (!!mySelf) {
-
-            try {
-
-              let reportInfo = {
-                feedbackInfo: result.data,
-                providedBy: mySelf
-              }
-
-              this.handleUndefined(reportInfo);
-
-              await this.ngxGenericFormService.report('feedbacks', reportInfo);
-              this.toast.show("Your information is saved...");
-              this.busy.hide();
-            }
-            catch (err) {
-              this.toast.error(err);
-              this.busy.hide();
-            }
-          }
-
-        }
-      }
-    })
-
-    return await modal.present();
-
+    await this.postsService.writeFeedback();
   }
 
   async showOptions(post) {
-
-    this.currentPost = post;
-    const buttons = [];
-
-    buttons.push({
-      text: 'Report this Ad...',
-      icon: 'assets/icons/abuse.svg',
-      cssClass: 'dangerbutton',
-      handler: async () => { this.reportAbuse(); }
-    });
-
-    const actionSheet = await this.actionSheetController.create({
-      header: 'Options',
-      buttons: buttons
-    });
-
-    await actionSheet.present();
-
+    await this.postsService.showPostOptions(post);
   }
 
-  private handleUndefined = (obj) => {
-    Object.keys(obj).forEach(key => {
-      if (obj[key] && typeof obj[key] === 'object') this.handleUndefined(obj[key]);
-      else if (obj[key] === undefined) obj[key] = null;
+  scrollToElement(id: string) {
+    var titleELe = document.getElementById(id);
+    this.content.scrollToPoint(0, titleELe.offsetTop, 1000);
+  }
+
+  async openPost(id: string) {
+    const modal = await this.modalController.create({
+      component: ArchakaPostViewComponent,
+      componentProps: {
+        id: id
+      }
     });
-    return obj;
-  };
 
-  async reportAbuse() {
+    await modal.present();
+  }
 
-    if (!!this.currentPost && !!this.currentPost.id) {
+  async openNotifications() {
+    const modal = await this.modalController.create({
+      component: ViewNotificationsComponent
+    });
 
-      const modal = await this.modalController.create({
-        component: NgxGenericFormComponent,
-        componentProps: {
-          formConfig: environment.formConfigs.reportAbuseForm,
-          pageTitle: "Report this Ad..."
-        }
-      });
-
-      modal.onDidDismiss().then(async result => {
-        if (result.role === 'ok') {
-          if (!!result.data) {
-
-            this.busy.show();
-
-            let mySelf = await this.profileService.profile.pipe(take(1)).toPromise();
-
-            if (!!mySelf) {
-
-              try {
-                if (!!result.data.isHidden) {
-                  await this.postsService.hideThisPost(this.currentPost.id);
-                }
-
-                let reportInfo = {
-                  subject: this.currentPost,
-                  reportedInfo: result.data,
-                  reportedBy: mySelf
-                }
-
-                this.handleUndefined(reportInfo);
-
-                await this.ngxGenericFormService.report('reportabuse', reportInfo);
-                this.toast.show("Your information is saved...");
-                this.busy.hide();
-              }
-              catch (err) {
-                this.toast.error(err);
-                this.busy.hide();
-              }
-            }
-
-          }
-        }
-      })
-
-      return await modal.present();
-
-    }
+    await modal.present();
   }
 
   ngOnDestroy() {

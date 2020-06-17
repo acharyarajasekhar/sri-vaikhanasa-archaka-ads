@@ -1,0 +1,36 @@
+<ion-header class="ion-no-border">
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-button (click)="cancel()">
+                <ion-icon name="arrow-back-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-buttons slot="end">
+            <ion-button fill="clear" (click)="ClearAll()" size="small" color="danger">
+                Clear
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <div class="container" style="max-width: 600px; padding-top: 15px;">
+        <ion-list>
+            <ion-item *ngFor="let n of notifications$ | async" (click)="openPost(n?.data?.id)">
+                <ion-icon name="notifications-circle-outline" slot="start"></ion-icon>
+                <ion-label>
+                    <h2>{{ n?.title }}</h2>
+                    <p>{{ n?.body }}</p>
+                </ion-label>
+            </ion-item>
+        </ion-list>
+    </div>
+
+    <ng-container *ngIf="notificationCount == 0">
+        <div id="noitemscontainer" class="ion-activatable">
+            <ion-ripple-effect></ion-ripple-effect>
+            <ion-icon name="notifications" style="font-size: 32px;"></ion-icon>
+            <p>No New Notifications...</p>
+        </div>
+    </ng-container>
+</ion-content>

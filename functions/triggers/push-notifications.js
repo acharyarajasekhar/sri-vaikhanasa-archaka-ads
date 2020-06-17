@@ -11,6 +11,10 @@ module.exports.newAdNotification = functions.firestore.document('archakaposts/{p
             notification: {
                 title: 'New Archaka Ad...',
                 body: `Temple Name: ${newData.name}, Salary: Rs.${newData.salary}/-`
+            },
+            data: {
+                type: 'archakaad',
+                id: newData.id
             }
         };
 
@@ -35,6 +39,10 @@ module.exports.updatedAdNotification = functions.firestore.document('archakapost
                 notification: {
                     title: 'Updated Archaka Ad...',
                     body: `Temple Name: ${newData.name}, Salary: Rs.${newData.salary}/-`
+                },
+                data: {
+                    type: 'archakaad',
+                    id: newData.id
                 }
             };
 
@@ -61,6 +69,10 @@ module.exports.reportAbuseNotification = functions.firestore.document('reportabu
             notification: {
                 title: `Report Abuse: ${newData.reportedInfo.type} (${newData.reportedInfo.isHidden})`,
                 body: `${newData.reportedInfo.description} - ${newData.reportedBy.displayName}`
+            },
+            data: {
+                type: 'archakaad',
+                id: newData.id
             }
         };
 
@@ -83,6 +95,10 @@ module.exports.feedbackNotification = functions.firestore.document('feedbacks/{i
             notification: {
                 title: `Feedback: ${newData.feedbackInfo.type}`,
                 body: `${newData.feedbackInfo.description} - ${newData.providedBy.displayName}`
+            },
+            data: {
+                type: 'feedback',
+                id: newData.id
             }
         };
 
