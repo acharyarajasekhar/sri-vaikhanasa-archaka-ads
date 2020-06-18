@@ -1,63 +1,92 @@
 import { Injectable } from '@angular/core';
-import { NativeFirebasePushNotificationService } from '@acharyarajasekhar/ion-native-services';
-import { BehaviorSubject } from 'rxjs';
-import { ToastService } from '@acharyarajasekhar/ngx-utility-services';
 import { ArchakaPostViewComponent } from '../archaka-post-view/archaka-post-view.component';
-import { ModalController } from '@ionic/angular';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { AuthService } from './auth.service';
+import { map } from 'rxjs/operators';
+import * as _ from 'lodash';
+import { NativeFirebasePushNotificationService } from '@acharyarajasekhar/ion-native-services';
+import { ToastService } from '@acharyarajasekhar/ngx-utility-services';
+import { ModalController, Platform } from '@ionic/angular';
 
 @Injectable({
     providedIn: 'root'
 })
 export class NotificationService {
 
-    private listOfNotifications: Array<any> = [];
-    public listOfNotifications$ = new BehaviorSubject<Array<any>>(this.listOfNotifications);
+    listOfNotifications: Array<any> = [];
 
     constructor(
-        private nativeFirebasePushNotificationService: NativeFirebasePushNotificationService,
+        private platform: Platform,
+        private store: AngularFirestore,
+        private authService: AuthService,
         private toast: ToastService,
-        private modalController: ModalController
-    ) { }
+        private modalController: ModalController,
+        private nativeFirebasePushNotificationService: NativeFirebasePushNotificationService,
+    ) {
 
-    public init() {
+        this.nativeFirebasePushNotificationService.init();
+
         this.nativeFirebasePushNotificationService.pushNotificationActionPerformed.subscribe(notification => {
-            alert(JSON.stringify(notification));
-            if (!!notification) {
-                setTimeout(async () => {
-                    if (notification.notification.data.type === "archakaad") {
-                        let id = notification.notification.data.id;
-                        if (!!id) {
-                            await this.openPost(id);
-                        }
-                    }
-                }, 1000);
+            if (!!notification && !!notification.notification && !!notification.notification.data && notification.notification.data.type === 'archakaad') {
+                const notifi = JSON.parse(JSON.stringify(notification));
+                this.platform.ready().then(async () => {
+                    setTimeout(async () => {
+                        const modal = await this.modalController.create({
+                            component: ArchakaPostViewComponent,
+                            componentProps: {
+                                id: notifi.notification.data.id
+                            }
+                        });
+                        await modal.present();
+                    }, 500)
+                });
             }
         });
 
         this.nativeFirebasePushNotificationService.pushNotificationReceived.subscribe(notification => {
-            this.listOfNotifications.push(notification);
-            this.listOfNotifications$.next(this.listOfNotifications);
-            this.toast.show("New Notification Received...");
+            // alert("Received: " + JSON.stringify(notification));    
+            this.toast.show("New notification received...");
+        });
+
+        this.authService.user.subscribe(u => {
+            if (!!u && !!u.uid) {
+                this.store.collection('notifications', q => q.where('userId', '==', u.uid)).snapshotChanges()
+                    .pipe(map(actions => actions.map(this.documentToDomainObject))).subscribe(notifications => {
+                        this.listOfNotifications = notifications;
+                        console.log(notifications)
+                    })
+            }
         })
     }
 
+    init() { }
+
+    documentToDomainObject = _ => {
+        const object = _.payload.doc.data();
+        object.id = _.payload.doc.id;
+        return object;
+    }
+
+    deleteOne(id: any) {
+        return this.store.collection('notifications').doc(id).delete();
+    }
+
     clearAll() {
-        this.listOfNotifications = [];
-        this.listOfNotifications$.next(this.listOfNotifications);
+        let temp = JSON.parse(JSON.stringify(this.listOfNotifications));
+        _.forEach(temp, async (item) => {
+            await this.deleteOne(item.id);
+        })
+    }
+
+    setAllAsRed() {
+        let temp = JSON.parse(JSON.stringify(this.listOfNotifications));
+        _.forEach(temp, async (item) => {
+            await this.store.collection('notifications').doc(item.id).set({ isNew: false }, { merge: true });
+        })
     }
 
     public getCount() {
-        return this.listOfNotifications.length || 0;
+        return _.filter(this.listOfNotifications, function (o) { if (!!o.isNew) return o }).length || 0;
     }
 
-    async openPost(id: string) {
-        const modal = await this.modalController.create({
-            component: ArchakaPostViewComponent,
-            componentProps: {
-                id: id
-            }
-        });
-
-        await modal.present();
-    }
 }

@@ -52,16 +52,16 @@ export class AppComponent implements OnInit {
         this.statusBar.backgroundColorByHexString('#004a8f');
         setTimeout(() => {
           SplashScreen.hide();
-        }, 2000);
+        }, 500);
         this.nativeAppVersionService.init().then(() => {
           this.nativeAppRateService.init();
-        });
-        this.notificationService.init();
+        });        
       }
 
       this.profileService.profile.subscribe(p => {
         this.profile = p;
       });
+      this.notificationService.init();
       this.backButtonHandler.init();
     });
   }

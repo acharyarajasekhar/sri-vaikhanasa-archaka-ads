@@ -252,7 +252,8 @@ export class PostsService {
                                 let reportInfo = {
                                     subject: post,
                                     reportedInfo: result.data,
-                                    reportedBy: mySelf
+                                    reportedBy: mySelf,
+                                    reportedAt: this.timestamp
                                 }
 
                                 this.handleUndefined(reportInfo);
@@ -302,7 +303,8 @@ export class PostsService {
 
                             let reportInfo = {
                                 feedbackInfo: result.data,
-                                providedBy: mySelf
+                                providedBy: mySelf,
+                                providedAt: this.timestamp
                             }
 
                             this.handleUndefined(reportInfo);

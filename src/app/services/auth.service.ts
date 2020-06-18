@@ -5,6 +5,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { BusyIndicatorService } from '@acharyarajasekhar/busy-indicator';
 import { NativeFirebasePushNotificationService } from '@acharyarajasekhar/ion-native-services';
 import { Platform } from '@ionic/angular';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -23,15 +24,23 @@ export class AuthService {
     private fireAuth: AngularFireAuth,
     private nativeFirebasePushNotificationService: NativeFirebasePushNotificationService,
     private busyIndicatorService: BusyIndicatorService,
+    private store: AngularFirestore,
     private router: Router) {
-
-    this.nativeFirebasePushNotificationService.init();
 
     this.authState = this.fireAuth.authState;
     this.authState.subscribe(u => {
 
       if (!!u && !!u.uid) {
         if (this.platform.is('mobile')) {
+          this.nativeFirebasePushNotificationService.registration.asObservable().subscribe(token => {
+            if (!!token) {
+              this.store.collection('fcm').doc(u.uid).set({
+                fcmToken: token,
+                userId: u.uid
+              })
+            }
+          });
+
           this.nativeFirebasePushNotificationService.subscribeToTopic(this.userNotificationTopic)
             .then(() => console.log('subscribed to topic: ' + this.userNotificationTopic))
             .catch(err => console.log('ERROR while subscribing to topic: ' + this.userNotificationTopic));

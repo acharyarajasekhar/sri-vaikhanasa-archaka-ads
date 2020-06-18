@@ -76,20 +76,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ionViewDidEnter() {
-
-    // this.notificationService.tappedNotification$.asObservable().subscribe(async notification => {
-    //   alert(JSON.stringify(notification));
-    //   if (!!notification) {
-    //     if (notification.notification.data.type === "archakaad") {
-    //       let id = notification.notification.data.id;
-    //       if (!!id) {
-    //         await this.openPost(id);
-    //       }
-    //     }
-    //     this.notificationService.resetTappedNotification();
-    //   }
-    // })
-
     this.queryConfig.where.push({ fieldPath: 'isActive', opStr: '==', value: true });
     this.queryConfig.where.push({ fieldPath: 'isVerified', opStr: '==', value: true });
     this.page.init(this.queryConfig);
@@ -157,6 +143,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     const modal = await this.modalController.create({
       component: ViewNotificationsComponent
     });
+
+    modal.onDidDismiss().then(() => {
+      this.notificationService.setAllAsRed();
+    })
 
     await modal.present();
   }

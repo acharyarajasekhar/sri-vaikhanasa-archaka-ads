@@ -13,7 +13,7 @@ module.exports = functions.auth.user().onCreate(user => {
         phoneNumber: user.phoneNumber,
         isActive: !user.disabled
     };
-    
-    return db.collection('users').doc(user.uid).set(userProfile);
-    
+
+    return db.collection('users').doc(user.uid).set(userProfile, { merge: true });
+
 });

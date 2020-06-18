@@ -14,9 +14,12 @@ module.exports.newAdNotification = functions.firestore.document('archakaposts/{p
             },
             data: {
                 type: 'archakaad',
-                id: newData.id
+                id: newData.id,
+                ownerId: newData.ownerId
             }
         };
+
+        storeAsNotifications(payload);
 
         return admin.messaging().sendToTopic("userchannel", payload)
             .then(function (response) {
@@ -42,9 +45,12 @@ module.exports.updatedAdNotification = functions.firestore.document('archakapost
                 },
                 data: {
                     type: 'archakaad',
-                    id: newData.id
+                    id: newData.id,
+                    ownerId: newData.ownerId
                 }
             };
+
+            storeAsNotifications(payload);
 
             return admin.messaging().sendToTopic("userchannel", payload)
                 .then(function (response) {
@@ -71,7 +77,7 @@ module.exports.reportAbuseNotification = functions.firestore.document('reportabu
                 body: `${newData.reportedInfo.description} - ${newData.reportedBy.displayName}`
             },
             data: {
-                type: 'archakaad',
+                type: 'report',
                 id: newData.id
             }
         };
@@ -111,3 +117,18 @@ module.exports.feedbackNotification = functions.firestore.document('feedbacks/{i
             });
 
     });
+
+function storeAsNotifications(payload) {
+    admin.firestore().collection('users').get().then((data) => {
+        data.forEach((doc) => {
+            if (doc.id !== payload.data.ownerId) {
+                admin.firestore().collection('notifications').add({
+                    userId: doc.id,
+                    notification: payload,
+                    dttm: admin.firestore.FieldValue.serverTimestamp(),
+                    isNew: true
+                });
+            }
+        });
+    });
+}

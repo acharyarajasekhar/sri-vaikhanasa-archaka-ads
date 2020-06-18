@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NotificationService } from '../services/notification.service';
 import { ModalController } from '@ionic/angular';
 import { ArchakaPostViewComponent } from '../archaka-post-view/archaka-post-view.component';
+import * as _ from 'lodash';
 
 @Component({
   templateUrl: './view-notifications.component.html',
@@ -9,14 +10,17 @@ import { ArchakaPostViewComponent } from '../archaka-post-view/archaka-post-view
 })
 export class ViewNotificationsComponent implements OnInit {
 
-  notifications$: any;
-
   constructor(
     private modalController: ModalController,
     private notificationService: NotificationService) { }
 
-  ngOnInit(): void {
-    this.notifications$ = this.notificationService.listOfNotifications$.asObservable();
+  ngOnInit(): void { }
+
+  get sortedNotifications() {
+    if (!!this.notificationService.listOfNotifications && this.notificationService.listOfNotifications.length > 0) {
+      return _.orderBy(this.notificationService.listOfNotifications, ['dttm'], ['desc']);
+    }
+    return [];
   }
 
   async openPost(id: string) {
@@ -34,11 +38,15 @@ export class ViewNotificationsComponent implements OnInit {
   }
 
   get notificationCount() {
-    return this.notificationService.getCount();
+    return this.sortedNotifications.length;
   }
 
   ClearAll() {
     this.notificationService.clearAll();
+  }
+
+  async clearThis(id) {
+    await this.notificationService.deleteOne(id);
   }
 
   cancel() {
