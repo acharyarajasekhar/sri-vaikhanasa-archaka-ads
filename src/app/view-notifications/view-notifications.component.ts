@@ -3,10 +3,29 @@ import { NotificationService } from '../services/notification.service';
 import { ModalController } from '@ionic/angular';
 import { ArchakaPostViewComponent } from '../archaka-post-view/archaka-post-view.component';
 import * as _ from 'lodash';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
   templateUrl: './view-notifications.component.html',
-  styleUrls: ['./view-notifications.component.css']
+  styleUrls: ['./view-notifications.component.css'],
+  animations: [
+    trigger('listItemState', [
+      state('in',
+        style({
+          opacity: 1,
+          height: '*',
+          minHeight: '*'
+        })
+      ),
+      transition('* => void', [
+        animate('0.25s ease-out', style({
+          opacity: 0,
+          height: '1px',
+          minHeight: '1px'
+        }))
+      ])
+    ])
+  ]
 })
 export class ViewNotificationsComponent implements OnInit {
 

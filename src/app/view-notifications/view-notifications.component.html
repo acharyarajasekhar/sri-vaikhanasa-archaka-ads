@@ -4,7 +4,7 @@
             <ion-button (click)="cancel()">
                 <ion-icon name="arrow-back-outline"></ion-icon>
             </ion-button>
-        </ion-buttons>        
+        </ion-buttons>
         <ion-title>Notifications</ion-title>
         <ion-buttons slot="end">
             <ion-button fill="clear" (click)="ClearAll()" size="small">
@@ -16,12 +16,9 @@
 
 <ion-content>
     <div class="container" style="max-width: 600px; padding-top: 15px;">
-        <ion-list>
-            <ion-item-sliding *ngFor="let n of sortedNotifications">
+        <ion-list lines="none">
+            <ion-item-sliding *ngFor="let n of sortedNotifications" [@listItemState]="'in'">
                 <ion-item-options side="start" (ionSwipe)="clearThis(n?.id)">
-                    <ion-item-option color="danger" expandable>
-                        Clear
-                    </ion-item-option>
                 </ion-item-options>
 
                 <ion-item (click)="openPost(n?.notification?.data?.id)">
@@ -34,9 +31,6 @@
                 </ion-item>
 
                 <ion-item-options side="end" (ionSwipe)="clearThis(n?.id)">
-                    <ion-item-option color="danger" expandable>
-                        Clear
-                    </ion-item-option>
                 </ion-item-options>
             </ion-item-sliding>
 

@@ -42,5 +42,5 @@ ion-note {
   }
 
   ion-item {
-    --background: var(--ion-color-light,#f4f5f8)!important;
+    margin-bottom: 10px;
   }

@@ -14,8 +14,8 @@
 </ion-header>
 
 <ion-content>
-  <div class="container" style="max-width: 600px;">
-    <profile-card [avatarUrl]="profile?.photoURL || defaults.avatarUrl" [coverPhotoUrl]="profile?.coverPhotoURL"
+  <div class="container" style="max-width: 600px; padding-top: 15px;">
+    <profile-card displayFlat="true" [avatarUrl]="profile?.photoURL || defaults.avatarUrl" [coverPhotoUrl]="profile?.coverPhotoURL"
       [coverBgColor]="defaults.coverPhotoBgColor" [title]="profile?.displayName || 'Guest User'" [subTitles]="subTitles">
       <ion-list lines="none">
         <ion-item href="tel:{{profile?.phoneNumber}}" button="true">

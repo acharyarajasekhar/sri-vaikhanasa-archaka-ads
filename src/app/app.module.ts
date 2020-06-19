@@ -44,6 +44,7 @@ import { NgxGenericFormModule } from '@acharyarajasekhar/ngx-generic-form';
 import { AppVersion } from '@ionic-native/app-version/ngx';
 import { ArchakaPostViewComponent } from './archaka-post-view/archaka-post-view.component';
 import { ViewNotificationsComponent } from './view-notifications/view-notifications.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
    declarations: [
@@ -64,6 +65,7 @@ import { ViewNotificationsComponent } from './view-notifications/view-notificati
    entryComponents: [ArchakaPostViewComponent, ViewNotificationsComponent],
    imports: [
       BrowserModule,
+      BrowserAnimationsModule,
       IonicModule.forRoot(),
       AppRoutingModule,
       FormsModule,

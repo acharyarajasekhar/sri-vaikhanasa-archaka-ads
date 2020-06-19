@@ -45,7 +45,7 @@ export class NotificationService {
 
         this.nativeFirebasePushNotificationService.pushNotificationReceived.subscribe(notification => {
             // alert("Received: " + JSON.stringify(notification));    
-            this.toast.show("New notification received...");
+            // this.toast.show("New notification received...");
         });
 
         this.authService.user.subscribe(u => {
