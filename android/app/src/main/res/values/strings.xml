@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">Archaka Ads</string>
-    <string name="title_activity_main">Archaka Ads</string>
+    <string name="app_name">ArchakaAds</string>
+    <string name="title_activity_main">ArchakaAds</string>
     <string name="package_name">net.srivaikhanasa.archakaads</string>
     <string name="custom_url_scheme">net.srivaikhanasa.archakaads</string>
 </resources>

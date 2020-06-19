@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { AuthService } from './services/auth.service';
 import { Router, RouterEvent } from '@angular/router';
@@ -31,6 +31,7 @@ export class AppComponent implements OnInit {
   constructor(
     private platform: Platform,
     private statusBar: StatusBar,
+    private ngZone: NgZone,
     private router: Router,
     private authService: AuthService,
     private profileService: ProfileService,
@@ -55,7 +56,7 @@ export class AppComponent implements OnInit {
         }, 500);
         this.nativeAppVersionService.init().then(() => {
           this.nativeAppRateService.init();
-        });        
+        });
       }
 
       this.profileService.profile.subscribe(p => {
@@ -69,8 +70,14 @@ export class AppComponent implements OnInit {
   ngOnInit() {
 
     this.networkService.onlineChanges.subscribe(isOnline => {
-      if (isOnline) this.networkAlertService.hide();
-      else this.networkAlertService.show();
+      this.ngZone.run(() => {
+        if (isOnline) {
+          this.networkAlertService.hide();
+        }
+        else {
+          this.networkAlertService.show();
+        }
+      });
     })
 
     this.router.events.subscribe((event: RouterEvent) => {

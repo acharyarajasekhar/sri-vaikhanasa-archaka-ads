@@ -21,13 +21,15 @@
                 <ion-item-options side="start" (ionSwipe)="clearThis(n?.id)">
                 </ion-item-options>
 
-                <ion-item (click)="openPost(n?.notification?.data?.id)">
-                    <ion-icon name="notifications-circle-outline" slot="start"
-                        [color]="!!n?.isNew ? 'secondary' : 'medium'"></ion-icon>
+                <ion-item (click)="openPost(n?.notification?.data?.id)" [ngStyle]="{ 'border-left': !!n?.isNew ? '3px solid #3dc2ff' : '3px solid lightgray' }">
+                    <!-- <ion-icon name="notifications-circle-outline" slot="start"
+                        [color]="!!n?.isNew ? 'secondary' : 'medium'"></ion-icon> -->
                     <ion-label class="ion-text-wrap">
                         <h2>{{ n?.notification?.notification?.title }}</h2>
                         <p>{{ n?.notification?.notification?.body }}</p>
+                        <small>{{ n?.dttm?.toDate() | timeAgo }}</small>
                     </ion-label>
+                    <!-- <ion-note slot="end"></ion-note> -->
                 </ion-item>
 
                 <ion-item-options side="end" (ionSwipe)="clearThis(n?.id)">
