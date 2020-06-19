@@ -5,15 +5,12 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Home</ion-title>
+    <ion-title>Archaka Ads</ion-title>
     <ion-buttons slot="end">
       <ion-button fill="clear" (click)="openNotifications()">
         <ion-icon name="notifications"></ion-icon>
         <ion-badge slot="end" *ngIf="notificationCount > 0">{{ notificationCount }}</ion-badge>
       </ion-button>
-      <!-- <ion-button fill="clear">
-        <ion-icon name="funnel"></ion-icon>
-      </ion-button> -->
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -104,7 +101,7 @@
   </div>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button size='small' (click)="addNew()">
+    <ion-fab-button size='small' (click)="addNew()" color="primary">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>

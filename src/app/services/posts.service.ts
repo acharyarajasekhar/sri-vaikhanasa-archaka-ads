@@ -260,14 +260,13 @@ export class PostsService {
 
                                 await this.ngxGenericFormService.report('reportabuse', reportInfo);
                                 this.toast.show("Your information is submitted...");
-                                this.busy.hide();
                             }
                             catch (err) {
                                 this.toast.error(err);
-                                this.busy.hide();
+                                
                             }
                         }
-
+                        this.busy.hide();
                     }
                 }
             })

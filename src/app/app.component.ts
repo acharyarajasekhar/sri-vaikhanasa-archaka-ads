@@ -4,7 +4,7 @@ import { AuthService } from './services/auth.service';
 import { Router, RouterEvent } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { ProfileService } from './services/profile.service';
-import { NetworkService, NetworkAlertService } from '@acharyarajasekhar/network-alert';
+import { NetworkService, NetworkAlertService } from '@acharyarajasekhar/ngx-network-alert';
 import { BackButtonHandler, ToastService } from '@acharyarajasekhar/ngx-utility-services';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Plugins } from '@capacitor/core';

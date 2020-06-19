@@ -11,7 +11,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 
 import { BusyIndicatorModule } from '@acharyarajasekhar/busy-indicator';
 import { ProfileCardModule } from '@acharyarajasekhar/profile-card';
-import { NetworkAlertModule } from '@acharyarajasekhar/network-alert';
+import { NetworkAlertModule } from '@acharyarajasekhar/ngx-network-alert';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';

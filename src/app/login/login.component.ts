@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-login',
-  template: '<ngx-firebase-phone-login></ngx-firebase-phone-login>',
-  styles: []
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
 })
 export class LoginComponent { }

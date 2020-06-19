@@ -53,7 +53,6 @@ export class NotificationService {
                 this.store.collection('notifications', q => q.where('userId', '==', u.uid)).snapshotChanges()
                     .pipe(map(actions => actions.map(this.documentToDomainObject))).subscribe(notifications => {
                         this.listOfNotifications = notifications;
-                        console.log(notifications)
                     })
             }
         })
