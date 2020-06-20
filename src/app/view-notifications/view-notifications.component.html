@@ -17,22 +17,24 @@
 <ion-content>
     <div class="container" style="max-width: 600px; padding-top: 15px;">
         <ion-list lines="none">
-            <ion-item-sliding *ngFor="let n of sortedNotifications" [@listItemState]="'in'">
-                <ion-item-options side="start" (ionSwipe)="clearThis(n?.id)">
+            <ion-item-sliding *ngFor="let n of sortedNotifications; let indx = index" [@listItemState]="'in'">
+                <ion-item-options side="start" (ionSwipe)="clearThis(n?.id, indx)">
                 </ion-item-options>
 
-                <ion-item (click)="openPost(n?.notification?.data?.id)" [ngStyle]="{ 'border-left': !!n?.isNew ? '3px solid #3dc2ff' : '3px solid lightgray' }">
+                <ion-item (click)="openPost(n?.notification?.data?.id)"
+                    [ngStyle]="{ 'border-left': !!n?.isNew ? '3px solid #3dc2ff' : '3px solid lightgray' }">
                     <!-- <ion-icon name="notifications-circle-outline" slot="start"
                         [color]="!!n?.isNew ? 'secondary' : 'medium'"></ion-icon> -->
                     <ion-label class="ion-text-wrap">
                         <h2>{{ n?.notification?.notification?.title }}</h2>
                         <p>{{ n?.notification?.notification?.body }}</p>
-                        <small>{{ n?.dttm?.toDate() | timeAgo }}</small>
+                        <small
+                            [ngStyle]="{ 'color': !!n?.isNew ? 'lightcoral' : '#383a3e' }">{{ n?.dttm?.toDate() | timeAgo }}</small>
                     </ion-label>
                     <!-- <ion-note slot="end"></ion-note> -->
                 </ion-item>
 
-                <ion-item-options side="end" (ionSwipe)="clearThis(n?.id)">
+                <ion-item-options side="end" (ionSwipe)="clearThis(n?.id, indx)">
                 </ion-item-options>
             </ion-item-sliding>
 

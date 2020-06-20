@@ -11,7 +11,7 @@ import { Plugins } from '@capacitor/core';
 import { NativeAppRateService, NativeAppVersionService } from '@acharyarajasekhar/ion-native-services';
 import { NotificationService } from './services/notification.service';
 
-const { SplashScreen } = Plugins;
+const { App, SplashScreen } = Plugins;
 
 @Component({
   selector: 'app-root',
@@ -46,6 +46,18 @@ export class AppComponent implements OnInit {
   }
 
   initializeApp() {
+
+    App.addListener('appUrlOpen', (data: any) => {
+      this.ngZone.run(() => {
+        // Example url: app://archakaads.srivaikhanasa.net/viewarchakaad/56hfpRWkHthakQah4N5P
+        const archakaAdId = data.url.split(".app/").pop();
+        if (!!archakaAdId) {
+          this.notificationService.openPost(archakaAdId);
+        }
+        // If no match, do nothing - let regular routing logic take over
+      });
+    });
+
     this.platform.ready().then(async () => {
       if (this.platform.is('android') || this.platform.is('ios')) {
         this.statusBar.styleDefault();
@@ -53,7 +65,7 @@ export class AppComponent implements OnInit {
         this.statusBar.backgroundColorByHexString('#004a8f');
         setTimeout(() => {
           SplashScreen.hide();
-        }, 500);
+        }, 2000);
         this.nativeAppVersionService.init().then(() => {
           this.nativeAppRateService.init();
         });

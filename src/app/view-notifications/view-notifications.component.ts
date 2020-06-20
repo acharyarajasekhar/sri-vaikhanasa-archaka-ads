@@ -29,15 +29,19 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 })
 export class ViewNotificationsComponent implements OnInit {
 
+  notificationsList: Array<any> = [];
+
   constructor(
     private modalController: ModalController,
     private notificationService: NotificationService) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.notificationsList = this.notificationService.listOfNotifications;
+  }
 
   get sortedNotifications() {
-    if (!!this.notificationService.listOfNotifications && this.notificationService.listOfNotifications.length > 0) {
-      return _.orderBy(this.notificationService.listOfNotifications, ['dttm'], ['desc']);
+    if (!!this.notificationsList && this.notificationsList.length > 0) {
+      return _.orderBy(this.notificationsList, ['dttm'], ['desc']);
     }
     return [];
   }
@@ -61,10 +65,12 @@ export class ViewNotificationsComponent implements OnInit {
   }
 
   ClearAll() {
+    this.notificationsList = [];
     this.notificationService.clearAll();
   }
 
-  async clearThis(id) {
+  async clearThis(id, index) {
+    this.notificationsList = this.notificationsList.splice(index, 1);
     await this.notificationService.deleteOne(id);
   }
 

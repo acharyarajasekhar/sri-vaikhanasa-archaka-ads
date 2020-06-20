@@ -29,17 +29,7 @@ export class NotificationService {
         this.nativeFirebasePushNotificationService.pushNotificationActionPerformed.subscribe(notification => {
             if (!!notification && !!notification.notification && !!notification.notification.data && notification.notification.data.type === 'archakaad') {
                 const notifi = JSON.parse(JSON.stringify(notification));
-                this.platform.ready().then(async () => {
-                    setTimeout(async () => {
-                        const modal = await this.modalController.create({
-                            component: ArchakaPostViewComponent,
-                            componentProps: {
-                                id: notifi.notification.data.id
-                            }
-                        });
-                        await modal.present();
-                    }, 500)
-                });
+                this.openPost(notifi.notification.data.id);
             }
         });
 
@@ -56,6 +46,20 @@ export class NotificationService {
                     })
             }
         })
+    }
+
+    openPost(archakaAdId) {
+        this.platform.ready().then(async () => {
+            setTimeout(async () => {
+                const modal = await this.modalController.create({
+                    component: ArchakaPostViewComponent,
+                    componentProps: {
+                        id: archakaAdId
+                    }
+                });
+                await modal.present();
+            }, 500)
+        });
     }
 
     init() { }

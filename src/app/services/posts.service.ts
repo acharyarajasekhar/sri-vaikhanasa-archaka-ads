@@ -12,6 +12,7 @@ import { take } from 'rxjs/operators';
 import { ProfileService } from './profile.service';
 import { ArchakaPostEditorComponent } from '../archaka-post-editor/archaka-post-editor.component';
 import { ArchakaPostViewComponent } from '../archaka-post-view/archaka-post-view.component';
+import { NativeSocialSharingService, SocialSharingContent } from '@acharyarajasekhar/ion-native-services';
 
 @Injectable({
     providedIn: 'root'
@@ -35,6 +36,7 @@ export class PostsService {
         private ngxGenericFormService: NgxGenericFormService,
         private profileService: ProfileService,
         private toast: ToastService,
+        private nativeSocialSharingService: NativeSocialSharingService,
         private uploadService: FireStorageUploadService
     ) {
         this.authService.authState.subscribe(u => {
@@ -97,6 +99,20 @@ export class PostsService {
         return this.store.collection('archakaposts').doc(id).valueChanges();
     }
 
+    shareThisPost(post: any) {
+        if (!!post && post.id) {
+
+            let message: SocialSharingContent = {
+                message: `Archaka required for '${post.name}' and monthly salary is ${post.salary}. For more details install 'Archaka Ads' app from Google Play Store..`,
+                subject: 'Archaka Ads',
+                url: `https://archakaads.app/${post.id}`
+            };
+
+            this.nativeSocialSharingService.share(message).then(() => { }).catch(err => this.toast.error(err));
+
+        }
+    }
+
     hideThisPost(postId: string) {
 
         return this.store
@@ -118,6 +134,8 @@ export class PostsService {
 
         let mySelf = await this.profileService.profile.pipe(take(1)).toPromise();
 
+
+
         if (post.ownerId === mySelf.id) {
             buttons.push({
                 text: 'Edit',
@@ -130,8 +148,18 @@ export class PostsService {
                 cssClass: 'dangerbutton',
                 handler: () => { this.delete(post); }
             });
+            buttons.push({
+                text: 'Share',
+                icon: 'assets/icons/share.svg',
+                handler: () => { this.shareThisPost(post); }
+            });
         }
         else {
+            buttons.push({
+                text: 'Share',
+                icon: 'assets/icons/share.svg',
+                handler: () => { this.shareThisPost(post); }
+            });
             buttons.push({
                 text: 'Report this Ad...',
                 icon: 'assets/icons/abuse.svg',
@@ -263,7 +291,7 @@ export class PostsService {
                             }
                             catch (err) {
                                 this.toast.error(err);
-                                
+
                             }
                         }
                         this.busy.hide();

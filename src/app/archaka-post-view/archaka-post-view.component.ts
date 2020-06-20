@@ -22,8 +22,8 @@ export class ArchakaPostViewComponent implements OnInit {
     }
   }
 
-  cancel() {
-    this.modalController.dismiss(null, 'cancel');
+  async cancel() {
+    await this.modalController.dismiss(null, 'cancel');
   }
 
   async showOptions(post) {
