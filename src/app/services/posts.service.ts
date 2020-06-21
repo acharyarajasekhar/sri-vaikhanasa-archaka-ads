@@ -103,7 +103,7 @@ export class PostsService {
         if (!!post && post.id) {
 
             let message: SocialSharingContent = {
-                message: `Archaka required for '${post.name}' and monthly salary is ${post.salary}. For more details install 'Archaka Ads' app from Google Play Store..`,
+                message: `Archaka required for a temple. Temple name is '${post.name}' and monthly salary is ${post.salary}. For more details install 'Archaka Ads' app from Google Play Store..`,
                 subject: 'Archaka Ads',
                 url: `https://archakaads.app/${post.id}`
             };
@@ -128,7 +128,16 @@ export class PostsService {
 
     async showPostOptions(post: any) {
 
-        if (!post.isVerified) return;
+        if (!post.isVerified) {
+            const alert = await this.alertController.create({
+                header: 'Alert',
+                message: `Your Ad is pending for admin verification and is not allowed to edit it. It will be either published to public view very soon or else we will contact you in case of any changes required to it. Feel free to contact us using 'Write Feedback' section if required..`,
+                buttons: ['OK']
+            });
+
+            await alert.present();
+            return;
+        }
 
         const buttons = [];
 

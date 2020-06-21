@@ -70,7 +70,7 @@ export class ViewNotificationsComponent implements OnInit {
   }
 
   async clearThis(id, index) {
-    this.notificationsList = this.notificationsList.splice(index, 1);
+    this.notificationsList.splice(index, 1);
     await this.notificationService.deleteOne(id);
   }
 
