@@ -23,7 +23,7 @@
     "@acharyarajasekhar/google-maps": "^1.0.5",
     "@acharyarajasekhar/ion-native-services": "^1.1.12",
     "@acharyarajasekhar/ion-photo-slides-card": "^1.0.1",
-    "@acharyarajasekhar/ngx-firebase-phone-login": "^1.1.14",
+    "@acharyarajasekhar/ngx-firebase-phone-login": "^1.1.15",
     "@acharyarajasekhar/ngx-generic-form": "^1.0.1",
     "@acharyarajasekhar/ngx-image-cropper": "^1.0.1",
     "@acharyarajasekhar/ngx-image-preloader": "^1.0.0",
