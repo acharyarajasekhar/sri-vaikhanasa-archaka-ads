@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="net.srivaikhanasa.archakaads">
+    package="net.srivaikhanasa.archakaads.dev">
 
     <application
         android:allowBackup="true"
@@ -11,7 +11,7 @@
         android:requestLegacyExternalStorage="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme">
-
+        
         <!-- Set custom default icon. This is used when no icon is set for incoming notification messages.
              See README(https://goo.gl/l4GJaQ) for more. -->
         <meta-data
@@ -25,7 +25,7 @@
 
         <activity
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|smallestScreenSize|screenLayout|uiMode"
-            android:name="net.srivaikhanasa.archakaads.MainActivity"
+            android:name="net.srivaikhanasa.archakaads.dev.MainActivity"
             android:label="@string/title_activity_main"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBarLaunch"

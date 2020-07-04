@@ -12,6 +12,7 @@ dependencies {
     implementation project(':rdlabo-capacitor-firebase-crashlytics')
     implementation project(':capacitor-fcm')
     implementation project(':capacitor-firebase-auth')
+    implementation project(':capacitor-rate-app')
     implementation "com.soundcloud.android:android-crop:1.0.0@aar"
     implementation "com.android.support:appcompat-v7:23+"
     implementation "com.android.support:support-v4:24.1.1+"
