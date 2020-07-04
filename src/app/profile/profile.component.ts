@@ -1,8 +1,7 @@
-import { Component, OnInit, NgZone } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ProfileService } from '../services/profile.service';
 import { environment } from 'src/environments/environment';
 import { ModalController } from '@ionic/angular';
-import { ProfileEditorComponent } from './profile-editor/profile-editor.component';
 import { ToastService } from '@acharyarajasekhar/ngx-utility-services';
 import { BusyIndicatorService } from '@acharyarajasekhar/busy-indicator';
 
@@ -22,10 +21,7 @@ export class ProfileComponent implements OnInit {
   public subTitles: Array<string> = []
 
   constructor(
-    private profileService: ProfileService,
-    private modalController: ModalController,
-    private toast: ToastService,
-    private busy: BusyIndicatorService
+    private profileService: ProfileService
   ) { }
 
   ngOnInit() {
@@ -35,38 +31,7 @@ export class ProfileComponent implements OnInit {
   }
 
   async editProfile() {
-    const modal = await this.modalController.create({
-      component: ProfileEditorComponent,
-      componentProps: {
-        profile: this.profile
-      }
-    });
-
-    modal.onDidDismiss().then(result => {
-      if (result.role === 'ok') {
-        if (!!result.data) {
-
-          this.busy.show();
-
-          this.profile = {
-            ...this.profile,
-            ...result.data
-          }
-
-          this.profileService.updateProfile(this.profile).then(() => {
-            this.toast.show("Profile updated successfully...");
-            this.busy.hide();
-          }).catch(err => {
-            console.log(err);
-            this.toast.error(err);
-            this.busy.hide();
-          });
-
-        }
-      }
-    })
-
-    return await modal.present();
+    await this.profileService.editProfile();
   }
 
 }

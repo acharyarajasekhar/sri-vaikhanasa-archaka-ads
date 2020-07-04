@@ -3,10 +3,13 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { AuthService } from './auth.service';
 import { BehaviorSubject, } from 'rxjs';
 import * as firebase from 'firebase/app';
-import { FireStorageUploadService } from '@acharyarajasekhar/ngx-utility-services';
+import { FireStorageUploadService, ToastService } from '@acharyarajasekhar/ngx-utility-services';
 import { environment } from 'src/environments/environment';
-import { PopoverController } from '@ionic/angular';
+import { PopoverController, ModalController, AlertController } from '@ionic/angular';
 import { ProfilePopupCardComponent } from '../profile/profile-popup-card/profile-popup-card.component';
+import { ProfileEditorComponent } from '../profile/profile-editor/profile-editor.component';
+import { BusyIndicatorService } from '@acharyarajasekhar/busy-indicator';
+import { take } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -23,12 +26,41 @@ export class ProfileService {
   constructor(
     private authService: AuthService,
     private store: AngularFirestore,
+    private toast: ToastService,
+    private busy: BusyIndicatorService,
+    private modalController: ModalController,
     private uploadService: FireStorageUploadService,
-    private popoverController: PopoverController
+    private popoverController: PopoverController,
+    private alertController: AlertController
   ) {
     this.authService.authState.subscribe(u => {
       if (!!u && !!u.uid) {
         this.myUserID = u.uid;
+        this.store.collection('users').doc(u.uid).valueChanges().pipe(take(1)).subscribe((profileData: any) => {
+          if (!!!profileData.displayName) {
+
+            this.alertController.create({
+              cssClass: 'my-custom-class',
+              header: 'Your Profile Is Incomplete',
+              message: 'Please update your profile. We are still do not know your good name...',
+              buttons: [
+                {
+                  text: 'Cancel',
+                  role: 'cancel',
+                  handler: () => { }
+                }, {
+                  text: 'Ok',
+                  handler: async () => {
+                    await this.editProfile();
+                  }
+                }
+              ]
+            }).then(alert => {
+              alert.present();
+            });
+
+          }
+        })
         this.store.collection('users').doc(u.uid).valueChanges().subscribe(profileData => {
           this.profile.next(profileData);
         })
@@ -101,6 +133,41 @@ export class ProfileService {
     });
 
     await popover.present();
+  }
+
+  async editProfile() {
+    const modal = await this.modalController.create({
+      component: ProfileEditorComponent,
+      componentProps: {
+        profile: this.profile
+      }
+    });
+
+    modal.onDidDismiss().then(result => {
+      if (result.role === 'ok') {
+        if (!!result.data) {
+
+          this.busy.show();
+
+          this.profile = {
+            ...this.profile,
+            ...result.data
+          }
+
+          this.updateProfile(this.profile).then(() => {
+            this.toast.show("Profile updated successfully...");
+            this.busy.hide();
+          }).catch(err => {
+            console.log(err);
+            this.toast.error(err);
+            this.busy.hide();
+          });
+
+        }
+      }
+    })
+
+    return await modal.present();
   }
 
 }
