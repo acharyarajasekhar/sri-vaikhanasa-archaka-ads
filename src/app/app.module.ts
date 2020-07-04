@@ -1,4 +1,4 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
@@ -32,19 +32,17 @@ import { MyPostsComponent } from './my-posts/my-posts.component';
 import { NgxImagePreloaderModule } from '@acharyarajasekhar/ngx-image-preloader';
 import { NgxUtilityPipesModule } from '@acharyarajasekhar/ngx-utility-pipes';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
-import { NativeImagePickerService, PhotoViewerModule, NativeFirebaseAuthService, NativeSocialSharingService, NativeAppRateService, NativeAppVersionService, NativePhotoViewerService } from '@acharyarajasekhar/ion-native-services';
+import { NativeImagePickerService, PhotoViewerModule, NativeFirebaseAuthService, NativePhotoViewerService } from '@acharyarajasekhar/ion-native-services';
 import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 import { NgxFirebasePhoneLoginModule } from '@acharyarajasekhar/ngx-firebase-phone-login';
 import { ProfilePopupCardComponent } from './profile/profile-popup-card/profile-popup-card.component';
-import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 import { TabsComponent } from './tabs/tabs.component';
-import { SocialSharing } from '@ionic-native/social-sharing/ngx';
-import { AppRate } from '@ionic-native/app-rate/ngx';
 import { NgxGenericFormModule } from '@acharyarajasekhar/ngx-generic-form';
-import { AppVersion } from '@ionic-native/app-version/ngx';
 import { ArchakaPostViewComponent } from './archaka-post-view/archaka-post-view.component';
 import { ViewNotificationsComponent } from './view-notifications/view-notifications.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+import { SentryErrorHandler } from '@acharyarajasekhar/ngx-utility-services';
 
 @NgModule({
    declarations: [
@@ -83,23 +81,18 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       NgxUtilityPipesModule,
       PhotoViewerModule,
       NgxFirebasePhoneLoginModule,
-      NgxGenericFormModule
+      NgxGenericFormModule,
+      ToastrModule.forRoot()
    ],
    providers: [
       NativeFirebaseAuthService,
       NativeImagePickerService,
-      NativeSocialSharingService,
-      NativeAppRateService,
-      NativeAppVersionService,
       NativePhotoViewerService,
       ImagePicker,
       PhotoViewer,
-      AndroidPermissions,
       StatusBar,
-      SocialSharing,
-      AppRate,
-      AppVersion,
-      { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+      { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+      { provide: ErrorHandler, useClass: SentryErrorHandler }
    ],
    bootstrap: [
       AppComponent

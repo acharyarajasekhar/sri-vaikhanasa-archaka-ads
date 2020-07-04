@@ -1,5 +1,5 @@
 <profile-card displayFlat="true" [avatarUrl]="profile?.photoURL || defaults.avatarUrl" [coverPhotoUrl]="profile?.coverPhotoURL"
-    [coverBgColor]="defaults.coverPhotoBgColor" [title]="profile?.displayName || 'Guest'" [subTitles]="subTitles">
+    [coverBgColor]="defaults.coverPhotoBgColor" [title]="profile?.displayName || 'Guest User'" [subTitles]="subTitles">
     <ion-list lines="none" *ngIf=!!profile?.isPublic>
         <ion-item href="tel:{{profile?.phoneNumber}}" button="true">
             <ion-icon slot="start" color="primary" src="/assets/icons/call.svg"></ion-icon>

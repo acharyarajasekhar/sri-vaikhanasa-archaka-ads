@@ -40,6 +40,9 @@
               },
               {
                 "input": "node_modules/bootstrap/dist/css/bootstrap.min.css"
+              },
+              {
+                "input": "node_modules/ngx-toastr/toastr.css"
               }
             ],
             "scripts": [
@@ -134,7 +137,9 @@
               "tsconfig.spec.json",
               "e2e/tsconfig.json"
             ],
-            "exclude": ["**/node_modules/**"]
+            "exclude": [
+              "**/node_modules/**"
+            ]
           }
         },
         "e2e": {

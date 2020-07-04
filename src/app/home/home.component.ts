@@ -1,5 +1,5 @@
 import { Component, OnInit, NgZone, OnDestroy, ViewChild } from '@angular/core';
-import { ModalController, IonContent } from '@ionic/angular';
+import { ModalController, IonContent, AlertController } from '@ionic/angular';
 import { PostsService } from '../services/posts.service';
 import { ToastService } from '@acharyarajasekhar/ngx-utility-services';
 import * as _ from 'lodash';
@@ -7,10 +7,12 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { FirestoreDataPaginationService, WhereCondition, QueryConfig } from '@acharyarajasekhar/ngx-utility-services';
 import { environment } from 'src/environments/environment';
-import { NativeSocialSharingService, NativeAppRateService } from '@acharyarajasekhar/ion-native-services';
 import { ArchakaPostViewComponent } from '../archaka-post-view/archaka-post-view.component';
 import { ViewNotificationsComponent } from '../view-notifications/view-notifications.component';
 import { NotificationService } from '../services/notification.service';
+
+import { Plugins } from "@capacitor/core";
+const { Share } = Plugins;
 
 @Component({
   selector: 'app-home',
@@ -56,10 +58,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     private modalController: ModalController,
     private postsService: PostsService,
     private toast: ToastService,
+    private alertController: AlertController,
     public page: FirestoreDataPaginationService,
     private ngZone: NgZone,
-    private nativeSocialSharingService: NativeSocialSharingService,
-    private nativeAppRateService: NativeAppRateService,
     private notificationService: NotificationService
   ) { }
 
@@ -107,12 +108,37 @@ export class HomeComponent implements OnInit, OnDestroy {
     await this.postsService.addNew();
   }
 
-  invite() {
-    this.nativeSocialSharingService.share(environment.defaults.appInvitation).then(() => { }).catch(err => this.toast.error(err));
+  async invite() {
+    await Share.share({
+      title: environment.defaults.appInvitation.subject,
+      text: environment.defaults.appInvitation.message,
+      url: 'https://play.google.com/store/apps/details?id=net.srivaikhanasa.archakaads',
+      dialogTitle: 'Invite Others'
+    });
   }
 
-  rateThisApp() {
-    this.nativeAppRateService.promptNow().then(() => { }).catch(err => this.toast.error(err));
+  async rateThisApp() {
+
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Rate This App...',
+      message: 'If you enjoy using Archaka Ads App, would you mind taking a moment to rate it on play store? Thank you so much!',
+      buttons: [
+        {
+          text: 'No, Thanks',
+          role: 'cancel',
+          handler: () => { }
+        }, {
+          text: 'Rate It Now',
+          handler: () => {
+            Plugins.CapacitorRateApp.requestReview();
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+
   }
 
   async writeFeedback() {

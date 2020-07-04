@@ -5,11 +5,11 @@ import { Router, RouterEvent } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { ProfileService } from './services/profile.service';
 import { NetworkService, NetworkAlertService } from '@acharyarajasekhar/ngx-network-alert';
-import { BackButtonHandler, ToastService } from '@acharyarajasekhar/ngx-utility-services';
+import { BackButtonHandler } from '@acharyarajasekhar/ngx-utility-services';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Plugins } from '@capacitor/core';
-import { NativeAppRateService, NativeAppVersionService } from '@acharyarajasekhar/ion-native-services';
 import { NotificationService } from './services/notification.service';
+import { SentryErrorHandler } from '@acharyarajasekhar/ngx-utility-services';
 
 const { App, SplashScreen } = Plugins;
 
@@ -38,9 +38,8 @@ export class AppComponent implements OnInit {
     private networkService: NetworkService,
     private networkAlertService: NetworkAlertService,
     private backButtonHandler: BackButtonHandler,
-    private nativeAppRateService: NativeAppRateService,
-    private nativeAppVersionService: NativeAppVersionService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private sentryErrorHandler: SentryErrorHandler
   ) {
     this.initializeApp();
   }
@@ -66,9 +65,6 @@ export class AppComponent implements OnInit {
         setTimeout(() => {
           SplashScreen.hide();
         }, 2000);
-        this.nativeAppVersionService.init().then(() => {
-          this.nativeAppRateService.init();
-        });
       }
 
       this.profileService.profile.subscribe(p => {
@@ -76,6 +72,7 @@ export class AppComponent implements OnInit {
       });
       this.notificationService.init();
       this.backButtonHandler.init();
+      this.sentryErrorHandler.init(environment.sentryConfig.dsn);
     });
   }
 

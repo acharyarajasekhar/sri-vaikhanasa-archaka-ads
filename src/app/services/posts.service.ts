@@ -12,7 +12,10 @@ import { take } from 'rxjs/operators';
 import { ProfileService } from './profile.service';
 import { ArchakaPostEditorComponent } from '../archaka-post-editor/archaka-post-editor.component';
 import { ArchakaPostViewComponent } from '../archaka-post-view/archaka-post-view.component';
-import { NativeSocialSharingService, SocialSharingContent } from '@acharyarajasekhar/ion-native-services';
+
+import { Plugins } from '@capacitor/core';
+import { Router } from '@angular/router';
+const { Share } = Plugins;
 
 @Injectable({
     providedIn: 'root'
@@ -36,7 +39,7 @@ export class PostsService {
         private ngxGenericFormService: NgxGenericFormService,
         private profileService: ProfileService,
         private toast: ToastService,
-        private nativeSocialSharingService: NativeSocialSharingService,
+        private router: Router,
         private uploadService: FireStorageUploadService
     ) {
         this.authService.authState.subscribe(u => {
@@ -66,6 +69,37 @@ export class PostsService {
                 res(photos);
             }
         });
+    }
+
+    async amIEligible() {
+        let mySelf = await this.profileService.profile.pipe(take(1)).toPromise();
+
+        if (!!!mySelf?.displayName) {
+
+            const alert = await this.alertController.create({
+                cssClass: 'my-custom-class',
+                header: 'Alert!',
+                message: 'Please update your profile information before proceeding to this option...',
+                buttons: [
+                    {
+                        text: 'Cancel',
+                        role: 'cancel',
+                        handler: () => { }
+                    }, {
+                        text: 'Goto MyProfle Now',
+                        handler: () => {
+                            this.router.navigate(['/profile']);
+                        }
+                    }
+                ]
+            });
+
+            await alert.present();
+            
+            return false;
+        }
+
+        return true;
     }
 
     addOrUpdatePost(post: any) {
@@ -102,13 +136,12 @@ export class PostsService {
     shareThisPost(post: any) {
         if (!!post && post.id) {
 
-            let message: SocialSharingContent = {
-                message: `Archaka required for a temple. Temple name is '${post.name}' and monthly salary is ${post.salary}. For more details install 'Archaka Ads' app from Google Play Store..`,
-                subject: 'Archaka Ads',
-                url: `https://archakaads.app/${post.id}`
-            };
-
-            this.nativeSocialSharingService.share(message).then(() => { }).catch(err => this.toast.error(err));
+            Share.share({
+                title: 'Archaka Ads',
+                text: `Archaka required for a temple. Temple name is '${post.name}' and monthly salary is ${post.salary}. For more details install 'Archaka Ads' app from Google Play Store..`,
+                url: `https://archakaads.app/${post.id}`,
+                dialogTitle: 'Share this Ad...'
+            }).then(() => { }).catch(err => this.toast.error(err));
 
         }
     }
@@ -127,6 +160,8 @@ export class PostsService {
     }
 
     async showPostOptions(post: any) {
+
+        if (!!!await this.amIEligible()) return;
 
         if (!post.isVerified) {
             const alert = await this.alertController.create({
@@ -364,6 +399,9 @@ export class PostsService {
     }
 
     async addNew() {
+
+        if (!!!await this.amIEligible()) return;
+
         const modal = await this.modalController.create({
             component: ArchakaPostEditorComponent
         });

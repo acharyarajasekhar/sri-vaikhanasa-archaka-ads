@@ -5,7 +5,6 @@ import { AuthService } from './auth.service';
 import { map } from 'rxjs/operators';
 import * as _ from 'lodash';
 import { NativeFirebasePushNotificationService } from '@acharyarajasekhar/ion-native-services';
-import { ToastService } from '@acharyarajasekhar/ngx-utility-services';
 import { ModalController, Platform } from '@ionic/angular';
 
 @Injectable({
@@ -19,7 +18,6 @@ export class NotificationService {
         private platform: Platform,
         private store: AngularFirestore,
         private authService: AuthService,
-        private toast: ToastService,
         private modalController: ModalController,
         private nativeFirebasePushNotificationService: NativeFirebasePushNotificationService,
     ) {

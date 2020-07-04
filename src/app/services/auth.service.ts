@@ -3,9 +3,10 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { BusyIndicatorService } from '@acharyarajasekhar/busy-indicator';
-import { NativeFirebasePushNotificationService } from '@acharyarajasekhar/ion-native-services';
-import { Platform } from '@ionic/angular';
+import { NativeFirebasePushNotificationService, NativeFirebaseAuthService } from '@acharyarajasekhar/ion-native-services';
+import { Platform, AlertController } from '@ionic/angular';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { take } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -23,8 +24,10 @@ export class AuthService {
     private platform: Platform,
     private fireAuth: AngularFireAuth,
     private nativeFirebasePushNotificationService: NativeFirebasePushNotificationService,
-    private busyIndicatorService: BusyIndicatorService,
+    private busy: BusyIndicatorService,
     private store: AngularFirestore,
+    private alertController: AlertController,
+    private nativeFirebaseAuthService: NativeFirebaseAuthService,
     private router: Router) {
 
     this.authState = this.fireAuth.authState;
@@ -78,11 +81,32 @@ export class AuthService {
   }
 
   async logout() {
-    await this.busyIndicatorService.show();
-    this.fireAuth.signOut().then(() => {
-      this.busyIndicatorService.hide();
-      this.router.navigate(['/login']);
-    })
+
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Confirm!',
+      message: 'Do you really want to <strong>Logout</strong>!!! <br/><br/><small><strong>Note: </strong>For security reasons, we will close this application on successfull logout.</small>',
+      buttons: [
+        {
+          text: 'No',
+          role: 'cancel',
+          handler: () => { }
+        }, {
+          text: 'Yes',
+          handler: async () => {
+            await this.busy.show();
+            this.nativeFirebaseAuthService.singOut().pipe(take(1)).subscribe(() => {
+              this.busy.hide();
+              this.router.navigate(['/login']);
+              navigator['app'].exitApp(); // Exit app
+            });
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+
   }
 
 }
