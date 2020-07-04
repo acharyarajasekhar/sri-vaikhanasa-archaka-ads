@@ -4,9 +4,9 @@
       <ion-content>
         <ion-toolbar>
           <div>
-            <profile-card displayFlat="true" [avatarUrl]="profile?.photoURL || defaults.avatarUrl" [coverPhotoUrl]="profile?.coverPhotoURL"
-              [coverBgColor]="defaults.coverPhotoBgColor" [title]="profile?.displayName || 'Guest User'"
-              [subTitles]="defaults.emptyArray">
+            <profile-card displayFlat="true" [avatarUrl]="profile?.photoURL || defaults.avatarUrl"
+              [coverPhotoUrl]="profile?.coverPhotoURL" [coverBgColor]="defaults.coverPhotoBgColor"
+              [title]="profile?.displayName || 'Guest User'" [subTitles]="defaults.emptyArray">
             </profile-card>
           </div>
         </ion-toolbar>
@@ -17,6 +17,28 @@
               <ion-icon slot="start" [name]="p.icon"></ion-icon>
               <ion-label>{{ p.title }}</ion-label>
             </ion-item>
+          </ion-menu-toggle>
+          <ion-menu-toggle auto-hide="false">
+
+            <ion-item-divider>
+              <ion-label>Information</ion-label>
+            </ion-item-divider>
+
+            <ion-item button (click)='openThisLink("https://srivaikhanasanetwork-dev.web.app/index.html")'>
+              <ion-icon slot="start" name="link-outline"></ion-icon>
+              <ion-label>About This App</ion-label>
+            </ion-item>
+
+            <ion-item button (click)='openThisLink("https://srivaikhanasanetwork-dev.web.app/privacy-policy.html")'>
+              <ion-icon slot="start" name="link-outline"></ion-icon>
+              <ion-label>Privacy Policy</ion-label>
+            </ion-item>
+
+            <ion-item button (click)='openThisLink("https://srivaikhanasanetwork-dev.web.app/terms-and-conditions.html")'>
+              <ion-icon slot="start" name="link-outline"></ion-icon>
+              <ion-label>Terms & Conditions</ion-label>
+            </ion-item>
+
           </ion-menu-toggle>
           <ion-menu-toggle auto-hide="false">
 

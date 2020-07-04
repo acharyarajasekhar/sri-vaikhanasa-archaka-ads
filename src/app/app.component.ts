@@ -11,7 +11,7 @@ import { Plugins } from '@capacitor/core';
 import { NotificationService } from './services/notification.service';
 import { SentryErrorHandler } from '@acharyarajasekhar/ngx-utility-services';
 
-const { App, SplashScreen } = Plugins;
+const { App, SplashScreen, Browser } = Plugins;
 
 @Component({
   selector: 'app-root',
@@ -102,5 +102,9 @@ export class AppComponent implements OnInit {
 
   logout() {
     this.authService.logout();
+  }
+
+  async openThisLink(link: string) {
+    await Browser.open({ url: link });
   }
 }
