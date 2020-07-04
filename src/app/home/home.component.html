@@ -1,5 +1,6 @@
 <ion-header class="ion-no-border">
-  <ion-progress-bar *ngIf="isLoading" type="indeterminate" color="light" mode="ios" style="position: absolute; z-index: 1999;">
+  <ion-progress-bar *ngIf="isLoading" type="indeterminate" color="light" mode="ios"
+    style="position: absolute; z-index: 1999;">
   </ion-progress-bar>
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
@@ -19,7 +20,7 @@
 
   <div class="container" style="max-width: 600px; padding-top: 15px;">
 
-    <photo-slides-card [slides]="slides"></photo-slides-card>
+    <photo-slides-card [slides]="slides" showPager="false" isZoomable="false"></photo-slides-card>
 
     <ion-grid class="connectionsgrid">
       <ion-row style="background-color: white;">

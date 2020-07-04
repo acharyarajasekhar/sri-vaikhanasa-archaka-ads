@@ -41,8 +41,8 @@ export class ProfileService {
 
             this.alertController.create({
               cssClass: 'my-custom-class',
-              header: 'Your Profile Is Incomplete',
-              message: 'Please update your profile. We are still do not know your good name...',
+              header: 'Alert!',
+              message: `Your profile is incomplete. Click 'Ok' to update your profile...`,
               buttons: [
                 {
                   text: 'Cancel',
@@ -136,10 +136,13 @@ export class ProfileService {
   }
 
   async editProfile() {
+
+    let mySelf = await this.profile.pipe(take(1)).toPromise();
+
     const modal = await this.modalController.create({
       component: ProfileEditorComponent,
       componentProps: {
-        profile: this.profile
+        profile: mySelf
       }
     });
 
@@ -149,12 +152,12 @@ export class ProfileService {
 
           this.busy.show();
 
-          this.profile = {
-            ...this.profile,
+          mySelf = {
+            ...mySelf,
             ...result.data
           }
 
-          this.updateProfile(this.profile).then(() => {
+          this.updateProfile(mySelf).then(() => {
             this.toast.show("Profile updated successfully...");
             this.busy.hide();
           }).catch(err => {
