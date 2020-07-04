@@ -1,4 +1,4 @@
-package net.srivaikhanasa.archakaads;
+package net.srivaikhanasa.archakaads.dev;
 
 import android.os.Bundle;
 
