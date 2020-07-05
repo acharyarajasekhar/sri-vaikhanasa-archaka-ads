@@ -3,11 +3,11 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>My Profile</ion-title>
+    <ion-title>{{ 'My Profile' | translate }}</ion-title>
     <ion-buttons slot="end">
       <ion-button fill="clear" (click)="editProfile()">
         <ion-icon slot="start" src="assets/icons/edit.svg"></ion-icon>
-        Edit
+        {{ 'Edit' | translate }}
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -15,15 +15,19 @@
 
 <ion-content>
   <div class="container" style="max-width: 600px; padding-top: 15px;">
-    <profile-card displayFlat="true" [avatarUrl]="profile?.photoURL || defaults.avatarUrl" [coverPhotoUrl]="profile?.coverPhotoURL"
-      [coverBgColor]="defaults.coverPhotoBgColor" [title]="profile?.displayName || 'Guest User'" [subTitles]="subTitles">
+    <profile-card displayFlat="true" [avatarUrl]="profile?.photoURL || defaults.avatarUrl"
+      [coverPhotoUrl]="profile?.coverPhotoURL" [coverBgColor]="defaults.coverPhotoBgColor"
+      [title]="profile?.displayName || ('Guest User' | translate)" [subTitles]="subTitles">
       <ion-list lines="none">
         <ion-item href="tel:{{profile?.phoneNumber}}" button="true">
           <ion-icon slot="start" color="primary" src="/assets/icons/call.svg"></ion-icon>
           <ion-label>
-            <h2>Phone</h2>
+            <h2>{{ 'Phone' | translate }}</h2>
             <p>{{ profile?.phoneNumber || 'Not Available' }}</p>
-            <ion-note>{{ !!profile?.isPublic ? "Others can see your phone number" : "Others cannot see your phone number" }}</ion-note>
+            <ion-note>
+              {{ !!profile?.isPublic ? ('Others can see your phone number' | translate) : ('Others cannot see your
+              phone number' | translate) }}
+            </ion-note>
           </ion-label>
         </ion-item>
       </ion-list>

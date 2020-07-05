@@ -10,6 +10,7 @@ import { ProfilePopupCardComponent } from '../profile/profile-popup-card/profile
 import { ProfileEditorComponent } from '../profile/profile-editor/profile-editor.component';
 import { BusyIndicatorService } from '@acharyarajasekhar/busy-indicator';
 import { take } from 'rxjs/operators';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,8 @@ export class ProfileService {
     return firebase.firestore.FieldValue.serverTimestamp();
   }
 
+  private LANG_TRANSLATIONS: any;
+
   constructor(
     private authService: AuthService,
     private store: AngularFirestore,
@@ -31,8 +34,15 @@ export class ProfileService {
     private modalController: ModalController,
     private uploadService: FireStorageUploadService,
     private popoverController: PopoverController,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private translate: TranslateService
   ) {
+
+    this.fetchLangTexts();
+    this.translate.onLangChange.subscribe(() => {
+        this.fetchLangTexts();
+    })
+
     this.authService.authState.subscribe(u => {
       if (!!u && !!u.uid) {
         this.myUserID = u.uid;
@@ -41,15 +51,15 @@ export class ProfileService {
 
             this.alertController.create({
               cssClass: 'my-custom-class',
-              header: 'Alert!',
-              message: `Your profile is incomplete. Click 'Ok' to update your profile...`,
+              header: this.LANG_TRANSLATIONS.Alert,
+              message: this.LANG_TRANSLATIONS.PROFILE_UPDATE_ALERT,
               buttons: [
                 {
-                  text: 'Cancel',
+                  text: this.LANG_TRANSLATIONS.Cancel,
                   role: 'cancel',
                   handler: () => { }
                 }, {
-                  text: 'Ok',
+                  text: this.LANG_TRANSLATIONS.Ok,
                   handler: async () => {
                     await this.editProfile();
                   }
@@ -70,6 +80,12 @@ export class ProfileService {
         this.profile.next(undefined);
       }
     })
+  }
+
+  private fetchLangTexts() {
+    this.translate.get(['Alert', 'Edit', 'PROFILE_UPDATE_ALERT', 'Ok', 'Cancel']).pipe(take(1)).subscribe((translations: string) => {
+      this.LANG_TRANSLATIONS = translations;
+    });
   }
 
   getUserProfileById(id: string) {

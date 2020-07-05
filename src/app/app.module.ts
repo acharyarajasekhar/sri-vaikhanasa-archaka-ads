@@ -43,6 +43,13 @@ import { ViewNotificationsComponent } from './view-notifications/view-notificati
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { SentryErrorHandler } from '@acharyarajasekhar/ngx-utility-services';
+import { HttpClient } from '@angular/common/http';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+export function createTranslateLoader(http: HttpClient) {
+   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
 
 @NgModule({
    declarations: [
@@ -82,7 +89,14 @@ import { SentryErrorHandler } from '@acharyarajasekhar/ngx-utility-services';
       PhotoViewerModule,
       NgxFirebasePhoneLoginModule,
       NgxGenericFormModule,
-      ToastrModule.forRoot()
+      ToastrModule.forRoot(),
+      TranslateModule.forRoot({
+         loader: {
+            provide: TranslateLoader,
+            useFactory: createTranslateLoader,
+            deps: [HttpClient]
+         }
+      })
    ],
    providers: [
       NativeFirebaseAuthService,

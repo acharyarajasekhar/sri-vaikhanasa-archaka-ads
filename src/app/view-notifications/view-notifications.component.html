@@ -5,10 +5,10 @@
                 <ion-icon name="arrow-back-outline"></ion-icon>
             </ion-button>
         </ion-buttons>
-        <ion-title>Notifications</ion-title>
+        <ion-title>{{ 'Notifications' | translate }}</ion-title>
         <ion-buttons slot="end">
             <ion-button fill="clear" (click)="ClearAll()" size="small">
-                Clear
+                {{ 'Clear' | translate }}
             </ion-button>
         </ion-buttons>
     </ion-toolbar>
@@ -45,7 +45,7 @@
         <div id="noitemscontainer">
             <ion-ripple-effect></ion-ripple-effect>
             <ion-icon name="notifications" style="font-size: 32px;"></ion-icon>
-            <p>No New Notifications...</p>
+            <p>{{ 'No New Notifications...' | translate }}</p>
         </div>
     </ng-container>
 </ion-content>

@@ -9,28 +9,28 @@
             <ion-item lines="none">
                 <ion-icon color="primary" slot="start" src="assets/icons/funds.svg"></ion-icon>
                 <ion-label>
-                    <h2>Monthly Salary</h2>
+                    <h2>{{ 'Monthly Salary' | translate }}</h2>
                     <p>{{ post?.salary | currency:'INR':'symbol':'1.0-0' }}</p>
                 </ion-label>
             </ion-item>
             <ion-item href="tel:{{post?.contactNumber}}" button="true" lines="none">
                 <ion-icon color="success" slot="start" src="assets/icons/call.svg"></ion-icon>
                 <ion-label>
-                    <h2>Contact Person</h2>
+                    <h2>{{ 'Contact Person' | translate }}</h2>
                     <p>{{ post.contactPerson }} - ({{ post?.contactNumber }})</p>
                 </ion-label>
             </ion-item>
             <ion-item [gMaps]="post?.address" button="true" lines="none">
                 <ion-icon color="warning" slot="start" src="assets/icons/address.svg"></ion-icon>
                 <ion-label>
-                    <h2>Address</h2>
+                    <h2>{{ 'Address' | translate }}</h2>
                     <p>{{ post?.address?.addressLine }}, {{ post?.address?.display }}</p>
                 </ion-label>
             </ion-item>
             <ion-item lines="none">
                 <ion-icon color="secondary" slot="start" src="assets/icons/supplyfree.svg"></ion-icon>
                 <ion-label>
-                    <h2>We provide</h2>
+                    <h2>{{ 'We provide' | translate }}</h2>
                     <ion-row class="color-icons-row">
                         <ng-container>
                             <ion-col>
@@ -77,8 +77,8 @@
                 <img [avatar]="owner.photoURL" defaultImage="assets/defaults/avatar.png" [zoomable]="owner.photoURL">
             </ion-thumbnail>
             <ion-label (click)="showThisProfile(owner)">
-                <h3 *ngIf="!isMyPost">{{ owner.displayName || 'Guest User' }}</h3>
-                <p><small class="text-muted">Last updated
+                <h3 *ngIf="!isMyPost">{{ owner.displayName || ('Guest User' | translate) }}</h3>
+                <p><small class="text-muted">{{ 'Last updated' | translate }}
                         {{ post?.updatedAt?.toDate() | timeAgo }}</small><br />
                     <small *ngIf="!!isMyPost" class="text-muted">Status:
                         {{ post?.isActive ? (post?.isVerified ? 'Active' : 'Pending for admin verification') : 'In Active' }}</small>

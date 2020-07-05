@@ -6,7 +6,7 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Archaka Ads</ion-title>
+    <ion-title>{{ 'Archaka Ads' | translate }}</ion-title>
     <ion-buttons slot="end">
       <ion-button fill="clear" (click)="openNotifications()">
         <ion-icon name="notifications"></ion-icon>
@@ -22,6 +22,34 @@
 
     <photo-slides-card [slides]="slides" showPager="false" isZoomable="false"></photo-slides-card>
 
+    <div class="containerforlanguages">
+      &nbsp;<ion-text class="ion-text-center margin">{{ 'Choose your language...' | translate }}</ion-text>
+      <div class="scroll" scrollX="true">
+        &nbsp;
+        <ion-chip outline="true" class="hchip"
+          [ngStyle]="{ 'background-color': currentLanguage === 'en' ? 'wheat' : 'inherit' }" (click)="chooseLang('en')">
+          <ion-label>English</ion-label>
+        </ion-chip>
+        <ion-chip outline="true" class="hchip"
+          [ngStyle]="{ 'background-color': currentLanguage === 'te' ? 'wheat' : 'inherit' }" (click)="chooseLang('te')">
+          <ion-label>తెలుగు</ion-label>
+        </ion-chip>
+        <ion-chip outline="true" class="hchip"
+          [ngStyle]="{ 'background-color': currentLanguage === 'ta' ? 'wheat' : 'inherit' }" (click)="chooseLang('ta')">
+          <ion-label>தமிழ்</ion-label>
+        </ion-chip>
+        <ion-chip outline="true" class="hchip"
+          [ngStyle]="{ 'background-color': currentLanguage === 'kn' ? 'wheat' : 'inherit' }" (click)="chooseLang('kn')">
+          <ion-label>ಕನ್ನಡ</ion-label>
+        </ion-chip>
+        <ion-chip outline="true" class="hchip"
+          [ngStyle]="{ 'background-color': currentLanguage === 'hi' ? 'wheat' : 'inherit' }" (click)="chooseLang('hi')">
+          <ion-label>हिन्दी</ion-label>
+        </ion-chip>
+        &nbsp;
+      </div>
+    </div>
+
     <ion-grid class="connectionsgrid">
       <ion-row style="background-color: white;">
         <ion-col class="connections ion-activatable">
@@ -33,13 +61,11 @@
               </ion-col>
             </ion-row>
             <ion-row>
-              <ion-col>
-                Invite<br />Others
-              </ion-col>
+              <ion-col [innerHtml]="'INVITE_OTHERS' | translate:{value:'info'}"></ion-col>
             </ion-row>
           </ion-grid>
         </ion-col>
-        <ion-col class="connections groups ion-activatable">
+        <ion-col class="connections groups ion-activatable middlegroup">
           <ion-ripple-effect></ion-ripple-effect>
           <ion-grid (click)="rateThisApp()">
             <ion-row>
@@ -48,9 +74,7 @@
               </ion-col>
             </ion-row>
             <ion-row>
-              <ion-col>
-                Rate<br />This App
-              </ion-col>
+              <ion-col [innerHtml]="'RATE_THIS_APP' | translate:{value:'info'}"></ion-col>
             </ion-row>
           </ion-grid>
         </ion-col>
@@ -63,9 +87,7 @@
               </ion-col>
             </ion-row>
             <ion-row>
-              <ion-col>
-                Write<br />Feedback
-              </ion-col>
+              <ion-col [innerHtml]="'WRITE_FEEDBACK' | translate:{value:'info'}"></ion-col>
             </ion-row>
           </ion-grid>
         </ion-col>
@@ -106,7 +128,7 @@
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
-  
+
   <ion-item lines="none" color="light" *ngIf="isLoading">
     <ion-spinner name="lines" style="margin: auto;"></ion-spinner>
   </ion-item>

@@ -7,6 +7,7 @@ import { NativeFirebasePushNotificationService, NativeFirebaseAuthService } from
 import { Platform, AlertController } from '@ionic/angular';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { take } from 'rxjs/operators';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,8 @@ export class AuthService {
   userNotificationTopic: string = 'userchannel';
   adminNotificationTopic: string = 'adminchannel';
 
+  private LANG_TRANSLATIONS: any;
+
   constructor(
     private platform: Platform,
     private fireAuth: AngularFireAuth,
@@ -28,7 +31,14 @@ export class AuthService {
     private store: AngularFirestore,
     private alertController: AlertController,
     private nativeFirebaseAuthService: NativeFirebaseAuthService,
-    private router: Router) {
+    private router: Router,
+    private translate: TranslateService
+  ) {
+
+    this.fetchLangTexts();
+    this.translate.onLangChange.subscribe(() => {
+      this.fetchLangTexts();
+    })
 
     this.authState = this.fireAuth.authState;
     this.authState.subscribe(u => {
@@ -80,19 +90,25 @@ export class AuthService {
 
   }
 
+  private fetchLangTexts() {
+    this.translate.get(['Confirm', 'Edit', 'LOGOUT_CONFIRM', 'Ok', 'Cancel']).pipe(take(1)).subscribe((translations: string) => {
+      this.LANG_TRANSLATIONS = translations;
+    });
+  }
+
   async logout() {
 
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
-      header: 'Confirm!',
-      message: 'Do you really want to <strong>Logout</strong>!!! <br/><br/><small><strong>Note: </strong>For security reasons, we will close this application on successfull logout.</small>',
+      header: this.LANG_TRANSLATIONS.Confirm,
+      message: this.LANG_TRANSLATIONS.LOGOUT_CONFIRM,
       buttons: [
         {
-          text: 'No',
+          text: this.LANG_TRANSLATIONS.Cancel,
           role: 'cancel',
           handler: () => { }
         }, {
-          text: 'Yes',
+          text: this.LANG_TRANSLATIONS.Ok,
           handler: async () => {
             await this.busy.show();
             this.nativeFirebaseAuthService.singOut().pipe(take(1)).subscribe(() => {

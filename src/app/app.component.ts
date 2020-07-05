@@ -10,6 +10,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Plugins } from '@capacitor/core';
 import { NotificationService } from './services/notification.service';
 import { SentryErrorHandler } from '@acharyarajasekhar/ngx-utility-services';
+import { TranslateService } from '@ngx-translate/core';
 
 const { App, SplashScreen, Browser } = Plugins;
 
@@ -39,12 +40,16 @@ export class AppComponent implements OnInit {
     private networkAlertService: NetworkAlertService,
     private backButtonHandler: BackButtonHandler,
     private notificationService: NotificationService,
-    private sentryErrorHandler: SentryErrorHandler
+    private sentryErrorHandler: SentryErrorHandler,
+    private translate: TranslateService
   ) {
     this.initializeApp();
   }
 
   initializeApp() {
+
+    this.translate.setDefaultLang('en');
+    this.translate.use('te');    
 
     App.addListener('appUrlOpen', (data: any) => {
       this.ngZone.run(() => {

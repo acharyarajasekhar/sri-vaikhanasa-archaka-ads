@@ -53,8 +53,9 @@ ion-col {
   margin: auto;
 }
 
-.groups {
+.middlegroup {
   border-left: 1px solid lavender;
+  border-right: 1px solid lavender;
 }
 
 .connectionsgrid {
@@ -76,4 +77,49 @@ ion-col {
 
 .connectionicon {
   font-size: 32px;
+}
+
+.containerforlanguages {
+
+  overflow: hidden;
+  white-space: nowrap;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background: var(--ion-color-light,#f4f5f8)!important;
+  margin-top: 10px;
+
+}
+
+.containerforlanguages::-webkit-scrollbar {
+  display: none;
+}
+
+.containerforlanguages .scroll {
+      overflow: auto;
+  }
+
+  .containerforlanguages  .avatar {
+    margin-left: 0px;
+}
+
+.containerforlanguages .selectedContact {
+    margin: 10px;
+}
+
+.containerforlanguages .displayName {
+    margin-left: 10px;
+    color: var(--ion-color-step-600, #666);
+}
+
+.containerforlanguages .count {
+    margin-left: 10px;
+    color: var(--ion-color-step-600, #666);
+}
+
+.containerforlanguages ion-chip {
+    line-height: normal;
+    height: 100%;
+    text-align: center;
+    border-color: var(--ion-color-danger);
+    color: var(--ion-color-danger);
 }

@@ -11,10 +11,10 @@ import { BusyIndicatorService } from '@acharyarajasekhar/busy-indicator';
 import { take } from 'rxjs/operators';
 import { ProfileService } from './profile.service';
 import { ArchakaPostEditorComponent } from '../archaka-post-editor/archaka-post-editor.component';
-import { ArchakaPostViewComponent } from '../archaka-post-view/archaka-post-view.component';
 
 import { Plugins } from '@capacitor/core';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 const { Share } = Plugins;
 
 @Injectable({
@@ -29,6 +29,8 @@ export class PostsService {
         return firebase.firestore.FieldValue.serverTimestamp();
     }
 
+    private LANG_TRANSLATIONS: any;
+
     constructor(
         private authService: AuthService,
         private store: AngularFirestore,
@@ -40,8 +42,15 @@ export class PostsService {
         private profileService: ProfileService,
         private toast: ToastService,
         private router: Router,
-        private uploadService: FireStorageUploadService
+        private uploadService: FireStorageUploadService,
+        private translate: TranslateService
     ) {
+
+        this.fetchLangTexts();
+        this.translate.onLangChange.subscribe(() => {
+            this.fetchLangTexts();
+        })
+
         this.authService.authState.subscribe(u => {
             if (!!u && !!u.uid) {
                 this.myUserID = u.uid;
@@ -55,6 +64,15 @@ export class PostsService {
                 this.myPosts.next([]);
             }
         })
+    }
+
+    private fetchLangTexts() {
+        this.translate.get(['Alert', 'Edit', 'PROFILE_UPDATE_REQUIRED', 'Ok', 'Cancel', "Share",
+            "REPORT_THIS_AD", "Delete", "Options", "PENDING_FOR_ADMIN", "DELETE_CONFIRM",
+            "Confirm", "Yes", "No", "INVITE_HEADER", "INVITE_MESSAGE", "APP_TITLE", "POST_SHARE_MESSAGE",
+        "RATE_ALERT_HEADER", "RATE_ALERT_MESSAGE", "NO_THANKS", "RATE_NOW"]).pipe(take(1)).subscribe((translations: string) => {
+                this.LANG_TRANSLATIONS = translations;
+            });
     }
 
     uploadProfileAvatar(photos, id) {
@@ -78,24 +96,24 @@ export class PostsService {
 
             const alert = await this.alertController.create({
                 cssClass: 'my-custom-class',
-                header: 'Alert!',
-                message: 'Please update your profile information before proceeding to this option...',
+                header: this.LANG_TRANSLATIONS.Alert,
+                message: this.LANG_TRANSLATIONS.PROFILE_UPDATE_REQUIRED,
                 buttons: [
                     {
-                        text: 'Cancel',
+                        text: this.LANG_TRANSLATIONS.Cancel,
                         role: 'cancel',
                         handler: () => { }
                     }, {
-                        text: 'Goto MyProfle Now',
+                        text: this.LANG_TRANSLATIONS.Ok,
                         handler: () => {
-                            this.router.navigate(['/profile']);
+                            this.profileService.editProfile();
                         }
                     }
                 ]
             });
 
             await alert.present();
-            
+
             return false;
         }
 
@@ -137,13 +155,44 @@ export class PostsService {
         if (!!post && post.id) {
 
             Share.share({
-                title: 'Archaka Ads',
-                text: `Archaka required for a temple. Temple name is '${post.name}' and monthly salary is ${post.salary}. For more details install 'Archaka Ads' app from Google Play Store..`,
+                title: this.LANG_TRANSLATIONS.APP_TITLE,
+                text: this.LANG_TRANSLATIONS.POST_SHARE_MESSAGE,
                 url: `https://archakaads.app/${post.id}`,
                 dialogTitle: 'Share this Ad...'
             }).then(() => { }).catch(err => this.toast.error(err));
 
         }
+    }
+
+    async shareThisApp() {
+        await Share.share({
+            title: this.LANG_TRANSLATIONS.INVITE_HEADER,
+            text: this.LANG_TRANSLATIONS.INVITE_MESSAGE,
+            url: 'https://play.google.com/store/apps/details?id=net.srivaikhanasa.archakaads',
+            dialogTitle: 'Invite Others'
+        });
+    }
+
+    async rateThisApp() {
+        const alert = await this.alertController.create({
+            cssClass: 'my-custom-class',
+            header: this.LANG_TRANSLATIONS.RATE_ALERT_HEADER,
+            message: this.LANG_TRANSLATIONS.RATE_ALERT_MESSAGE,
+            buttons: [
+                {
+                    text: this.LANG_TRANSLATIONS.NO_THANKS,
+                    role: 'cancel',
+                    handler: () => { }
+                }, {
+                    text: this.LANG_TRANSLATIONS.RATE_NOW,
+                    handler: () => {
+                        Plugins.CapacitorRateApp.requestReview();
+                    }
+                }
+            ]
+        });
+
+        await alert.present();
     }
 
     hideThisPost(postId: string) {
@@ -165,9 +214,9 @@ export class PostsService {
 
         if (!post.isVerified) {
             const alert = await this.alertController.create({
-                header: 'Alert',
-                message: `Your Ad is pending for admin verification and is not allowed to edit it. It will be either published to public view very soon or else we will contact you in case of any changes required to it. Feel free to contact us using 'Write Feedback' section if required..`,
-                buttons: ['OK']
+                header: this.LANG_TRANSLATIONS.Alert,
+                message: this.LANG_TRANSLATIONS.PENDING_FOR_ADMIN,
+                buttons: [this.LANG_TRANSLATIONS.Ok]
             });
 
             await alert.present();
@@ -182,30 +231,30 @@ export class PostsService {
 
         if (post.ownerId === mySelf.id) {
             buttons.push({
-                text: 'Edit',
+                text: this.LANG_TRANSLATIONS.Edit,
                 icon: 'assets/icons/edit.svg',
                 handler: () => { this.edit(post); }
             });
             buttons.push({
-                text: 'Delete',
+                text: this.LANG_TRANSLATIONS.Delete,
                 icon: 'assets/icons/delete.svg',
                 cssClass: 'dangerbutton',
                 handler: () => { this.delete(post); }
             });
             buttons.push({
-                text: 'Share',
+                text: this.LANG_TRANSLATIONS.Share,
                 icon: 'assets/icons/share.svg',
                 handler: () => { this.shareThisPost(post); }
             });
         }
         else {
             buttons.push({
-                text: 'Share',
+                text: this.LANG_TRANSLATIONS.Share,
                 icon: 'assets/icons/share.svg',
                 handler: () => { this.shareThisPost(post); }
             });
             buttons.push({
-                text: 'Report this Ad...',
+                text: this.LANG_TRANSLATIONS.REPORT_THIS_AD,
                 icon: 'assets/icons/abuse.svg',
                 cssClass: 'dangerbutton',
                 handler: async () => { this.reportAbuse(post); }
@@ -213,7 +262,7 @@ export class PostsService {
         }
 
         const actionSheet = await this.actionSheetController.create({
-            header: 'Options',
+            header: this.LANG_TRANSLATIONS.Options,
             buttons: buttons
         });
 
@@ -232,16 +281,16 @@ export class PostsService {
     async delete(post) {
 
         const alert = await this.alertController.create({
-            header: 'Confirm!',
-            message: 'Do you really want to <strong>DELETE</strong> this Ad ?',
+            header: this.LANG_TRANSLATIONS.Confirm,
+            message: this.LANG_TRANSLATIONS.DELETE_CONFIRM,
             buttons: [
                 {
-                    text: 'No',
+                    text: this.LANG_TRANSLATIONS.No,
                     role: 'cancel',
                     cssClass: 'secondary',
                     handler: () => { }
                 }, {
-                    text: 'Yes',
+                    text: this.LANG_TRANSLATIONS.Yes,
                     handler: async () => {
                         this.busy.show();
                         this.deleteMyPostById(post.id).then(() => {
@@ -302,7 +351,7 @@ export class PostsService {
                 component: NgxGenericFormComponent,
                 componentProps: {
                     formConfig: environment.formConfigs.reportAbuseForm,
-                    pageTitle: "Report this Ad..."
+                    pageTitle: this.LANG_TRANSLATIONS.REPORT_THIS_AD
                 }
             });
 
