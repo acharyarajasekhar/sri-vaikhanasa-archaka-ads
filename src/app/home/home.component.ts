@@ -3,12 +3,13 @@ import { ModalController, IonContent } from '@ionic/angular';
 import { PostsService } from '../services/posts.service';
 import * as _ from 'lodash';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, take } from 'rxjs/operators';
 import { FirestoreDataPaginationService, WhereCondition, QueryConfig } from '@acharyarajasekhar/ngx-utility-services';
 import { ArchakaPostViewComponent } from '../archaka-post-view/archaka-post-view.component';
 import { ViewNotificationsComponent } from '../view-notifications/view-notifications.component';
 import { NotificationService } from '../services/notification.service';
 import { TranslateService } from '@ngx-translate/core';
+import { BusyIndicatorService } from '@acharyarajasekhar/busy-indicator';
 
 @Component({
   selector: 'app-home',
@@ -60,7 +61,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     public page: FirestoreDataPaginationService,
     private ngZone: NgZone,
     private notificationService: NotificationService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private busy: BusyIndicatorService
   ) { }
 
   ngOnInit() {
@@ -120,7 +122,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   async chooseLang(lang: string) {
-    this.translate.use(lang).subscribe();
+    this.busy.show();
+    this.translate.use(lang).pipe(take(1)).subscribe(() => this.busy.hide(), () => this.busy.hide());
   }
 
   async showOptions(post) {
