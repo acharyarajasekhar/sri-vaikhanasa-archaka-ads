@@ -12,7 +12,7 @@ import { NotificationService } from './services/notification.service';
 import { SentryErrorHandler } from '@acharyarajasekhar/ngx-utility-services';
 import { TranslateService } from '@ngx-translate/core';
 
-const { App, SplashScreen, Browser } = Plugins;
+const { App, SplashScreen, Browser, Storage } = Plugins;
 
 @Component({
   selector: 'app-root',
@@ -28,6 +28,10 @@ export class AppComponent implements OnInit {
   public profile: any = {};
   public activePath: string = '';
   public showSideMenu: boolean = false;
+
+  get currentLanguage() {
+    return this.translate.currentLang || 'en';
+  }
 
   constructor(
     private platform: Platform,
@@ -49,7 +53,7 @@ export class AppComponent implements OnInit {
   initializeApp() {
 
     this.translate.setDefaultLang('en');
-    this.translate.use('te');    
+    this.setCurrentAppLang();
 
     App.addListener('appUrlOpen', (data: any) => {
       this.ngZone.run(() => {
@@ -81,6 +85,12 @@ export class AppComponent implements OnInit {
     });
   }
 
+  setCurrentAppLang() {
+    Storage.get({ key: 'app-lang' }).then(appLang => {
+      this.translate.use(appLang.value || 'en');
+    })
+  }
+
   ngOnInit() {
 
     this.networkService.onlineChanges.subscribe(isOnline => {
@@ -110,6 +120,7 @@ export class AppComponent implements OnInit {
   }
 
   async openThisLink(link: string) {
-    await Browser.open({ url: link });
+    let newLink = link + "." + this.currentLanguage + ".html";
+    await Browser.open({ url: newLink });
   }
 }

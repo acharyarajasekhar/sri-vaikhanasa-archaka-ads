@@ -11,6 +11,9 @@ import { NotificationService } from '../services/notification.service';
 import { TranslateService } from '@ngx-translate/core';
 import { BusyIndicatorService } from '@acharyarajasekhar/busy-indicator';
 
+import { Plugins } from '@capacitor/core';
+const { Storage } = Plugins;
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -123,7 +126,19 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   async chooseLang(lang: string) {
     this.busy.show();
-    this.translate.use(lang).pipe(take(1)).subscribe(() => this.busy.hide(), () => this.busy.hide());
+    this.translate.use(lang).pipe(take(1)).subscribe(async () => {
+      await Storage.set({
+        key: 'app-lang',
+        value: lang
+      });
+      this.ngZone.run(() => {
+        this.busy.hide();
+      })
+    }, () => {
+      this.ngZone.run(() => {
+        this.busy.hide();
+      })
+    });
   }
 
   async showOptions(post) {
