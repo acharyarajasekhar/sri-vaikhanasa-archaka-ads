@@ -1,4 +1,5 @@
 export const reportAbuseForm = {
+    translationKey: "REPORT_ABUSE_FORM_DATA",
     controls: [
         {
             order: 0,

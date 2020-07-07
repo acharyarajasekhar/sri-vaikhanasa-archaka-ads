@@ -54,11 +54,16 @@
 	"WRITE_FEEDBACK": "అభిప్రాయం<br/>తెలియజేయండి",
 	"We provide": "మేము అందిస్తాము",
 	"Yes": "అవును",
+	"New Ad...": "క్రొత్త ప్రకటన...",
+	"Edit Ad...": "ప్రకటనను సవరించడానికి...",
+	"Submit": "సబ్మిట్",	
+	"Save": "సేవ్",
+	"FeedbackForm": "అభిప్రాయమును తెలియ చేయు",
 	"FORM_DATA": {
 		"ARCHAKA_POST_ADD_FORM": {
 			"TEMPLE_NAME": "దేవాలయం పేరు",
 			"TEMPLE_NAME_REQUIRED":  "దేవాలయం పేరు తప్పనిసరి",
-			"TEMPLE_NAME_MINLENGTTH": "దేవాలయం పేరు కనీసం 5 అక్షరాల పొడవు ఉండాలి",
+			"TEMPLE_NAME_MINLENGTH": "దేవాలయం పేరు కనీసం 5 అక్షరాల పొడవు ఉండాలి",
 			"TEMPLE_NAME_MAXLENGTH": "దేవాలయం పేరు 50 అక్షరాల కంటే ఎక్కువ ఉండకూడదు",
 			"TEMPLE_NAME_PATTERN": "దేవాలయం పేరులో అక్షరాలు మాత్రమే ఉండాలి",
 			"BRIEF_DESCRIPTION": "బాధ్యతల గురించి సంక్షిప్త వివరణ",

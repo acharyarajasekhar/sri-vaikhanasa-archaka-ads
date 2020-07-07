@@ -11,6 +11,7 @@ import { Plugins } from '@capacitor/core';
 import { NotificationService } from './services/notification.service';
 import { SentryErrorHandler } from '@acharyarajasekhar/ngx-utility-services';
 import { TranslateService } from '@ngx-translate/core';
+import { FormDataTranslationService } from './services/form.data.translation.service';
 
 const { App, SplashScreen, Browser, Storage } = Plugins;
 
@@ -45,6 +46,7 @@ export class AppComponent implements OnInit {
     private backButtonHandler: BackButtonHandler,
     private notificationService: NotificationService,
     private sentryErrorHandler: SentryErrorHandler,
+    private formDataTranslationService: FormDataTranslationService,
     private translate: TranslateService
   ) {
     this.initializeApp();
@@ -54,6 +56,7 @@ export class AppComponent implements OnInit {
 
     this.translate.setDefaultLang('en');
     this.setCurrentAppLang();
+    this.formDataTranslationService.init();
 
     App.addListener('appUrlOpen', (data: any) => {
       this.ngZone.run(() => {

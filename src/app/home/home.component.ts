@@ -132,11 +132,15 @@ export class HomeComponent implements OnInit, OnDestroy {
         value: lang
       });
       this.ngZone.run(() => {
-        this.busy.hide();
+        setTimeout(() => {
+          this.busy.hide();
+        }, 1000);
       })
     }, () => {
       this.ngZone.run(() => {
-        this.busy.hide();
+        setTimeout(() => {
+          this.busy.hide();
+        }, 1000);
       })
     });
   }

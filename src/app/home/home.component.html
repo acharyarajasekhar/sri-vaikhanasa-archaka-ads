@@ -25,8 +25,7 @@
     <div class="containerforlanguages">
       &nbsp;<ion-text class="ion-text-center margin">{{ 'Choose your language...' | translate }}</ion-text>
       <div class="scroll" scrollX="true">
-        &nbsp;
-        <ion-chip outline="true" class="hchip"
+        <ion-chip outline="true" class="hchip" style="margin-left: 0px;"
           [ngStyle]="{ 'background-color': currentLanguage === 'en' ? 'wheat' : 'inherit' }" (click)="chooseLang('en')">
           <ion-label>English</ion-label>
         </ion-chip>
@@ -42,11 +41,10 @@
           [ngStyle]="{ 'background-color': currentLanguage === 'kn' ? 'wheat' : 'inherit' }" (click)="chooseLang('kn')">
           <ion-label>ಕನ್ನಡ</ion-label>
         </ion-chip>
-        <ion-chip outline="true" class="hchip"
+        <ion-chip outline="true" class="hchip" style="margin-right: 0px;"
           [ngStyle]="{ 'background-color': currentLanguage === 'hi' ? 'wheat' : 'inherit' }" (click)="chooseLang('hi')">
           <ion-label>हिन्दी</ion-label>
         </ion-chip>
-        &nbsp;
       </div>
     </div>
 

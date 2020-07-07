@@ -15,6 +15,7 @@ import { ArchakaPostEditorComponent } from '../archaka-post-editor/archaka-post-
 import { Plugins } from '@capacitor/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { FormDataTranslationService } from './form.data.translation.service';
 const { Share } = Plugins;
 
 @Injectable({
@@ -41,7 +42,7 @@ export class PostsService {
         private ngxGenericFormService: NgxGenericFormService,
         private profileService: ProfileService,
         private toast: ToastService,
-        private router: Router,
+        private formDataTranslationService: FormDataTranslationService,
         private uploadService: FireStorageUploadService,
         private translate: TranslateService
     ) {
@@ -69,8 +70,8 @@ export class PostsService {
     private fetchLangTexts() {
         this.translate.get(['Alert', 'Edit', 'PROFILE_UPDATE_REQUIRED', 'Ok', 'Cancel', "Share",
             "REPORT_THIS_AD", "Delete", "Options", "PENDING_FOR_ADMIN", "DELETE_CONFIRM",
-            "Confirm", "Yes", "No", "INVITE_HEADER", "INVITE_MESSAGE", "APP_TITLE", "POST_SHARE_MESSAGE",
-        "RATE_ALERT_HEADER", "RATE_ALERT_MESSAGE", "NO_THANKS", "RATE_NOW"]).pipe(take(1)).subscribe((translations: string) => {
+            "Confirm", "Yes", "No", "INVITE_HEADER", "INVITE_MESSAGE", "APP_TITLE", "POST_SHARE_MESSAGE", "FeedbackForm",
+            "RATE_ALERT_HEADER", "RATE_ALERT_MESSAGE", "NO_THANKS", "RATE_NOW"]).pipe(take(1)).subscribe((translations: string) => {
                 this.LANG_TRANSLATIONS = translations;
             });
     }
@@ -347,10 +348,12 @@ export class PostsService {
 
         if (!!post && !!post.id) {
 
+            let newFormConfig = await this.formDataTranslationService.setFormConfigWithTranslatedText(environment.formConfigs.reportAbuseForm);
+
             const modal = await this.modalController.create({
                 component: NgxGenericFormComponent,
                 componentProps: {
-                    formConfig: environment.formConfigs.reportAbuseForm,
+                    formConfig: newFormConfig,
                     pageTitle: this.LANG_TRANSLATIONS.REPORT_THIS_AD
                 }
             });
@@ -399,11 +402,13 @@ export class PostsService {
 
     async writeFeedback() {
 
+        let newFormConfig = await this.formDataTranslationService.setFormConfigWithTranslatedText(environment.formConfigs.feedbackForm);
+
         const modal = await this.modalController.create({
             component: NgxGenericFormComponent,
             componentProps: {
-                formConfig: environment.formConfigs.feedbackForm,
-                pageTitle: "Feedback Form...",
+                formConfig: newFormConfig,
+                pageTitle: this.LANG_TRANSLATIONS.FeedbackForm,
                 headerColor: 'primary',
                 contentColor: 'secondary'
             }

@@ -1,4 +1,5 @@
 export const profileEditForm = {
+    translationKey: "PROFILE_FORM_DATA",
     controls: [
         {
             order: 0,
@@ -9,7 +10,7 @@ export const profileEditForm = {
             label: "FULLNAME",
             validators: {
                 required: { message: "FULLNAME_REQUIRED" },
-                minLength: { length: 5, message: "FULLNAME_MINLENGTH },
+                minLength: { length: 5, message: "FULLNAME_MINLENGTH" },
                 maxLength: { length: 50, message: "FULLNAME_MAXLENGTH" },
                 pattern: { regEx: "^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$", message: 'FULLNAME_PATTREN' }
             }
@@ -19,7 +20,7 @@ export const profileEditForm = {
             name: "photoURL",
             controlType: 'photos',
             icon: "details",
-            label: "CHOOSE_PROFIILE_PHOTO",
+            label: "CHOOSE_PROFILE_PHOTO",
             multiple: false,
             cropRequired: true,
             accept: ".png, .jpg, .jpeg",

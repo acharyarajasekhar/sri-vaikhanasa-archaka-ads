@@ -1,4 +1,5 @@
 export const feedbackForm = {
+    translationKey: "FEEDBACK_FORM_DATA",
     controls: [
         {
             order: 0,

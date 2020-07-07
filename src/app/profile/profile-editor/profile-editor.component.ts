@@ -3,6 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { ControlBase, ControlsService } from '@acharyarajasekhar/dynamic-forms';
 import { ModalController } from '@ionic/angular';
 import { environment } from 'src/environments/environment';
+import { FormDataTranslationService } from 'src/app/services/form.data.translation.service';
 
 @Component({
   templateUrl: './profile-editor.component.html',
@@ -19,26 +20,40 @@ export class ProfileEditorComponent implements OnInit {
 
   profile: any;
 
+  isReadyToRender: boolean = false;
+
   constructor(
     private controlSvc: ControlsService,
     private modalController: ModalController,
+    private formDataTranslationService: FormDataTranslationService,
     private zone: NgZone
   ) { }
 
   ngOnInit() {
-    this.initDynamicFormControls();
-    this.initFormGroup();
-    if (!!this.profile && !!this.profile.id) {
-      this.setInitialFormValues();
-    }
+
+    this.initDynamicFormControls().then(() => {
+      this.isReadyToRender = true;
+      this.initFormGroup();
+      if (!!this.profile && !!this.profile.id) {
+        this.setInitialFormValues();
+      }
+    })
 
   }
 
   private initDynamicFormControls() {
-    this.formConfig = environment.formConfigs.profileEditForm;
-    if (!!this.formConfig) {
-      this.controls = this.controlSvc.getControls(this.formConfig.controls);
-    }
+    return new Promise((res) => {
+      this.formConfig = environment.formConfigs.profileEditForm;
+      this.formDataTranslationService.setFormConfigWithTranslatedText(this.formConfig)
+        .then((translatedFormConfig: any) => {          
+          if (!!translatedFormConfig) {
+            this.zone.run(() => {
+              this.controls = this.controlSvc.getControls(translatedFormConfig.controls);
+            })
+          }
+          res();
+        })
+    })
   }
 
   private initFormGroup() {

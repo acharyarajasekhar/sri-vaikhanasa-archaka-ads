@@ -1,4 +1,5 @@
 export const archakaPostAdForm = {
+    translationKey: "ARCHAKA_POST_ADD_FORM",
     controls: [
         {
             order: 0,

@@ -1,8 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, NgZone } from '@angular/core';
 import { ControlBase, ControlsService } from '@acharyarajasekhar/dynamic-forms';
 import { FormGroup } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { environment } from 'src/environments/environment';
+import { FormDataTranslationService } from '../services/form.data.translation.service';
 
 @Component({
   selector: 'app-archaka-post-editor',
@@ -21,25 +22,57 @@ export class ArchakaPostEditorComponent implements OnInit {
   pageTitle: string = "New Ad...";
   post: any;
 
+  isReadyToRender: boolean = false;
+
   constructor(
     private controlSvc: ControlsService,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private formDataTranslationService: FormDataTranslationService,
+    private zone: NgZone
   ) { }
 
+  // ngOnInit() {
+  //   this.initDynamicFormControls();
+  //   this.initFormGroup();
+  //   if (!!this.post && !!this.post.id) {
+  //     this.setInitialFormValues();
+  //   }
+
+  // }
+
+  // private initDynamicFormControls() {
+  //   this.formConfig = environment.formConfigs.archakaPostForm;
+  //   if (!!this.formConfig) {
+  //     this.controls = this.controlSvc.getControls(this.formConfig.controls);
+  //   }
+  // }
+
   ngOnInit() {
-    this.initDynamicFormControls();
-    this.initFormGroup();
-    if (!!this.post && !!this.post.id) {
-      this.setInitialFormValues();
-    }
+
+    this.initDynamicFormControls().then(() => {
+      this.isReadyToRender = true;
+      this.initFormGroup();
+      if (!!this.post && !!this.post.id) {
+        this.setInitialFormValues();
+      }
+    })
 
   }
 
   private initDynamicFormControls() {
-    this.formConfig = environment.formConfigs.archakaPostForm;
-    if (!!this.formConfig) {
-      this.controls = this.controlSvc.getControls(this.formConfig.controls);
-    }
+    return new Promise((res) => {
+      this.formConfig = environment.formConfigs.archakaPostForm;
+      this.formDataTranslationService.setFormConfigWithTranslatedText(this.formConfig)
+        .then((translatedFormConfig: any) => {
+          if (!!translatedFormConfig) {
+            this.zone.run(() => {
+              this.controls = this.controlSvc.getControls(translatedFormConfig.controls);
+            })
+          }
+          console.log(translatedFormConfig)
+          res();
+        })
+    })
   }
 
   private initFormGroup() {
