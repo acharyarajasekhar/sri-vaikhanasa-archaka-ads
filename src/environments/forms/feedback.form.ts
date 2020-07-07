@@ -5,15 +5,15 @@ export const feedbackForm = {
             name: "type",
             controlType: 'radiolist',
             icon: "abuse",
-            label: "Type of Feedback...",
+            label: "FEEDBACK_TYPE",
             options: [
-                { value: "Compliment", text: "Compliment" },
-                { value: "Complaint", text: "Complaint" },
-                { value: "Suggestion", text: "Suggestion" },
-                { value: "Other", text: "Other" }
+                { value: "Compliment", text: "COMPLIMENT" },
+                { value: "Complaint", text: "COMPLAINT" },
+                { value: "Suggestion", text: "SUGGESTION" },
+                { value: "Other", text: "OTHERS" }
             ],
             validators: {
-                required: { message: "Type of feedback is required" }
+                required: { message: "TYPE_REQUIRED" }
             }
         },
         {
@@ -21,11 +21,11 @@ export const feedbackForm = {
             name: "description",
             controlType: 'textarea',
             icon: "details",
-            label: "Please provide your comments here...",
+            label: "PROVIDE_COMMENT",
             validators: {
-                required: { message: "Description is required" },
-                minLength: { length: 10, message: "Description must be at least 10 characters long" },
-                maxLength: { length: 5000, message: "Description cannot be more than 5000 characters long" }
+                required: { message: "DESCRIPTION_REQUIRED" },
+                minLength: { length: 10, message: "DESCRIPTION_MINLENGTH" },
+                maxLength: { length: 5000, message: "DESCRIPTION_MAXLENGTH" }
             }
         }
     ]

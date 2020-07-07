@@ -5,17 +5,17 @@ export const reportAbuseForm = {
             name: "type",
             controlType: 'radiolist',
             icon: "abuse",
-            label: "Type of abuse...",
+            label: "ABUSE_TYPE",
             options: [
-                { value: "Spam", text: "Spam" },
-                { value: "Offensive", text: "Violence/offensive" },
-                { value: "Nudity", text: "Nudity" },
-                { value: "Private", text: "Private/confidential" },
-                { value: "Copyright", text: "Copyright infringement" },
-                { value: "Other", text: "Other" }
+                { value: "Spam", text: "SPAM" },
+                { value: "Offensive", text: "VIO_OFFENCE" },
+                { value: "Nudity", text: "NUDITY" },
+                { value: "Private", text: "PRIVATE" },
+                { value: "Copyright", text: "INFRINGMENT" },
+                { value: "Other", text: "OTHER" }
             ],
             validators: {
-                required: { message: "Type of abuse is required" }
+                required: { message: "TYPE_REQUIRED" }
             }
         },
         {
@@ -23,18 +23,18 @@ export const reportAbuseForm = {
             name: "description",
             controlType: 'textarea',
             icon: "details",
-            label: "Please provide your comments here...",
+            label: "PROVIDE_COMMENTS",
             validators: {
-                required: { message: "Description is required" },
-                minLength: { length: 10, message: "Description must be at least 10 characters long" },
-                maxLength: { length: 5000, message: "Description cannot be more than 5000 characters long" }
+                required: { message: "DESCRIPTION_REQUIRED" },
+                minLength: { length: 10, message: "DESCRIPTION_MINLENGTH" },
+                maxLength: { length: 5000, message: "DESCRIPTION_MAXLENGTH" }
             }
         },
         {
             order: 2,
             name: "isHidden",
             controlType: 'toggle',
-            label: "Hide this Ad from public view immediately",
+            label: "HIDE_AD",
             value: false,
             validators: {}
         }

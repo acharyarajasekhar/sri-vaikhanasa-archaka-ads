@@ -6,12 +6,12 @@ export const profileEditForm = {
             controlType: 'input',
             inputType: 'text',
             icon: "avatar",
-            label: "Full Name",
+            label: "FULLNAME",
             validators: {
-                required: { message: "Full Name is required" },
-                minLength: { length: 5, message: "Full Name must be at least 5 characters long" },
-                maxLength: { length: 50, message: "Full Name cannot be more than 50 characters long" },
-                pattern: { regEx: "^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$", message: 'Full Name must contain only letters' }
+                required: { message: "FULLNAME_REQUIRED" },
+                minLength: { length: 5, message: "FULLNAME_MINLENGTH },
+                maxLength: { length: 50, message: "FULLNAME_MAXLENGTH" },
+                pattern: { regEx: "^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$", message: 'FULLNAME_PATTREN' }
             }
         },
         {
@@ -19,7 +19,7 @@ export const profileEditForm = {
             name: "photoURL",
             controlType: 'photos',
             icon: "details",
-            label: "Choose Profile Photo",
+            label: "CHOOSE_PROFIILE_PHOTO",
             multiple: false,
             cropRequired: true,
             accept: ".png, .jpg, .jpeg",
@@ -30,7 +30,7 @@ export const profileEditForm = {
             name: "coverPhotoURL",
             controlType: 'photos',
             icon: "details",
-            label: "Choose Cover Photo",
+            label: "CHOOSE_COVER_PHOTO",
             multiple: false,
             accept: ".png, .jpg, .jpeg",
             validators: {}
@@ -39,7 +39,7 @@ export const profileEditForm = {
             order: 2,
             name: "isPublic",
             controlType: 'toggle',
-            label: "Can show my phone number to others",
+            label: "SHOW_PHONE_NUMBER",
             value: false,
             validators: {}
         }

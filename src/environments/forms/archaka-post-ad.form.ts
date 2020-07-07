@@ -6,12 +6,12 @@ export const archakaPostAdForm = {
             controlType: 'input',
             inputType: 'text',
             icon: "temple",
-            label: "Temple Name",
+            label: "TEMPLE_NAME",
             validators: {
-                required: { message: "Temple Name is required" },
-                minLength: { length: 5, message: "Temple Name must be at least 5 characters long" },
-                maxLength: { length: 50, message: "Temple Name cannot be more than 50 characters long" },
-                pattern: { regEx: "^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$", message: 'Temple Name must contain only letters' }
+                required: { message: "TEMPLE_NAME_REQUIRED" },
+                minLength: { length: 5, message: "TEMPLE_NAME_MINLENGTH" },
+                maxLength: { length: 50, message: "TEMPLE_NAME_MAXLENGTH" },
+                pattern: { regEx: "^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$", message: 'TEMPLE_NAME_PATTERN' }
             }
         },
         {
@@ -19,11 +19,11 @@ export const archakaPostAdForm = {
             name: "description",
             controlType: 'textarea',
             icon: "details",
-            label: "Brief description about roles and responsibilities",
+            label: "BRIEF_DESCRIPTION",
             validators: {
-                required: { message: "Description is required" },
-                minLength: { length: 10, message: "Description must be at least 10 characters long" },
-                maxLength: { length: 5000, message: "Description cannot be more than 5000 characters long" }
+                required: { message: "DESCRIPTION_REQUIRED" },
+                minLength: { length: 10, message: "DESCRIPTION_MINLENGTH" },
+                maxLength: { length: 5000, message: "DESCRIPTION_MAXLENGTH" }
             }
         },
         {
@@ -31,11 +31,11 @@ export const archakaPostAdForm = {
             name: "photos",
             controlType: 'photos',
             icon: "details",
-            label: "Choose Cover Photos",
+            label: "CHOOSE_COVERPHOTO",
             multiple: true,
             accept: ".png, .jpg, .jpeg",
             validators: {
-                maxAllowed: { count: 5, message: "Maximum 5 photos are allowed" },
+                maxAllowed: { count: 5, message: "MAXALLOWED" },
             }
         },
         {
@@ -44,10 +44,10 @@ export const archakaPostAdForm = {
             controlType: 'input',
             inputType: 'number',
             icon: "rupee",
-            label: "Monthly Salary",
+            label: "MONTHLY_SALARY",
             validators: {
-                required: { message: "Monthly Salary is required" },
-                min: { min: 0, message: "Monthly Salary  must be greater than 0" }
+                required: { message: "SALARY_REQUIRED" },
+                min: { min: 0, message: "MIN_SALARY" }
             }
         },
         {
@@ -55,13 +55,13 @@ export const archakaPostAdForm = {
             name: "additionals",
             controlType: 'checkboxlist',
             icon: "supplyfree",
-            label: "Choose...",
+            label: "CHOOSE",
             options: [
-                { value: "Accommodation", text: "Accommodation" },
+                { value: "Accommodation", text: "ACCOMMODATION" },
                 { value: "LPG", text: "LPG" },
-                { value: "Rice", text: "Rice" },
-                { value: "Vegetables", text: "Vegetables" },
-                { value: "Milk", text: "Milk" }
+                { value: "Rice", text: "RICE" },
+                { value: "Vegetables", text: "VEGETABLES" },
+                { value: "Milk", text: "MILK" }
             ],
             validators: {}
         },
@@ -71,12 +71,12 @@ export const archakaPostAdForm = {
             controlType: 'input',
             inputType: 'text',
             icon: "avatar",
-            label: "Contact Person Name",
+            label: "CONTACT_NAME",
             validators: {
-                required: { message: "Contact Person Name is required" },
-                minLength: { length: 5, message: "Contact Person Name must be at least 5 characters long" },
-                maxLength: { length: 50, message: "Contact Person Name cannot be more than 50 characters long" },
-                pattern: { regEx: "^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$", message: 'Contact Person Name must contain only letters' }
+                required: { message: "NAME_REQUIRED" },
+                minLength: { length: 5, message: "PERSON_NAME_MINLENGTH" },
+                maxLength: { length: 50, message: "PERSON_NAME_MAXLENGTH" },
+                pattern: { regEx: "^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$", message: 'PERSON_NAME_PATTERN' }
             }
         },
         {
@@ -85,9 +85,9 @@ export const archakaPostAdForm = {
             controlType: 'input',
             inputType: 'number',
             icon: "call",
-            label: "Contact Number",
+            label: "CONTACT_NUMBER",
             validators: {
-                required: { message: "Contact Number is required" }
+                required: { message: "CONTACT_NUMBER_REQUIRED" }
             }
         },
         {
@@ -95,21 +95,21 @@ export const archakaPostAdForm = {
             name: "address",
             controlType: 'address',
             icon: "postoffice",
-            label: "Fill Address",
+            label: "ADDRESS",
             validators: {
-                required: { message: 'Address is Required' },
-                isAddressLineRequired: { message: "Address Line is required" },
-                addressLineMinLength: { length: 3, message: "Address Line must be at least 3 characters long" },
-                addressLineMaxLength: { length: 250, message: "Address Line cannot be more than 250 characters long" },
-                postalAddressRequired: { message: "Please choose your post office using your pincode" }
-                // geoLocationRequired: { message: "Please choose your geo location on google maps" }
+                required: { message: 'ADDRESS_REQUIRED' },
+                isAddressLineRequired: { message: "ADDRESS_LINE_REQUIRED" },
+                addressLineMinLength: { length: 3, message: "ADDRESS_LINE_MINLENGTH" },
+                addressLineMaxLength: { length: 250, message: "ADDRESS_LINE_MAXLENGTH" },
+                postalAddressRequired: { message: "POSTAL_REQUIRED" }
+                // geoLocationRequired: { message: "LOCATION_REQUIRED" }
             }
         },
         {
             order: 8,
             name: "isActive",
             controlType: 'toggle',
-            label: "Show this Ad to public",
+            label: "SHOW_AD_PUBLIC",
             value: false,
             validators: {}
         }
