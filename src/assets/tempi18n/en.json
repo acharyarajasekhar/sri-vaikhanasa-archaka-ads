@@ -1,8 +1,8 @@
 {
 	"APP_TITLE": "Archaka Ads",
-	"About The App": "About The App",
+	"About Archaka Ads": "About Archaka Ads",
 	"Account": "Account",
-	"Add": "New Ad",
+	"Add": "Add",
 	"Address": "Address",
 	"Archaka Ads": "Archaka Ads",
 	"Cancel": "Cancel",
@@ -59,14 +59,10 @@
 	"Submit": "Submit",
 	"Save": "Save",
 	"FeedbackForm": "Feedback Form",
-	"Z_LANG_TRANS_INPOGRESS": "Dear {{ name }}, We are working on English translation of this app. Sorry for the inconvenience.",
-	"Z_ASK_TO_ADD_AD": "Are you looking for Archaka for your temple? Then tap here to post an Ad now on this App and get ready to receive calls from the interested Archakas...",
-	"Z_POST_BY_ARCHAKA_TO_ARCHAKA": "Are you aware of any temple where Archaka is needed? Then post that information on this App to help Archaka community...",
-	"Z_LOOKS_LIKE_NO_ADS_YET": "Looks like we don't have any ads for Archakas. So please wait and meanwhile, let's share this App with as many people as we can to help each other.",
 	"FORM_DATA": {
 		"ARCHAKA_POST_ADD_FORM": {
 			"TEMPLE_NAME": "Temple Name",
-			"TEMPLE_NAME_REQUIRED": "Temple Name is required",
+			"TEMPLE_NAME_REQUIRED":  "Temple Name is required",
 			"TEMPLE_NAME_MINLENGTH": "Temple Name must be at least 5 characters long",
 			"TEMPLE_NAME_MAXLENGTH": "Temple Name cannot be more than 50 characters long",
 			"TEMPLE_NAME_PATTERN": "Temple Name must contain only letters",

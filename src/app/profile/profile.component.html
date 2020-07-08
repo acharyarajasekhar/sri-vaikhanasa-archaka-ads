@@ -20,7 +20,7 @@
       [title]="profile?.displayName || ('Guest User' | translate)" [subTitles]="subTitles">
       <ion-list lines="none">
         <ion-item href="tel:{{profile?.phoneNumber}}" button="true">
-          <ion-icon slot="start" color="primary" src="/assets/icons/call.svg"></ion-icon>
+          <ion-icon slot="start" color="tertiary" src="/assets/icons/call.svg"></ion-icon>
           <ion-label>
             <h2>{{ 'Phone' | translate }}</h2>
             <p>{{ profile?.phoneNumber || 'Not Available' }}</p>

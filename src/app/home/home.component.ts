@@ -10,6 +10,9 @@ import { ViewNotificationsComponent } from '../view-notifications/view-notificat
 import { NotificationService } from '../services/notification.service';
 import { TranslateService } from '@ngx-translate/core';
 import { BusyIndicatorService } from '@acharyarajasekhar/busy-indicator';
+import { ProfileService } from '../services/profile.service';
+
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 import { Plugins } from '@capacitor/core';
 const { Storage } = Plugins;
@@ -18,7 +21,25 @@ const { Storage } = Plugins;
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
-  providers: [FirestoreDataPaginationService]
+  providers: [FirestoreDataPaginationService],
+  animations: [
+    trigger('listItemState', [
+      state('in',
+        style({
+          opacity: 1,
+          height: '*',
+          minHeight: '*'
+        })
+      ),
+      transition('* => void', [
+        animate('0.25s ease-out', style({
+          opacity: 0,
+          height: '1px',
+          minHeight: '1px'
+        }))
+      ])
+    ])
+  ]
 })
 export class HomeComponent implements OnInit, OnDestroy {
 
@@ -58,6 +79,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     return this.translate.currentLang || 'en';
   }
 
+  isLanguageAlertRequired: boolean = false;
+
+  userName: any = { name: 'User' };
+
   constructor(
     private modalController: ModalController,
     private postsService: PostsService,
@@ -77,6 +102,13 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.page.loading.pipe(takeUntil(this.destroyed$)).subscribe(flag => {
       this.ngZone.run(() => this.isLoading = flag);
     });
+
+    if (this.currentLanguage == 'en' || this.currentLanguage == 'te') {
+      this.isLanguageAlertRequired = false;
+    }
+    else {
+      this.isLanguageAlertRequired = true;
+    }
 
   }
 
@@ -124,8 +156,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     await this.postsService.writeFeedback();
   }
 
-  async chooseLang(lang: string) {
+  async chooseLang(lang: string, alertRequired: boolean = false) {
     this.busy.show();
+    this.isLanguageAlertRequired = alertRequired;
     this.translate.use(lang).pipe(take(1)).subscribe(async () => {
       await Storage.set({
         key: 'app-lang',
@@ -134,15 +167,19 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.ngZone.run(() => {
         setTimeout(() => {
           this.busy.hide();
-        }, 1000);
+        }, 500);
       })
     }, () => {
       this.ngZone.run(() => {
         setTimeout(() => {
           this.busy.hide();
-        }, 1000);
+        }, 500);
       })
     });
+  }
+
+  closeLanguageAlert() {
+    // this.isLanguageAlertRequired = false;
   }
 
   async showOptions(post) {

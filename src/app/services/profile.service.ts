@@ -19,6 +19,7 @@ export class ProfileService {
 
   profile = new BehaviorSubject<any>(undefined);
   myUserID: string;
+  myUserName: string;
 
   get timestamp() {
     return firebase.firestore.FieldValue.serverTimestamp();
@@ -71,7 +72,8 @@ export class ProfileService {
 
           }
         })
-        this.store.collection('users').doc(u.uid).valueChanges().subscribe(profileData => {
+        this.store.collection('users').doc(u.uid).valueChanges().subscribe((profileData: any) => {
+          this.myUserName = profileData.displayName;
           this.profile.next(profileData);
         })
       }
@@ -81,6 +83,8 @@ export class ProfileService {
       }
     })
   }
+
+  init() {}
 
   private fetchLangTexts() {
     this.translate.get(['Alert', 'Edit', 'PROFILE_UPDATE_ALERT', 'Ok', 'Cancel']).pipe(take(1)).subscribe((translations: string) => {

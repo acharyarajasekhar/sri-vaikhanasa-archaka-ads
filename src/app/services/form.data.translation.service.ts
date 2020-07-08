@@ -50,7 +50,6 @@ export class FormDataTranslationService {
     private fetchLangTexts() {
         this.translate.get(this.translationKeys).pipe(take(1)).subscribe((translations: string) => {
             this.translations = translations;
-            console.log(translations)
         });
     }
 

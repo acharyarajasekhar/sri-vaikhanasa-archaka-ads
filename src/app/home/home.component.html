@@ -34,18 +34,42 @@
           <ion-label>తెలుగు</ion-label>
         </ion-chip>
         <ion-chip outline="true" class="hchip"
-          [ngStyle]="{ 'background-color': currentLanguage === 'ta' ? 'wheat' : 'inherit' }" (click)="chooseLang('ta')">
+          [ngStyle]="{ 'background-color': currentLanguage === 'ta' ? 'wheat' : 'inherit' }"
+          (click)="chooseLang('ta', true)">
           <ion-label>தமிழ்</ion-label>
         </ion-chip>
         <ion-chip outline="true" class="hchip"
-          [ngStyle]="{ 'background-color': currentLanguage === 'kn' ? 'wheat' : 'inherit' }" (click)="chooseLang('kn')">
+          [ngStyle]="{ 'background-color': currentLanguage === 'kn' ? 'wheat' : 'inherit' }"
+          (click)="chooseLang('kn', true)">
           <ion-label>ಕನ್ನಡ</ion-label>
         </ion-chip>
+        <ion-chip outline="true" class="hchip"
+          [ngStyle]="{ 'background-color': currentLanguage === 'ml' ? 'wheat' : 'inherit' }"
+          (click)="chooseLang('ml', true)">
+          <ion-label>മലയാളം</ion-label>
+        </ion-chip>
         <ion-chip outline="true" class="hchip" style="margin-right: 0px;"
-          [ngStyle]="{ 'background-color': currentLanguage === 'hi' ? 'wheat' : 'inherit' }" (click)="chooseLang('hi')">
+          [ngStyle]="{ 'background-color': currentLanguage === 'hi' ? 'wheat' : 'inherit' }"
+          (click)="chooseLang('hi', true)">
           <ion-label>हिन्दी</ion-label>
         </ion-chip>
       </div>
+    </div>
+
+    <div class="alert alert-danger fade show ion-activatable" role="alert" *ngIf="isLanguageAlertRequired"
+      [@listItemState]="'in'" (click)="closeLanguageAlert()">
+      <ion-ripple-effect></ion-ripple-effect>
+      {{ 'Z_LANG_TRANS_INPOGRESS' | translate:userName }}
+    </div>
+
+    <div class="alert alert-primary fade show" role="alert" (click)="addNew()">
+      <ion-ripple-effect></ion-ripple-effect>
+      <ion-text>{{ 'Z_ASK_TO_ADD_AD' | translate }}</ion-text>
+    </div>
+
+    <div class="alert alert-success fade show ion-activatable" role="alert" (click)="addNew()">
+      <ion-ripple-effect></ion-ripple-effect>
+      {{ 'Z_POST_BY_ARCHAKA_TO_ARCHAKA' | translate }}
     </div>
 
     <ion-grid class="connectionsgrid">
@@ -94,12 +118,6 @@
 
     <div class="row" style="padding-top: 15px;">
 
-      <!-- <ng-container *ngFor="let post of sortedPosts">
-
-        <ion-button (click)="openPost(post.id)">{{ post.name }}</ion-button>
-
-      </ng-container> -->
-
       <ng-container *ngFor="let post of sortedPosts">
 
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12" [id]="post.id">
@@ -111,9 +129,11 @@
 
       <ng-container *ngIf="page.empty | async">
 
-        <div id="noitemscontainer">
-          <ion-icon src="/assets/icons/noinbox.svg" style="font-size: 32px;"></ion-icon>
-          <p>No Active Ads</p>
+        <div class="container" style="max-width: 600px;">
+          <div class="alert alert-warning fade show ion-activatable" role="alert" (click)="invite()">
+            <ion-ripple-effect></ion-ripple-effect>
+            {{ 'Z_LOOKS_LIKE_NO_ADS_YET' | translate }}
+          </div>
         </div>
 
       </ng-container>
