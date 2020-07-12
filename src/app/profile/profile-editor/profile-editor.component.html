@@ -5,14 +5,15 @@
                 <ion-icon name="chevron-back-outline"></ion-icon>
             </ion-button>
         </ion-buttons>
-        <ion-title>Edit Profile</ion-title>
+        <ion-title>{{ 'Edit Profile' | translate }}</ion-title>
     </ion-toolbar>
 </ion-header>
 
 <ion-content>
     <br />
     <div class="container">
-        <dynamic-form *ngIf="isReadyToRender" #dynamicForm [controls]="controls" [form]="form" [svgIconBasePath]="'assets/icons/'">
+        <dynamic-form *ngIf="isReadyToRender" #dynamicForm [controls]="controls" [form]="form"
+            [svgIconBasePath]="'assets/icons/'">
         </dynamic-form>
     </div>
 </ion-content>
@@ -21,10 +22,10 @@
     <ion-toolbar color="primary">
         <ion-buttons slot="end">
             <ion-button (click)="cancel()">
-                <ion-icon slot="start" name="close-outline"></ion-icon>Cancel
+                <ion-icon slot="start" name="close-outline"></ion-icon>{{ 'Cancel' | translate }}
             </ion-button>
             <ion-button (click)="onSave()">
-                <ion-icon slot="start" name="checkmark-done-outline"></ion-icon>Submit
+                <ion-icon slot="start" name="checkmark-done-outline"></ion-icon>{{ 'Submit' | translate }}
             </ion-button>
         </ion-buttons>
     </ion-toolbar>
