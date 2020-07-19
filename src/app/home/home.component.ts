@@ -103,7 +103,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.ngZone.run(() => this.isLoading = flag);
     });
 
-    if (this.currentLanguage == 'en' || this.currentLanguage == 'te') {
+    if (this.currentLanguage == 'en' || this.currentLanguage == 'te' || this.currentLanguage == 'kn') {
       this.isLanguageAlertRequired = false;
     }
     else {

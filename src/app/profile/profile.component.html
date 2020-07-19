@@ -5,7 +5,7 @@
     </ion-buttons>
     <ion-title>{{ 'My Profile' | translate }}</ion-title>
     <ion-buttons slot="end">
-      <ion-button fill="clear" (click)="editProfile()">
+      <ion-button fill="clear" (click)="editProfile()" *ngIf="!!profile">
         <ion-icon slot="start" src="assets/icons/edit.svg"></ion-icon>
         {{ 'Edit' | translate }}
       </ion-button>
